@@ -61,6 +61,8 @@ GraphicManager::GraphicManager() :
 	unloaded(true),
 	datVersion(DAT_VERSION_UNKNOWN),
 	sprVersion(SPR_VERSION_UNKNOWN),
+	item_count(0),
+	creature_count(0),
 	loaded_textures(0),
 	lastclean(0)
 {
@@ -1089,11 +1091,11 @@ bool GraphicManager::loadSpriteData(const FileName& datafile, wxString& error, w
 			return false;
 	}
 
-	if(settings.getInteger(Config::USE_MEMCACHED_SPRITES) == false) {
+	/*if(settings.getInteger(Config::USE_MEMCACHED_SPRITES) == false) {
 		spritefile = nstr(datafile.GetFullPath());
 		unloaded = false;
 		return true;
-	}
+	}*/
 
 	std::vector<uint> sprite_indexes;
 	for(uint i = 0; i < total_pics; ++i) {

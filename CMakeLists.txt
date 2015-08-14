@@ -3,9 +3,12 @@ cmake_minimum_required(VERSION 2.8)
 project(rme)
 
 if(NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE RelWithDebInfo)
+	set(CMAKE_BUILD_TYPE Debug)
 endif()
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin/release")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "bin/debug")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "bin/release")
 set(CMAKE_CXX_FLAGS                "-Wall -Wextra -Wno-unused-parameter -Wno-unused-variable -Wno-deprecated-declarations -std=c++0x")
 set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g -D__DEBUG__")
 set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")

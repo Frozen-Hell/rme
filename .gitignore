@@ -20,6 +20,8 @@ data/user
 *.suo
 *.obj
 
+bin/
+obj/
 vcproj/ipch/
 vcproj/Beta Release/
 vcproj/Debug/
@@ -31,7 +33,9 @@ vcproj/Installer/Beta Release/
 vcproj/Installer/Debug/
 vcproj/Installer/Release/
 
-
 # Xcode
 xcuserdata
 .DS_STORE
+
+# Eclipse
+.settings
