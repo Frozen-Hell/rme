@@ -336,12 +336,12 @@ bool GUI::LoadDataFiles(wxString& error, wxArrayString& warnings)
 	gui.gfx.client_version = getLoadedVersion();
 	
 	gui.CreateLoadBar(wxT("Loading data files"));
-	gui.SetLoadDone(0, wxT("Loading Tibia.dat ..."));
+	gui.SetLoadDone(0, wxT("Loading Tibia.dat..."));
 	FileName dat_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.dat"));
 	
 	if(!gui.gfx.loadSpriteMetadata(dat_path, error, warnings))
 	{
-		error = wxT("Couldn't load tibia.dat: ") + error;
+		error = wxT("Couldn't load Tibia.dat: ") + error;
 		gui.DestroyLoadBar();
 		UnloadVersion();
 		return false;
@@ -349,16 +349,23 @@ bool GUI::LoadDataFiles(wxString& error, wxArrayString& warnings)
 	
 	FileName spr_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.spr"));
 
-	gui.SetLoadDone(10, wxT("Loading Tibia.spr ..."));
+	gui.SetLoadDone(10, wxT("Loading Tibia.spr..."));
 	if(!gui.gfx.loadSpriteData(spr_path.GetFullPath(), error, warnings))
 	{
-		error = wxT("Couldn't load tibia.spr: ") + error;
+		error = wxT("Couldn't load Tibia.spr: ") + error;
 		gui.DestroyLoadBar();
 		UnloadVersion();
 		return false;
 	}
 
-	gui.SetLoadDone(20, wxT("Loading items.otb ..."));
+	FileName alp_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.alp"));
+	if (alp_path.FileExists())
+	{
+		gui.SetLoadDone(20, wxT("Loading Tibia.alp..."));
+		gui.gfx.loadSpriteAlphaTransparency(alp_path.GetFullPath(), error, warnings);
+	}
+
+	gui.SetLoadDone(30, wxT("Loading items.otb..."));
 	if(!item_db.loadFromOtb(wxString(data_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("items.otb")), error, warnings))
 	{
 		error = wxT("Couldn't load items.otb: ") + error;
@@ -367,19 +374,19 @@ bool GUI::LoadDataFiles(wxString& error, wxArrayString& warnings)
 		return false;
 	}
 
-	gui.SetLoadDone(30, wxT("Loading items.xml ..."));
+	gui.SetLoadDone(40, wxT("Loading items.xml..."));
 	if(!item_db.loadFromGameXml(wxString(data_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("items.xml")), error, warnings))
 	{
 		warnings.push_back(wxT("Couldn't load items.xml: ") + error);
 	}
 
-	gui.SetLoadDone(45, wxT("Loading creatures.xml ..."));
+	gui.SetLoadDone(50, wxT("Loading creatures.xml..."));
 	if(!creature_db.loadFromXML(wxString(data_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("creatures.xml")), true, error, warnings))
 	{
 		warnings.push_back(wxT("Couldn't load creatures.xml: ") + error);
 	}
 
-	gui.SetLoadDone(45, wxT("Loading user creatures.xml ..."));
+	gui.SetLoadDone(60, wxT("Loading user creatures.xml..."));
 	{
 		FileName cdb = getLoadedVersion()->getLocalDataPath();
 		cdb.SetFullName(wxT("creatures.xml"));
@@ -388,19 +395,19 @@ bool GUI::LoadDataFiles(wxString& error, wxArrayString& warnings)
 		creature_db.loadFromXML(cdb, false, nerr, nwarn);
 	}
 
-	gui.SetLoadDone(50, wxT("Loading materials.xml ..."));
+	gui.SetLoadDone(70, wxT("Loading materials.xml..."));
 	if(!materials.loadMaterials(wxString(data_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("materials.xml")), error, warnings))
 	{
 		warnings.push_back(wxT("Couldn't load materials.xml: ") + error);
 	}
 
-	gui.SetLoadDone(70, wxT("Loading extensions..."));
+	gui.SetLoadDone(80, wxT("Loading extensions..."));
 	if(!materials.loadExtensions(extension_path, error, warnings))
 	{
 		//warnings.push_back(wxT("Couldn't load extensions: ") + error);
 	}
 
-	gui.SetLoadDone(70, wxT("Finishing..."));
+	gui.SetLoadDone(90, wxT("Finishing..."));
 	brushes.init();
 	materials.createOtherTileset();
 

@@ -115,7 +115,7 @@ protected:
 
 		// This contains the pixel data
 		uint16_t size;
-		uint8_t* dump;
+		uint8_t * dump, * alpha;
 
 		virtual void clean(int time);
 
@@ -203,6 +203,7 @@ public:
 	bool loadSpriteMetadataFlagsVer78(FileReadHandle& file, GameSprite* sType, wxString& error, wxArrayString& warnings);
 	bool loadSpriteMetadataFlagsVer86(FileReadHandle& file, GameSprite* sType, wxString& error, wxArrayString& warnings);
 	bool loadSpriteData(const FileName& datafile, wxString& error, wxArrayString& warnings);
+	bool loadSpriteAlphaTransparency(const FileName & datafile, wxString & error, wxArrayString & warnings);
 
 	// Cleans old & unused textures according to config settings
 	void garbageCollection();

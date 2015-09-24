@@ -1143,6 +1143,53 @@ bool GraphicManager::loadSpriteData(const FileName& datafile, wxString& error, w
 	return true;
 }
 
+bool GraphicManager::loadSpriteAlphaTransparency(const FileName & datafile, wxString & error, wxArrayString & warnings)
+{
+	FileReadHandle fh(nstr(datafile.GetFullPath()));
+
+	if(fh.isOk() == false) {
+		error = wxT("Failed to open file for reading");
+		return false;
+	}
+
+#define safe_get(func, ...) do {\
+		if(!fh.get##func(__VA_ARGS__)) {\
+			error = wxstr(fh.getErrorMessage()); \
+			return false; \
+		} \
+	} while(false)
+
+	uint32_t alpSignature;
+	safe_get(U32, alpSignature);
+
+	uint32_t spritesCount;
+	safe_get(U32, spritesCount);
+	uint32_t id, offset, currentOffset;
+
+	for (uint32_t i = 0; i < spritesCount; ++i)
+	{
+		safe_get(U32, id);
+		ImageMap::iterator it = image_space.find(id);
+		if (it != image_space.end())
+		{
+			GameSprite::NormalImage * spr = dynamic_cast <GameSprite::NormalImage *> (it->second);
+			if (spr)
+			{
+				safe_get(U32, offset);
+				currentOffset = fh.tell();
+				fh.seek(offset);
+				spr->alpha = new uint8_t[1024];
+				fh.getRAW(spr->alpha, 1024);
+				fh.seek(currentOffset);
+			}
+		}
+	}
+
+#undef safe_get
+	unloaded = false;
+	return true;
+}
+
 bool GraphicManager::loadSpriteDump(uint8_t*& target, uint16_t& size, int sprite_id)
 {
 	if(settings.getInteger(Config::USE_MEMCACHED_SPRITES))
@@ -1667,19 +1714,23 @@ void GameSprite::Image::clean(int time) {
 GameSprite::NormalImage::NormalImage() :
 	id(0),
 	size(0),
-	dump(nullptr)
+	dump(nullptr),
+	alpha(nullptr)
 {
 }
 
 GameSprite::NormalImage::~NormalImage() {
-	delete[] dump;
+	delete [] dump;
+	delete [] alpha;
 }
 
 void GameSprite::NormalImage::clean(int time) {
 	Image::clean(time);
 	if(time - lastaccess > 5 && !settings.getInteger(Config::USE_MEMCACHED_SPRITES)) { // We keep dumps around for 5 seconds.
-		delete[] dump;
+		delete [] dump;
 		dump = nullptr;
+		delete [] alpha;
+		alpha = nullptr;
 	}
 }
 
@@ -1781,8 +1832,9 @@ uint8_t* GameSprite::NormalImage::getRGBAData() {
 			}
 		}
 	}
-	uint8_t* rgba32x32 = newd uint8_t[32*32*4];
-	memset(rgba32x32, 0, 32*32*4);
+	uint32_t rgbaSize = 32 * 32 * 4;
+	uint8_t* rgba32x32 = newd uint8_t[rgbaSize];
+	memset(rgba32x32, 0, rgbaSize);
 	/* SPR dump format
 	 *  The spr format contains chunks, a chunk can either be transparent or contain pixel data.
 	 *  First 2 bytes (unsigned short) are read, which tells us how long the chunk is. One
@@ -1854,6 +1906,15 @@ uint8_t* GameSprite::NormalImage::getRGBAData() {
 		if(x >= 32) {
 			x = 0;
 			y++;
+		}
+	}
+
+	// Additional functionality - adding alpha-transparency
+	if (alpha)
+	{
+		for (uint32_t i = 3, j = 0; i < rgbaSize; i += 4, ++j)
+		{
+			rgba32x32[i] = alpha[j];
 		}
 	}
 

@@ -152,7 +152,7 @@ bool ItemDatabase::loadFromOtbVer1(BinaryNode* itemNode, wxString& error, wxArra
 		ItemType* t = newd ItemType();
 		t->group = ItemGroup_t(u8);
 
-		switch(t->group)
+		switch (t->group)
 		{
 			case  ITEM_GROUP_NONE:
 			case ITEM_GROUP_GROUND:
@@ -163,7 +163,7 @@ bool ItemDatabase::loadFromOtbVer1(BinaryNode* itemNode, wxString& error, wxArra
 			case ITEM_GROUP_ARMOR:
 			case ITEM_GROUP_WRITEABLE:
 			case ITEM_GROUP_KEY:
-				break;
+			break;
 			case ITEM_GROUP_DOOR: t->type = ITEM_TYPE_DOOR; break;
 			case ITEM_GROUP_CONTAINER: t->type = ITEM_TYPE_CONTAINER; break;
 			case ITEM_GROUP_RUNE: t->client_chargeable = true; break;
@@ -433,7 +433,7 @@ bool ItemDatabase::loadFromOtbVer2(BinaryNode* itemNode, wxString& error, wxArra
 			case ITEM_GROUP_GROUND:
 			case ITEM_GROUP_SPLASH:
 			case ITEM_GROUP_FLUID:
-				break;
+			break;
 			case   ITEM_GROUP_DOOR: t->type = ITEM_TYPE_DOOR; break;
 			case   ITEM_GROUP_CONTAINER: t->type = ITEM_TYPE_CONTAINER; break;
 			case   ITEM_GROUP_RUNE: t->client_chargeable = true; break;
@@ -587,15 +587,23 @@ bool ItemDatabase::loadFromOtbVer3(BinaryNode* itemNode, wxString& error, wxArra
 		ItemType* t = newd ItemType();
 		t->group = ItemGroup_t(u8);
 
-		switch(t->group)
+		switch (t->group)
 		{
-			case  ITEM_GROUP_NONE:
+			case ITEM_GROUP_NONE:
 			case ITEM_GROUP_GROUND:
+			case ITEM_GROUP_WEAPON:
+			case ITEM_GROUP_AMMUNITION:
+			case ITEM_GROUP_ARMOR:
+			case ITEM_GROUP_RUNE:
+			case ITEM_GROUP_TELEPORT:
+			case ITEM_GROUP_MAGICFIELD:
+			case ITEM_GROUP_WRITEABLE:
+			case ITEM_GROUP_KEY:
 			case ITEM_GROUP_SPLASH:
 			case ITEM_GROUP_FLUID:
-				break;
+			case ITEM_GROUP_DOOR:
+			break;
 			case ITEM_GROUP_CONTAINER: t->type = ITEM_TYPE_CONTAINER; break;
-				break;
 			default:
 				warnings.push_back(wxT("Unknown item group declaration"));
 		}
