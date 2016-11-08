@@ -29,6 +29,7 @@
 #include "palette_house.h"
 #include "palette_creature.h"
 #include "palette_waypoints.h"
+#include "palette_audio.h"
 
 #include "house_brush.h"
 #include "map.h"
@@ -77,6 +78,9 @@ PaletteWindow::PaletteWindow(wxWindow* parent, const TilesetContainer& tilesets)
 	
 	creature_palette = static_cast<CreaturePalettePanel*>(CreateCreaturePalette(choicebook, tilesets));
 	choicebook->AddPage(creature_palette, creature_palette->GetName());
+	
+	audioPalette = static_cast <AudioPalettePanel *> (CreateAudioPalette(choicebook, tilesets));
+	choicebook->AddPage(audioPalette, audioPalette->GetName());
 
 	raw_palette = static_cast<BrushPalettePanel*>(CreateRAWPalette(choicebook, tilesets));
 	choicebook->AddPage(raw_palette, raw_palette->GetName());
@@ -153,6 +157,12 @@ PalettePanel* PaletteWindow::CreateWaypointPalette(wxWindow *parent, const Tiles
 
 PalettePanel* PaletteWindow::CreateCreaturePalette(wxWindow *parent, const TilesetContainer& tilesets) {
 	CreaturePalettePanel* panel = newd CreaturePalettePanel(parent);
+	return panel;
+}
+
+PalettePanel * PaletteWindow::CreateAudioPalette(wxWindow * parent, const TilesetContainer & tilesets)
+{
+	AudioPalettePanel * panel = newd AudioPalettePanel(parent);
 	return panel;
 }
 

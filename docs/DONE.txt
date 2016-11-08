@@ -1,0 +1,3 @@
+- Implemented "Audio" palette in RME which is form containing controls for audio configuration.
+- Long time spent figuring out how brushes and their rendering work in RME. 
+- Implemented "point" and "area" audio types brushes rendering.

@@ -235,6 +235,13 @@ void Settings::IO(IOMode mode) {
 	Int(USE_OTBM_4_FOR_ALL_MAPS, 0);
 	Int(USE_OTGZ, 1);
 	Int(SAVE_WITH_OTB_MAGIC_NUMBER, 0);
+	String(AUDIO_NAME, "");
+	Int(AUDIO_TYPE, 0);
+	Int(AUDIO_COLOR, 0xFFFF0000);
+	Int(AUDIO_SIZE, 5);
+	Float(AUDIO_VOLUME, 1.0f);
+	Int(AUDIO_LOOPING, 0);
+	Float(AUDIO_PAUSE_INTERVAL, 0);
 
 	section("Graphics");
 	Int(TEXTURE_MANAGEMENT, 1);

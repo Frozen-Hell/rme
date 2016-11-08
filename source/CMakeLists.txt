@@ -1,7 +1,8 @@
-set(rme_SRC
+set(RME_SRC
 ${CMAKE_CURRENT_LIST_DIR}/about_window.cpp
 ${CMAKE_CURRENT_LIST_DIR}/action.cpp
 ${CMAKE_CURRENT_LIST_DIR}/application.cpp
+${CMAKE_CURRENT_LIST_DIR}/audio_brush.cpp
 ${CMAKE_CURRENT_LIST_DIR}/basemap.cpp
 ${CMAKE_CURRENT_LIST_DIR}/brush.cpp
 ${CMAKE_CURRENT_LIST_DIR}/brush_tables.cpp
@@ -61,6 +62,7 @@ ${CMAKE_CURRENT_LIST_DIR}/palette_common.cpp
 ${CMAKE_CURRENT_LIST_DIR}/palette_creature.cpp
 ${CMAKE_CURRENT_LIST_DIR}/palette_house.cpp
 ${CMAKE_CURRENT_LIST_DIR}/palette_waypoints.cpp
+${CMAKE_CURRENT_LIST_DIR}/palette_audio.cpp
 ${CMAKE_CURRENT_LIST_DIR}/palette_window.cpp
 ${CMAKE_CURRENT_LIST_DIR}/pngfiles.cpp
 ${CMAKE_CURRENT_LIST_DIR}/preferences.cpp

@@ -140,6 +140,7 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(SELECT_CREATURE, wxITEM_NORMAL, OnSelectCreaturePalette);
 	MAKE_ACTION(SELECT_HOUSE, wxITEM_NORMAL, OnSelectHousePalette);
 	MAKE_ACTION(SELECT_WAYPOINT, wxITEM_NORMAL, OnSelectWaypointPalette);
+	MAKE_ACTION(SELECT_AUDIO, wxITEM_NORMAL, OnSelectAudioPalette);
 	MAKE_ACTION(SELECT_RAW, wxITEM_NORMAL, OnSelectRawPalette);
 
 	/*
@@ -335,6 +336,7 @@ void MainMenuBar::Update()
 	EnableItem(SELECT_HOUSE, loaded);
 	EnableItem(SELECT_CREATURE, loaded);
 	EnableItem(SELECT_WAYPOINT, loaded);
+	EnableItem(SELECT_AUDIO, loaded);
 	EnableItem(SELECT_RAW, loaded);
 	
 	EnableItem(LIVE_START, is_local);
@@ -1809,6 +1811,11 @@ void MainMenuBar::OnSelectCreaturePalette(wxCommandEvent& WXUNUSED(event))
 void MainMenuBar::OnSelectWaypointPalette(wxCommandEvent& WXUNUSED(event)) 
 {
 	gui.SelectPalettePage(TILESET_WAYPOINT);
+}
+
+void MainMenuBar::OnSelectAudioPalette(wxCommandEvent& WXUNUSED(event)) 
+{
+	gui.SelectPalettePage(TILESET_AUDIO);
 }
 
 void MainMenuBar::OnSelectRawPalette(wxCommandEvent& WXUNUSED(event)) 

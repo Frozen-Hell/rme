@@ -233,7 +233,7 @@ void MapCanvas::TakeScreenshot(wxFileName path, wxString format)
 		date << wxT("-") << current_time->tm_min;
 		date << wxT("-") << current_time->tm_sec;
 		
-		int type = 0;
+		wxBitmapType type = wxBITMAP_TYPE_ANY;
 		path.SetName(date);
 		if(format == wxT("bmp"))
 		{

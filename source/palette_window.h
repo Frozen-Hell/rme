@@ -11,6 +11,7 @@ class BrushPalettePanel;
 class CreaturePalettePanel;
 class HousePalettePanel;
 class WaypointPalettePanel;
+class AudioPalettePanel;
 
 class PaletteWindow : public wxPanel {
 public:
@@ -49,23 +50,25 @@ public:
 	void OnKey(wxKeyEvent& event);
 	void OnClose(wxCloseEvent&);
 protected:
-	static PalettePanel* CreateTerrainPalette(wxWindow* parent, const TilesetContainer& tilesets);
-	static PalettePanel* CreateDoodadPalette(wxWindow* parent, const TilesetContainer& tilesets);
-	static PalettePanel* CreateItemPalette(wxWindow* parent, const TilesetContainer& tilesets);
-	static PalettePanel* CreateCreaturePalette(wxWindow* parent, const TilesetContainer& tilesets);
-	static PalettePanel* CreateHousePalette(wxWindow* parent, const TilesetContainer& tilesets);
-	static PalettePanel* CreateWaypointPalette(wxWindow* parent, const TilesetContainer& tilesets);
-	static PalettePanel* CreateRAWPalette(wxWindow* parent, const TilesetContainer& tilesets);
+	static PalettePanel * CreateTerrainPalette(wxWindow * parent, const TilesetContainer & tilesets);
+	static PalettePanel * CreateDoodadPalette(wxWindow * parent, const TilesetContainer & tilesets);
+	static PalettePanel * CreateItemPalette(wxWindow * parent, const TilesetContainer & tilesets);
+	static PalettePanel * CreateCreaturePalette(wxWindow * parent, const TilesetContainer & tilesets);
+	static PalettePanel * CreateHousePalette(wxWindow * parent, const TilesetContainer & tilesets);
+	static PalettePanel * CreateWaypointPalette(wxWindow * parent, const TilesetContainer & tilesets);
+	static PalettePanel * CreateAudioPalette(wxWindow * parent, const TilesetContainer & tilesets);
+	static PalettePanel * CreateRAWPalette(wxWindow * parent, const TilesetContainer & tilesets);
 	
-	wxChoicebook* choicebook;
+	wxChoicebook * choicebook;
 
-	BrushPalettePanel* terrain_palette;
-	BrushPalettePanel* doodad_palette;
-	BrushPalettePanel* item_palette;
-	CreaturePalettePanel* creature_palette;
-	HousePalettePanel* house_palette;
-	WaypointPalettePanel* waypoint_palette;
-	BrushPalettePanel* raw_palette;
+	BrushPalettePanel * terrain_palette = NULL;
+	BrushPalettePanel * doodad_palette = NULL;
+	BrushPalettePanel * item_palette = NULL;
+	CreaturePalettePanel * creature_palette = NULL;
+	HousePalettePanel * house_palette = NULL;
+	WaypointPalettePanel * waypoint_palette = NULL;
+	AudioPalettePanel * audioPalette = NULL;
+	BrushPalettePanel * raw_palette = NULL;
 
 	DECLARE_EVENT_TABLE()
 };

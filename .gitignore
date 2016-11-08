@@ -38,5 +38,7 @@ vcproj/Installer/Release/
 xcuserdata
 .DS_STORE
 
-# Eclipse
-.settings
+# Misc
+tags
+.ycm_extra_conf.pyc
+

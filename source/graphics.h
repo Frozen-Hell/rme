@@ -192,6 +192,8 @@ public:
 
 	// Get an unused texture id (this is acquired by simply increasing a value starting from 0x10000000)
 	GLuint getFreeTextureID();
+	GLuint convertBitmapToTexture(wxBitmap * bitmap);
+	GLuint getAudioPointTexture();
 
 	// This is part of the binary
 	bool loadEditorSprites();
@@ -224,6 +226,7 @@ private:
 	typedef std::map<int, GameSprite::Image*> ImageMap;
 	ImageMap image_space;
 	std::deque<GameSprite*> cleanup_list;
+	GLuint audioPointTexture = 0;
 
 	DatVersion datVersion;
 	SprVersion sprVersion;

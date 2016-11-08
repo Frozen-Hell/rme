@@ -19,6 +19,7 @@
 #include "raw_brush.h"
 #include "table_brush.h"
 #include "waypoint_brush.h"
+#include "audio_brush.h"
 
 MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC& pdc) : canvas(canvas), editor(canvas->editor), pdc(pdc), options(options)
 {
@@ -669,21 +670,23 @@ void MapDrawer::DrawBrush()
 		return;
 
 	// This is SO NOT A GOOD WAY TO DO THINGS
-	Brush* brush = gui.GetCurrentBrush();
-	RAWBrush* rawbrush = dynamic_cast<RAWBrush*>(brush);
-	TerrainBrush* terrainbrush = dynamic_cast<TerrainBrush*>(brush);
-	WallBrush* wall_brush = dynamic_cast<WallBrush*>(brush);
-	TableBrush* table_brush = dynamic_cast<TableBrush*>(brush);
-	CarpetBrush* carpet_brush = dynamic_cast<CarpetBrush*>(brush);
-	DoorBrush* door_brush = dynamic_cast<DoorBrush*>(brush);
-	OptionalBorderBrush* optional_brush = dynamic_cast<OptionalBorderBrush*>(brush);
-	CreatureBrush* creature_brush = dynamic_cast<CreatureBrush*>(brush);
-	SpawnBrush* spawn_brush = dynamic_cast<SpawnBrush*>(brush);
-	HouseBrush* house_brush = dynamic_cast<HouseBrush*>(brush);
-	HouseExitBrush* house_exit_brush = dynamic_cast<HouseExitBrush*>(brush);
-	WaypointBrush* waypoint_brush = dynamic_cast<WaypointBrush*>(brush);
-	FlagBrush* flag_brush = dynamic_cast<FlagBrush*>(brush);
-	EraserBrush* eraser = dynamic_cast<EraserBrush*>(brush);
+	Brush * brush = gui.GetCurrentBrush();
+	RAWBrush * rawbrush = dynamic_cast <RAWBrush *> (brush);
+	TerrainBrush * terrainbrush = dynamic_cast <TerrainBrush *> (brush);
+	WallBrush * wall_brush = dynamic_cast <WallBrush *> (brush);
+	TableBrush * table_brush = dynamic_cast <TableBrush *> (brush);
+	CarpetBrush * carpet_brush = dynamic_cast <CarpetBrush *> (brush);
+	DoorBrush * door_brush = dynamic_cast <DoorBrush *> (brush);
+	OptionalBorderBrush * optional_brush = dynamic_cast <OptionalBorderBrush *> (brush);
+	CreatureBrush * creature_brush = dynamic_cast <CreatureBrush *> (brush);
+	SpawnBrush * spawn_brush = dynamic_cast <SpawnBrush *> (brush);
+	HouseBrush * house_brush = dynamic_cast <HouseBrush *> (brush);
+	HouseExitBrush * house_exit_brush = dynamic_cast <HouseExitBrush *> (brush);
+	WaypointBrush * waypoint_brush = dynamic_cast <WaypointBrush *> (brush);
+	FlagBrush * flag_brush = dynamic_cast <FlagBrush *> (brush);
+	EraserBrush * eraser = dynamic_cast <EraserBrush *> (brush);
+	AudioPointBrush * audioPointBrush = dynamic_cast <AudioPointBrush *> (brush);
+	AudioAreaBrush * audioAreaBrush = dynamic_cast <AudioAreaBrush *> (brush);
 	
 	BrushColor brushColor = COLOR_BLANK;
 	
@@ -967,7 +970,7 @@ void MapDrawer::DrawBrush()
 		}
 		else if(!dynamic_cast<DoodadBrush*>(brush))
 		{
-			if(rawbrush)
+			if (rawbrush || audioPointBrush)
 			{ // Textured brush
 				glEnable(GL_TEXTURE_2D);
 			}
@@ -986,16 +989,28 @@ void MapDrawer::DrawBrush()
 								y <= gui.GetBrushSize()
 							)
 						{
-							if(rawbrush)
+							if (rawbrush)
 							{
 								BlitSpriteType(cx, cy, rawbrush->getItemType()->sprite, 160, 160, 160, 160);
 							}
+							else if (audioPointBrush)
+							{
+								glBlitTexture(cx, cy, gui.gfx.getAudioPointTexture(), 128, 128, 128, 128);
+							}
 							else
 							{
-								if(waypoint_brush || house_exit_brush || optional_brush)
+								if (audioAreaBrush)
+								{
+									glColor(audioAreaBrush->getColor());
+								}
+								else if (waypoint_brush || house_exit_brush || optional_brush)
+								{
 									glColorCheck(brush, Position(mouse_map_x + x, mouse_map_y + y, floor));
+								}
 								else
+								{
 									glColor(brushColor);
+								}
 
 								glBegin(GL_QUADS);
 									glVertex2f(cx   ,cy+32);

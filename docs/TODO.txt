@@ -1,0 +1,1 @@
+- Fix sprites drawn on spawn and waypoint (probably replace them with appropriate sprites from fof.dat).

@@ -27,6 +27,7 @@
 #include "gui.h"
 
 #include <wx/mstream.h>
+#include <wx/rawbmp.h>
 #include "pngfiles.h"
 
 // All 133 template colors
@@ -95,6 +96,43 @@ GLuint GraphicManager::getFreeTextureID()
 {
 	static GLuint id_counter = 0x10000000;
 	return id_counter++; // This should (hopefully) never run out
+}
+
+GLuint GraphicManager::convertBitmapToTexture(wxBitmap * bitmap)
+{
+	// loading audio point texture
+	int width = bitmap->GetWidth(), height = bitmap->GetHeight(), x = 0, y = 0;
+	int pixelCount = width * height, bytesCount = pixelCount * 4;
+	GLubyte * buffer = newd GLubyte[bytesCount];
+	wxAlphaPixelData pixelData(*bitmap);
+	wxAlphaPixelData::Iterator it = pixelData.GetPixels();
+	for (int i = 0, p = 0; i < pixelCount; ++i)
+	{
+		it.MoveTo(pixelData, x, y);
+		buffer[p++] = it.Red();
+		buffer[p++] = it.Green();
+		buffer[p++] = it.Blue();
+		buffer[p++] = it.Alpha();
+		++x;
+		if (x >= width)
+		{
+			x = 0;
+			++y;
+		}
+	}
+
+	GLuint texture = gui.gfx.getFreeTextureID();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear Filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Linear Filtering
+	glTexParameteri(GL_TEXTURE_2D, 0x2802, 0x812F);
+	glTexParameteri(GL_TEXTURE_2D, 0x2803, 0x812F);
+	gui.gfx.loaded_textures += 1;
+
+	delete [] buffer;
+
+	return texture;
 }
 
 void GraphicManager::clear()
@@ -185,6 +223,7 @@ inline wxBitmap* _wxGetBitmapFromMemory(const unsigned char* data, int length)
 	wxMemoryInputStream is(data, length);
 	wxImage img(is, wxT("image/png"));
 	if(!img.IsOk()) return nullptr;
+	if (!img.HasAlpha()) img.InitAlpha();
 	return newd wxBitmap(img, -1);
 }
 
@@ -341,6 +380,17 @@ bool GraphicManager::loadEditorSprites()
 		);
 
 	return true;
+}
+
+GLuint GraphicManager::getAudioPointTexture()
+{
+	if (audioPointTexture == 0)
+	{
+		wxBitmap * bitmap = loadPNGFile(circular_7_png);
+		audioPointTexture = convertBitmapToTexture(bitmap);
+		delete bitmap;
+	}
+	return audioPointTexture;
 }
 
 bool GraphicManager::loadSpriteMetadata(const FileName& datafile, wxString& error, wxArrayString& warnings)
