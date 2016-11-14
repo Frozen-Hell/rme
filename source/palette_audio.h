@@ -39,6 +39,8 @@ public:
 	void OnSizeSpinChanged(wxSpinEvent & event);
 	void OnVolumeSliderScroll(wxScrollEvent & event);
 	void OnVolumeTextChanged(wxCommandEvent & event);
+	void OnIsLoopingCheckboxChanged(wxCommandEvent & event);
+	void OnPauseIntervalTextChanged(wxCommandEvent & event);
 	void OnClickPlaceButton(wxCommandEvent & event);
 	
 	virtual ~AudioPalettePanel();

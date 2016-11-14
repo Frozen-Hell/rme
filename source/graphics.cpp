@@ -386,7 +386,7 @@ GLuint GraphicManager::getAudioPointTexture()
 {
 	if (audioPointTexture == 0)
 	{
-		wxBitmap * bitmap = loadPNGFile(circular_7_png);
+		wxBitmap * bitmap = loadPNGFile(audio_point_png);
 		audioPointTexture = convertBitmapToTexture(bitmap);
 		delete bitmap;
 	}

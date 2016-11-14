@@ -74,6 +74,7 @@ public:
 	void Draw();
 	void DrawBackground();
 	void DrawMap();
+	void DrawAudio();
 	void DrawDraggingShadow();
 	void DrawHigherFloors();
 	void DrawSelectionBox();

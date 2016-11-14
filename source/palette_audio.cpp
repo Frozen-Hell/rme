@@ -34,6 +34,8 @@ BEGIN_EVENT_TABLE(AudioPalettePanel, PalettePanel)
 	EVT_SPINCTRL(PALETTE_AUDIO_SIZE_SPIN, AudioPalettePanel::OnSizeSpinChanged)
 	EVT_COMMAND_SCROLL(PALETTE_AUDIO_VOLUME_SLIDER, AudioPalettePanel::OnVolumeSliderScroll)
 	EVT_TEXT(PALETTE_AUDIO_VOLUME_TEXT, AudioPalettePanel::OnVolumeTextChanged)
+	EVT_CHECKBOX(PALETTE_AUDIO_LOOPING_CHECKBOX, AudioPalettePanel::OnIsLoopingCheckboxChanged)
+	EVT_TEXT(PALETTE_AUDIO_PAUSE_INTERVAL_TEXT, AudioPalettePanel::OnPauseIntervalTextChanged)
 	EVT_BUTTON(PALETTE_AUDIO_PLACE_BUTTON, AudioPalettePanel::OnClickPlaceButton)
 END_EVENT_TABLE()
 
@@ -95,7 +97,7 @@ AudioPalettePanel::AudioPalettePanel(wxWindow * parent, wxWindowID id) : Palette
 	gridSizer->Add(hBox, wxGBPosition(currentRow, 0), wxGBSpan(1, 2), wxEXPAND | wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 
-	isLoopingCheckbox = newd wxCheckBox(this, wxID_ANY, "is looping");
+	isLoopingCheckbox = newd wxCheckBox(this, PALETTE_AUDIO_LOOPING_CHECKBOX, "is looping");
 	isLoopingCheckbox->SetValue(settings.getInteger(Config::AUDIO_LOOPING));
 	gridSizer->Add(isLoopingCheckbox, wxGBPosition(currentRow, 0), wxGBSpan(1, 2), wxALIGN_CENTER_VERTICAL);
 	++currentRow;
@@ -105,7 +107,7 @@ AudioPalettePanel::AudioPalettePanel(wxWindow * parent, wxWindowID id) : Palette
 	pauseIntervalValue = settings.getFloat(Config::AUDIO_PAUSE_INTERVAL);
 	wxFloatingPointValidator <float> pauseIntervalValidator(3, &pauseIntervalValue, wxNUM_VAL_ZERO_AS_BLANK);
 	pauseIntervalValidator.SetRange(0, 100.0f);
-	pauseIntervalText = newd wxTextCtrl(this, wxID_ANY, f2ws(pauseIntervalValue), wxDefaultPosition, wxDefaultSize, 0, pauseIntervalValidator);
+	pauseIntervalText = newd wxTextCtrl(this, PALETTE_AUDIO_PAUSE_INTERVAL_TEXT, f2ws(pauseIntervalValue), wxDefaultPosition, wxDefaultSize, 0, pauseIntervalValidator);
 	gridSizer->Add(pauseIntervalText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 
@@ -148,6 +150,7 @@ void AudioPalettePanel::OnAreaColorChanged(wxColourPickerEvent & event)
 	if (areaBrush)
 	{
 		const wxColour & color = event.GetColour();
+		areaBrush->setAreaColor(color);
 		wxColour brushColor(color.Red(), color.Green(), color.Blue(), 128);
 		areaBrush->setColor(brushColor);
 	}
@@ -155,18 +158,43 @@ void AudioPalettePanel::OnAreaColorChanged(wxColourPickerEvent & event)
 
 void AudioPalettePanel::OnSizeSpinChanged(wxSpinEvent & event)
 {
-	gui.SetBrushSize(event.GetPosition());
+	int size = event.GetPosition();
+	if (pointBrush) pointBrush->setAudioSize(size);
+	if (areaBrush) areaBrush->setAudioSize(size);
+	if (currentBrush == areaBrush) gui.SetBrushSize(size);
 }
 
 void AudioPalettePanel::OnVolumeSliderScroll(wxScrollEvent & event)
 {
-	volumeText->ChangeValue(f2ws(event.GetPosition() / 100.0f));
+	float volume = event.GetPosition() / 100.0f;
+	volumeText->ChangeValue(f2ws(volume));
+	if (pointBrush) pointBrush->setAudioVolume(volume);
+	if (areaBrush) areaBrush->setAudioVolume(volume);
 }
 
 void AudioPalettePanel::OnVolumeTextChanged(wxCommandEvent & event)
 {
 	if (!volumeText) return;
-	volumeSlider->SetValue(atof(volumeText->GetValue()) * 100);
+	float volume = atof(volumeText->GetValue());
+	volumeSlider->SetValue(volume * 100);
+	if (pointBrush) pointBrush->setAudioVolume(volume);
+	if (areaBrush) areaBrush->setAudioVolume(volume);
+}
+
+void AudioPalettePanel::OnIsLoopingCheckboxChanged(wxCommandEvent & event)
+{
+	if (!isLoopingCheckbox) return;
+	bool looping = isLoopingCheckbox->GetValue();
+	if (pointBrush) pointBrush->setAudioLooping(looping);
+	if (areaBrush) areaBrush->setAudioLooping(looping);
+}
+
+void AudioPalettePanel::OnPauseIntervalTextChanged(wxCommandEvent & event)
+{
+	if (!pauseIntervalText) return;
+	float pauseInterval = atof(pauseIntervalText->GetValue());
+	if (pointBrush) pointBrush->setAudioPauseInterval(pauseInterval);
+	if (areaBrush) areaBrush->setAudioPauseInterval(pauseInterval);
 }
 
 void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
@@ -175,6 +203,9 @@ void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
 	int type = typeAreaRadio->GetValue();
 	int size = sizeSpin->GetValue();
 	unsigned int color = areaColorPicker->GetColour().GetRGB();
+	float volume = atof(volumeText->GetValue());
+	bool looping = isLoopingCheckbox->GetValue();
+	float pauseInterval = atof(pauseIntervalText->GetValue());
 
 	if (name.IsEmpty())
 	{
@@ -193,19 +224,31 @@ void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
 	settings.setInteger(Config::AUDIO_TYPE, type);
 	settings.setInteger(Config::AUDIO_COLOR, color);
 	settings.setInteger(Config::AUDIO_SIZE, size);
-	settings.setFloat(Config::AUDIO_VOLUME, atof(volumeText->GetValue()));
-	settings.setInteger(Config::AUDIO_LOOPING, (int) isLoopingCheckbox->GetValue());
-	settings.setFloat(Config::AUDIO_PAUSE_INTERVAL, atof(pauseIntervalText->GetValue()));
+	settings.setFloat(Config::AUDIO_VOLUME, volume);
+	settings.setInteger(Config::AUDIO_LOOPING, (int) looping);
+	settings.setFloat(Config::AUDIO_PAUSE_INTERVAL, pauseInterval);
 
 	if (type == 0)
 	{
 		pointBrush = newd AudioPointBrush();
+		pointBrush->setAudioName(name);
+		pointBrush->setAudioSize(size);
+		pointBrush->setAudioVolume(volume);
+		pointBrush->setAudioLooping(looping);
+		pointBrush->setAudioPauseInterval(pauseInterval);
 		currentBrush = pointBrush;
 		gui.SetBrushSize(0);
 	}
 	else
 	{
 		areaBrush = newd AudioAreaBrush();
+		areaBrush->setAudioName(name);
+		areaBrush->setAreaColor(areaColorPicker->GetColour());
+		areaBrush->setAudioSize(size);
+		areaBrush->setAudioVolume(volume);
+		areaBrush->setAudioLooping(looping);
+		areaBrush->setAudioPauseInterval(pauseInterval);
+		
 		wxColour brushColor;
 		brushColor.SetRGBA(color | 0x80000000);
 		areaBrush->setColor(brushColor);

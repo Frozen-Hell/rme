@@ -2,6 +2,7 @@ set(RME_SRC
 ${CMAKE_CURRENT_LIST_DIR}/about_window.cpp
 ${CMAKE_CURRENT_LIST_DIR}/action.cpp
 ${CMAKE_CURRENT_LIST_DIR}/application.cpp
+${CMAKE_CURRENT_LIST_DIR}/audio.cpp
 ${CMAKE_CURRENT_LIST_DIR}/audio_brush.cpp
 ${CMAKE_CURRENT_LIST_DIR}/basemap.cpp
 ${CMAKE_CURRENT_LIST_DIR}/brush.cpp

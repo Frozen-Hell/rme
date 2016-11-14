@@ -1,1 +1,4 @@
 - Fix sprites drawn on spawn and waypoint (probably replace them with appropriate sprites from fof.dat).
+- Implement audio saving into XML. Make additional field in map properties to set audio XML file.
+- Implement "View" menu options to show audio areas and audio point sources (separate items).
+

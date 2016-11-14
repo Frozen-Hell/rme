@@ -19,6 +19,7 @@
 #include "raw_brush.h"
 #include "table_brush.h"
 #include "waypoint_brush.h"
+#include "audio.h"
 #include "audio_brush.h"
 
 MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC& pdc) : canvas(canvas), editor(canvas->editor), pdc(pdc), options(options)
@@ -151,6 +152,7 @@ void MapDrawer::Draw()
 {
 	DrawBackground();
 	DrawMap();
+	DrawAudio();
 	DrawDraggingShadow();
 	DrawHigherFloors();
 	if(options.dragging)
@@ -381,6 +383,79 @@ void MapDrawer::DrawMap()
 
 	if(!options.show_only_colors)
 		glEnable(GL_TEXTURE_2D);
+}
+
+void MapDrawer::DrawAudio()
+{
+	int nd_start_x = start_x & ~3;
+	int nd_start_y = start_y & ~3;
+	int nd_end_x = (end_x & ~3) + 4;
+	int nd_end_y = (end_y & ~3) + 4;
+
+	for (int nd_map_x = nd_start_x; nd_map_x <= nd_end_x; nd_map_x += 4)
+	{
+		for (int nd_map_y = nd_start_y; nd_map_y <= nd_end_y; nd_map_y += 4)
+		{
+			QTreeNode * nd = editor.map.getLeaf(nd_map_x, nd_map_y);
+			if (!nd) continue;
+
+			for (int map_x = 0; map_x < 4; ++map_x)
+			{
+				for (int map_y = 0; map_y < 4; ++map_y)
+				{
+					TileLocation * location = nd->getTile(map_x, map_y, floor);
+					Tile * tile = location->get();
+					if (tile && tile->audio)
+					{
+						int tileX = location->getX();
+						int tileY = location->getY();
+						int drawX = tileX * 32 - view_scroll_x;
+						if (floor <= 7)
+						{
+							drawX -= (7 - floor) * 32;
+						}
+						int drawY = tileY * 32 - view_scroll_y;
+						if (floor <= 7)
+						{
+							drawY -= (7 - floor) * 32;
+						}
+						
+						Audio * audio = tile->audio;
+						int radius = audio->getSize() * 32;
+						if (audio->getType() == Audio::TYPE_POINT)
+						{
+							glEnable(GL_TEXTURE_2D);
+							glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 255, 255, 255, 255);
+							glDisable(GL_TEXTURE_2D);
+
+							// drawing point audio radius as a circle
+							glColor4ub(255, 0, 0, 255);
+							glBegin(GL_LINE_LOOP);
+							for (int i = 0; i <= 32; i++)
+							{
+								float angle = 2 * M_PI * i / 32;
+								float x = drawX + 16 + radius * cos(angle);
+								float y = drawY + 16 + radius * sin(angle);
+								glVertex2d(x, y);
+							}
+							glEnd();
+						}
+						else if (audio->getType() == Audio::TYPE_AREA)
+						{
+							const wxColor & renderColor = audio->getAreaColor();
+							glColor4ub(renderColor.Red(), renderColor.Green(), renderColor.Blue(), 128);
+							glBegin(GL_QUADS);
+								glVertex2f(drawX - radius, drawY + radius + 32);
+								glVertex2f(drawX + radius + 32, drawY + radius + 32);
+								glVertex2f(drawX + radius + 32, drawY - radius);
+								glVertex2f(drawX - radius, drawY - radius);
+							glEnd();
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void MapDrawer::DrawIngameBox()
