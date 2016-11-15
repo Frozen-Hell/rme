@@ -108,6 +108,9 @@ void DrawingOptions::SetDefault()
 	show_special_tiles = true;
 	show_items = true;
 
+	showAudioPointSources = true;
+	showAudioAreas = true;
+
 	highlight_items = false;
 	show_blocking = false;
 	show_only_colors = false;
@@ -132,6 +135,9 @@ void DrawingOptions::SetIngame()
 	show_special_tiles = false;
 	show_items = true;
 
+	showAudioPointSources = false;
+	showAudioAreas = false;
+	
 	highlight_items = false;
 	show_blocking = false;
 	show_only_colors = false;
@@ -387,6 +393,10 @@ void MapDrawer::DrawMap()
 
 void MapDrawer::DrawAudio()
 {
+	if (!options.showAudioPointSources && !options.showAudioAreas) return;
+
+	glDisable(GL_TEXTURE_2D);
+	
 	int nd_start_x = start_x & ~3;
 	int nd_start_y = start_y & ~3;
 	int nd_end_x = (end_x & ~3) + 4;
@@ -422,7 +432,7 @@ void MapDrawer::DrawAudio()
 						
 						Audio * audio = tile->audio;
 						int radius = audio->getSize() * 32;
-						if (audio->getType() == Audio::TYPE_POINT)
+						if (audio->getType() == Audio::TYPE_POINT && options.showAudioPointSources)
 						{
 							glEnable(GL_TEXTURE_2D);
 							glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 255, 255, 255, 255);
@@ -440,7 +450,7 @@ void MapDrawer::DrawAudio()
 							}
 							glEnd();
 						}
-						else if (audio->getType() == Audio::TYPE_AREA)
+						else if (audio->getType() == Audio::TYPE_AREA && options.showAudioAreas)
 						{
 							const wxColor & renderColor = audio->getAreaColor();
 							glColor4ub(renderColor.Red(), renderColor.Green(), renderColor.Blue(), 128);
@@ -455,6 +465,12 @@ void MapDrawer::DrawAudio()
 				}
 			}
 		}
+	}
+	
+	// this is what DrawMap() does at the end, probably needed to maintain rendering flow (@dtroitskiy)
+	if (!options.show_only_colors)
+	{
+		glEnable(GL_TEXTURE_2D);
 	}
 }
 

@@ -32,6 +32,9 @@ struct DrawingOptions {
 	bool show_special_tiles;
 	bool show_items;
 
+	bool showAudioPointSources;
+	bool showAudioAreas;
+
 	bool highlight_items;
 	bool show_blocking;
 	bool show_only_colors;

@@ -28,6 +28,7 @@
 #include "palette_audio.h"
 
 BEGIN_EVENT_TABLE(AudioPalettePanel, PalettePanel)
+	EVT_TEXT(PALETTE_AUDIO_NAME_TEXT, AudioPalettePanel::OnNameTextChanged)
 	EVT_RADIOBUTTON(PALETTE_AUDIO_TYPE_POINT_CHECKBOX, AudioPalettePanel::OnTypeRadioChanged)
 	EVT_RADIOBUTTON(PALETTE_AUDIO_TYPE_AREA_CHECKBOX, AudioPalettePanel::OnTypeRadioChanged)
 	EVT_COLOURPICKER_CHANGED(PALETTE_AUDIO_AREA_COLOR_PICKER, AudioPalettePanel::OnAreaColorChanged)
@@ -49,7 +50,7 @@ AudioPalettePanel::AudioPalettePanel(wxWindow * parent, wxWindowID id) : Palette
 	int currentRow = 0;
 	wxStaticText * nameLabel = newd wxStaticText(this, wxID_ANY, "Name:");
 	gridSizer->Add(nameLabel, wxGBPosition(currentRow, 0), wxDefaultSpan, wxALIGN_CENTER_VERTICAL);
-	nameText = newd wxTextCtrl(this, wxID_ANY, settings.getString(Config::AUDIO_NAME));
+	nameText = newd wxTextCtrl(this, PALETTE_AUDIO_NAME_TEXT, settings.getString(Config::AUDIO_NAME));
 	gridSizer->Add(nameText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 	
@@ -126,6 +127,15 @@ PaletteType AudioPalettePanel::GetType() const
 	return TILESET_AUDIO;
 }
 
+void AudioPalettePanel::OnNameTextChanged(wxCommandEvent & event)
+{
+	if (!nameText) return;
+	const wxString & name = nameText->GetValue();
+	if (pointBrush) pointBrush->setAudioName(name);
+	if (areaBrush) areaBrush->setAudioName(name);
+	settings.setString(Config::AUDIO_NAME, name.ToStdString());
+}
+
 void AudioPalettePanel::OnTypeRadioChanged(wxCommandEvent & event)
 {
 	bool isAreaTypeSelected = typeAreaRadio->GetValue();
@@ -143,6 +153,7 @@ void AudioPalettePanel::OnTypeRadioChanged(wxCommandEvent & event)
 	}
 	gui.ActivatePalette(GetParentPalette());
 	gui.SelectBrush();
+	settings.setInteger(Config::AUDIO_TYPE, (int) isAreaTypeSelected);
 }
 
 void AudioPalettePanel::OnAreaColorChanged(wxColourPickerEvent & event)
@@ -153,6 +164,7 @@ void AudioPalettePanel::OnAreaColorChanged(wxColourPickerEvent & event)
 		areaBrush->setAreaColor(color);
 		wxColour brushColor(color.Red(), color.Green(), color.Blue(), 128);
 		areaBrush->setColor(brushColor);
+		settings.setInteger(Config::AUDIO_COLOR, color.GetRGB());
 	}
 }
 
@@ -162,6 +174,7 @@ void AudioPalettePanel::OnSizeSpinChanged(wxSpinEvent & event)
 	if (pointBrush) pointBrush->setAudioSize(size);
 	if (areaBrush) areaBrush->setAudioSize(size);
 	if (currentBrush == areaBrush) gui.SetBrushSize(size);
+	settings.setInteger(Config::AUDIO_SIZE, size);
 }
 
 void AudioPalettePanel::OnVolumeSliderScroll(wxScrollEvent & event)
@@ -170,6 +183,7 @@ void AudioPalettePanel::OnVolumeSliderScroll(wxScrollEvent & event)
 	volumeText->ChangeValue(f2ws(volume));
 	if (pointBrush) pointBrush->setAudioVolume(volume);
 	if (areaBrush) areaBrush->setAudioVolume(volume);
+	settings.setFloat(Config::AUDIO_VOLUME, volume);
 }
 
 void AudioPalettePanel::OnVolumeTextChanged(wxCommandEvent & event)
@@ -179,6 +193,7 @@ void AudioPalettePanel::OnVolumeTextChanged(wxCommandEvent & event)
 	volumeSlider->SetValue(volume * 100);
 	if (pointBrush) pointBrush->setAudioVolume(volume);
 	if (areaBrush) areaBrush->setAudioVolume(volume);
+	settings.setFloat(Config::AUDIO_VOLUME, volume);
 }
 
 void AudioPalettePanel::OnIsLoopingCheckboxChanged(wxCommandEvent & event)
@@ -187,6 +202,7 @@ void AudioPalettePanel::OnIsLoopingCheckboxChanged(wxCommandEvent & event)
 	bool looping = isLoopingCheckbox->GetValue();
 	if (pointBrush) pointBrush->setAudioLooping(looping);
 	if (areaBrush) areaBrush->setAudioLooping(looping);
+	settings.setInteger(Config::AUDIO_LOOPING, (int) looping);
 }
 
 void AudioPalettePanel::OnPauseIntervalTextChanged(wxCommandEvent & event)
@@ -195,6 +211,7 @@ void AudioPalettePanel::OnPauseIntervalTextChanged(wxCommandEvent & event)
 	float pauseInterval = atof(pauseIntervalText->GetValue());
 	if (pointBrush) pointBrush->setAudioPauseInterval(pauseInterval);
 	if (areaBrush) areaBrush->setAudioPauseInterval(pauseInterval);
+	settings.setFloat(Config::AUDIO_PAUSE_INTERVAL, pauseInterval);
 }
 
 void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)

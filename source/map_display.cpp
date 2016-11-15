@@ -172,6 +172,9 @@ void MapCanvas::OnPaint(wxPaintEvent& event)
 			options.show_only_colors = settings.getInteger(Config::SHOW_ONLY_TILEFLAGS);
 			options.show_only_modified = settings.getInteger(Config::SHOW_ONLY_MODIFIED_TILES);
 			options.hide_items_when_zoomed = settings.getInteger(Config::HIDE_ITEMS_WHEN_ZOOMED);
+			
+			options.showAudioPointSources = settings.getInteger(Config::SHOW_AUDIO_POINT_SOURCES);
+			options.showAudioAreas = settings.getInteger(Config::SHOW_AUDIO_AREAS);
 		}
 
 		options.dragging = boundbox_selection;

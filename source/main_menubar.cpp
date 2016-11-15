@@ -129,6 +129,9 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(SHOW_ONLY_MODIFIED, wxITEM_CHECK, OnChangeViewSettings);
 	MAKE_ACTION(SHOW_HOUSES, wxITEM_CHECK, OnChangeViewSettings);
 	MAKE_ACTION(SHOW_PATHING, wxITEM_CHECK, OnChangeViewSettings);
+	
+	MAKE_ACTION(SHOW_AUDIO_POINT_SOURCES, wxITEM_CHECK, OnChangeViewSettings);
+	MAKE_ACTION(SHOW_AUDIO_AREAS, wxITEM_CHECK, OnChangeViewSettings);
 
 	MAKE_ACTION(WIN_MINIMAP, wxITEM_NORMAL, OnMinimapWindow);
 	MAKE_ACTION(NEW_PALETTE, wxITEM_NORMAL, OnNewPalette);
@@ -391,6 +394,9 @@ void MainMenuBar::LoadValues()
 	CheckItem(SHOW_ONLY_COLORS, settings.getInteger(Config::SHOW_ONLY_TILEFLAGS));
 	CheckItem(SHOW_ONLY_MODIFIED, settings.getInteger(Config::SHOW_ONLY_MODIFIED_TILES));
 	CheckItem(SHOW_HOUSES, settings.getInteger(Config::SHOW_HOUSES));
+
+	CheckItem(SHOW_AUDIO_POINT_SOURCES, settings.getInteger(Config::SHOW_AUDIO_POINT_SOURCES));
+	CheckItem(SHOW_AUDIO_AREAS, settings.getInteger(Config::SHOW_AUDIO_AREAS));
 }
 
 void MainMenuBar::LoadRecentFiles() 
@@ -1756,6 +1762,9 @@ void MainMenuBar::OnChangeViewSettings(wxCommandEvent& event)
 	settings.setInteger(Config::SHOW_HOUSES, IsItemChecked(MenuBar::SHOW_HOUSES));
 	settings.setInteger(Config::HIGHLIGHT_ITEMS, IsItemChecked(MenuBar::HIGHLIGHT_ITEMS));
 	settings.setInteger(Config::SHOW_BLOCKING, IsItemChecked(MenuBar::SHOW_PATHING));
+
+	settings.setInteger(Config::SHOW_AUDIO_POINT_SOURCES, IsItemChecked(MenuBar::SHOW_AUDIO_POINT_SOURCES));
+	settings.setInteger(Config::SHOW_AUDIO_AREAS, IsItemChecked(MenuBar::SHOW_AUDIO_AREAS));
 
 	gui.RefreshView();
 }

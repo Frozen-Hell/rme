@@ -34,6 +34,7 @@ public:
 	
 	PaletteType GetType() const;
 	Brush * GetSelectedBrush() const;
+	void OnNameTextChanged(wxCommandEvent & event);
 	void OnTypeRadioChanged(wxCommandEvent & event);
 	void OnAreaColorChanged(wxColourPickerEvent & event);
 	void OnSizeSpinChanged(wxSpinEvent & event);
