@@ -114,11 +114,17 @@ MapPropertiesWindow::MapPropertiesWindow(wxWindow* parent, MapTab* view, Editor&
 	grid_sizer->Add(
 		newd wxStaticText(this, wxID_ANY, wxT("External Spawnfile"))
 		);
-
+	
 	grid_sizer->Add(
 		spawn_filename_ctrl =
 			newd wxTextCtrl(this, wxID_ANY, wxstr(map.getSpawnFilename())), 1, wxEXPAND
 		);
+
+	grid_sizer->Add(newd wxStaticText(this, wxID_ANY, wxT("External Audiofile")));
+
+	grid_sizer->Add(
+		audioFilenameText = newd wxTextCtrl(this, wxID_ANY, wxstr(map.getAudioFilename())), 1, wxEXPAND
+	);
 
 	topsizer->Add(grid_sizer, wxSizerFlags(1).Expand().Border(wxALL, 20));
 
@@ -320,6 +326,7 @@ void MapPropertiesWindow::OnClickOK(wxCommandEvent& WXUNUSED(event))
 	map.setMapDescription(nstr(description_ctrl->GetValue()));
 	map.setHouseFilename(nstr(house_filename_ctrl->GetValue()));
 	map.setSpawnFilename(nstr(spawn_filename_ctrl->GetValue()));
+	map.setAudioFilename(nstr(audioFilenameText->GetValue()));
 
 	// Only resize if we have to
 	int new_map_width = width_spin->GetValue();

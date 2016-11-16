@@ -397,6 +397,12 @@ void Map::setSpawnFilename(const std::string&  new_spawnfile)
 	unnamed = false;
 }
 
+void Map::setAudioFilename(const std::string& newAudioFile)
+{
+	audioFile = newAudioFile;
+	unnamed = false;
+}
+
 bool Map::addSpawn(Tile* tile)
 {
 	Spawn* spawn = tile->spawn;

@@ -393,6 +393,17 @@ GLuint GraphicManager::getAudioPointTexture()
 	return audioPointTexture;
 }
 
+GLuint GraphicManager::getAudioAreaTexture()
+{
+	if (audioAreaTexture == 0)
+	{
+		wxBitmap * bitmap = loadPNGFile(audio_area_png);
+		audioAreaTexture = convertBitmapToTexture(bitmap);
+		delete bitmap;
+	}
+	return audioAreaTexture;
+}
+
 bool GraphicManager::loadSpriteMetadata(const FileName& datafile, wxString& error, wxArrayString& warnings)
 {
 	// items.otb has most of the info we need. This only loads the GameSprite metadata

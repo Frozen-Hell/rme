@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //////////////////////////////////////////////////////////////////////
 
+// This is custom class by @dtroitskiy made for "Frontiers of Fantasy" project specific needs.
+
 #ifndef RME_AUDIO_H_
 #define RME_AUDIO_H_
 

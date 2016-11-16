@@ -434,10 +434,6 @@ void MapDrawer::DrawAudio()
 						int radius = audio->getSize() * 32;
 						if (audio->getType() == Audio::TYPE_POINT && options.showAudioPointSources)
 						{
-							glEnable(GL_TEXTURE_2D);
-							glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 255, 255, 255, 255);
-							glDisable(GL_TEXTURE_2D);
-
 							// drawing point audio radius as a circle
 							glColor4ub(255, 0, 0, 255);
 							glBegin(GL_LINE_LOOP);
@@ -449,6 +445,10 @@ void MapDrawer::DrawAudio()
 								glVertex2d(x, y);
 							}
 							glEnd();
+							
+							glEnable(GL_TEXTURE_2D);
+							glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 255, 255, 255, 255);
+							glDisable(GL_TEXTURE_2D);
 						}
 						else if (audio->getType() == Audio::TYPE_AREA && options.showAudioAreas)
 						{
@@ -460,6 +460,10 @@ void MapDrawer::DrawAudio()
 								glVertex2f(drawX + radius + 32, drawY - radius);
 								glVertex2f(drawX - radius, drawY - radius);
 							glEnd();
+							
+							glEnable(GL_TEXTURE_2D);
+							glBlitTexture(drawX, drawY, gui.gfx.getAudioAreaTexture(), 255, 255, 255, 255);
+							glDisable(GL_TEXTURE_2D);
 						}
 					}
 				}
@@ -1104,10 +1108,10 @@ void MapDrawer::DrawBrush()
 								}
 
 								glBegin(GL_QUADS);
-									glVertex2f(cx   ,cy+32);
-									glVertex2f(cx+32,cy+32);
-									glVertex2f(cx+32,cy);
-									glVertex2f(cx,   cy);
+									glVertex2f(cx, cy + 32);
+									glVertex2f(cx + 32, cy + 32);
+									glVertex2f(cx + 32, cy);
+									glVertex2f(cx, cy);
 								glEnd();
 							}
 						}

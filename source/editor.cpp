@@ -70,6 +70,7 @@ Editor::Editor(CopyBuffer& copybuffer) :
 	map.name = sname + ".otbm";
 	map.spawnfile = sname + "-spawn.xml";
 	map.housefile = sname + "-house.xml";
+	map.audioFile = sname + "-audio.xml";
 	map.description = "No map description available.";
 	map.unnamed = true;
 
@@ -188,6 +189,8 @@ void Editor::saveMap(FileName filename, bool showdialog) {
 		map.spawnfile = nstr(_name.GetFullName());
 		_name.SetName(filename.GetName() + wxT("-house"));
 		map.housefile = nstr(_name.GetFullName());
+		_name.SetName(filename.GetName() + wxT("-audio"));
+		map.audioFile = nstr(_name.GetFullName());
 
 		map.unnamed = false;
 	}
@@ -199,7 +202,7 @@ void Editor::saveMap(FileName filename, bool showdialog) {
 
 	// Make temporary backups
 	//converter.Assign(wxstr(savefile));
-	std::string backup_otbm, backup_house, backup_spawn;
+	std::string backup_otbm, backup_house, backup_spawn, backupAudio;
 
 	if (converter.GetExt() == "otgz")
 	{
@@ -235,6 +238,14 @@ void Editor::saveMap(FileName filename, bool showdialog) {
 			std::remove(backup_spawn.c_str());
 			std::rename((map_path + map.spawnfile).c_str(), backup_spawn.c_str());
 		}
+		
+		converter.SetFullName(wxstr(map.audioFile));
+		if (converter.FileExists())
+		{
+			backupAudio = map_path + nstr(converter.GetName()) + ".xml~";
+			std::remove(backupAudio.c_str());
+			std::rename((map_path + map.audioFile).c_str(), backupAudio.c_str());
+		}
 	}
 
 	// Save the map
@@ -244,11 +255,11 @@ void Editor::saveMap(FileName filename, bool showdialog) {
 		f << 
 			backup_otbm << std::endl << 
 			backup_house << std::endl << 
-			backup_spawn << std::endl;
+			backup_spawn << std::endl <<
+			backupAudio << std::endl;
 	}
 
 	{
-
 		// Set up the Map paths
 		wxFileName fn = wxstr(savefile);
 		map.filename = fn.GetFullPath().mb_str(wxConvUTF8);
@@ -287,6 +298,13 @@ void Editor::saveMap(FileName filename, bool showdialog) {
 				converter.SetFullName(wxstr(map.spawnfile));
 				std::string spawn_filename = map_path + nstr(converter.GetName());
 				std::rename(backup_spawn.c_str(), std::string(spawn_filename + ".xml").c_str());
+			}
+			
+			if(!backupAudio.empty())
+			{
+				converter.SetFullName(wxstr(map.audioFile));
+				std::string audioFilename = map_path + nstr(converter.GetName());
+				std::rename(backupAudio.c_str(), std::string(audioFilename + ".xml").c_str());
 			}
 
 			// Display the error
@@ -344,6 +362,13 @@ void Editor::saveMap(FileName filename, bool showdialog) {
 			std::string spawn_filename = map_path + nstr(converter.GetName());
 			std::rename(backup_spawn.c_str(), std::string(spawn_filename + "." + date.str() + ".xml").c_str());
 		}
+
+		if(!backupAudio.empty())
+		{
+			converter.SetFullName(wxstr(map.audioFile));
+			std::string audioFilename = map_path + nstr(converter.GetName());
+			std::rename(backupAudio.c_str(), std::string(audioFilename + "." + date.str() + ".xml").c_str());
+		}
 	}
 	else
 	{
@@ -351,6 +376,7 @@ void Editor::saveMap(FileName filename, bool showdialog) {
 		std::remove(backup_otbm.c_str());
 		std::remove(backup_house.c_str());
 		std::remove(backup_spawn.c_str());
+		std::remove(backupAudio.c_str());
 	}
 
 	map.clearChanges();

@@ -455,7 +455,7 @@ bool Container::serializeItemNode_OTBM(const IOMap& maphandle, NodeFileWriteHand
 	|--- OTBM_ITEM_DEF (not implemented)
 */
 
-bool IOMapOTBM::getVersionInfo(const FileName& filename, MapVersion& out_ver)
+bool IOMapOTBM::getVersionInfo(const FileName & filename, MapVersion & out_ver)
 {
 	if (filename.GetExt() == wxT("otgz"))
 	{
@@ -506,7 +506,7 @@ bool IOMapOTBM::getVersionInfo(const FileName& filename, MapVersion& out_ver)
 	}
 }
 
-bool IOMapOTBM::getVersionInfo(NodeFileReadHandle* f,  MapVersion& out_ver)
+bool IOMapOTBM::getVersionInfo(NodeFileReadHandle * f,  MapVersion & out_ver)
 {
 	BinaryNode* root = f->getRootNode();
 	if(!root)
@@ -533,7 +533,7 @@ bool IOMapOTBM::getVersionInfo(NodeFileReadHandle* f,  MapVersion& out_ver)
 	return true;
 }
 
-bool IOMapOTBM::loadMap(Map& map, const FileName& filename)
+bool IOMapOTBM::loadMap(Map & map, const FileName & filename)
 {
 	if (filename.GetExt() == wxT("otgz"))
 	{
@@ -547,8 +547,10 @@ bool IOMapOTBM::loadMap(Map& map, const FileName& filename)
 		// Memory buffers for the houses & spawns
 		std::shared_ptr<uint8_t> house_buffer;
 		std::shared_ptr<uint8_t> spawn_buffer;
+		std::shared_ptr<uint8_t> audio_buffer;
 		size_t house_buffer_size = 0;
 		size_t spawn_buffer_size = 0;
+		size_t audio_buffer_size = 0;
 
 		// See if the otbm file has been loaded
 		bool otbm_loaded = false;
@@ -626,6 +628,22 @@ bool IOMapOTBM::loadMap(Map& map, const FileName& filename)
 					warning(wxT("Failed to decompress spawns."));
 				}
 			}
+			else if (entryName == "world/audio.xml")
+			{
+				audio_buffer_size = archive_entry_size(entry);
+				audio_buffer.reset(new uint8_t[audio_buffer_size]);
+				
+				// Read from the archive
+				size_t read_bytes = archive_read_data(a.get(), audio_buffer.get(), audio_buffer_size);
+				
+				// Check so it at least contains the 4-byte file id
+				if (read_bytes < audio_buffer_size)
+				{
+					audio_buffer.reset();
+					audio_buffer_size = 0;
+					warning(wxT("Failed to decompress audio."));
+				}
+			}
 		}
 
 		if (!otbm_loaded)
@@ -660,6 +678,24 @@ bool IOMapOTBM::loadMap(Map& map, const FileName& filename)
 			}
 		}
 
+		// Load the audio from the stored buffer
+		if (audio_buffer.get() && audio_buffer_size > 0)
+		{
+			pugi::xml_document doc;
+			pugi::xml_parse_result result = doc.load_buffer(audio_buffer.get(), audio_buffer_size);
+			if (result)
+			{
+				if (!loadAudio(map, doc))
+				{
+					warning(wxT("Failed to load audio."));
+				}
+			}
+			else
+			{
+				warning(wxT("Failed to load audio due to XML parse error."));
+			}
+		}
+
 		return true;
 	}
 	else
@@ -675,22 +711,27 @@ bool IOMapOTBM::loadMap(Map& map, const FileName& filename)
 			return false;
 		
 		// Read auxilliary files
-		if(!loadHouses(map, filename))
+		if (!loadHouses(map, filename))
 		{
 			warning(wxT("Failed to load houses."));
 			map.housefile = nstr(filename.GetName()) + "-house.xml";
 		}
-		if(!loadSpawns(map, filename))
+		if (!loadSpawns(map, filename))
 		{
 			warning(wxT("Failed to load spawns."));
 			map.spawnfile = nstr(filename.GetName())+ "-spawn.xml";
+		}
+		if (!loadAudio(map, filename))
+		{
+			warning(wxT("Failed to load audio."));
+			map.spawnfile = nstr(filename.GetName())+ "-audio.xml";
 		}
 
 		return true;
 	}
 }
 
-bool IOMapOTBM::loadMap(Map& map, NodeFileReadHandle& f)
+bool IOMapOTBM::loadMap(Map & map, NodeFileReadHandle & f)
 {
 	BinaryNode* root = f.getRootNode();
 	if(!root)
@@ -779,16 +820,23 @@ bool IOMapOTBM::loadMap(Map& map, NodeFileReadHandle& f)
 			{
 				if(!mapHeaderNode->getString(map.spawnfile))
 				{
-					warning(wxT("Invalid map spawnfile tag"));
+					warning(wxT("Invalid map spawn file tag"));
 				}
 			} break;
 			case OTBM_ATTR_EXT_HOUSE_FILE:
 			{
 				if(!mapHeaderNode->getString(map.housefile))
 				{
-					warning(wxT("Invalid map housefile tag"));
+					warning(wxT("Invalid map house file tag"));
 				}
 			} break;
+			case OTBM_ATTR_EXT_AUDIO_FILE:
+			{
+				if(!mapHeaderNode->getString(map.audioFile))
+				{
+					warning(wxT("Invalid map audio file tag"));
+				}
+			}
 			default:
 			{
 				warning(wxT("Unknown header node."));
@@ -1058,7 +1106,7 @@ bool IOMapOTBM::loadMap(Map& map, NodeFileReadHandle& f)
 	return true;
 }
 
-bool IOMapOTBM::loadSpawns(Map& map, const FileName& dir)
+bool IOMapOTBM::loadSpawns(Map & map, const FileName & dir)
 {
 	std::string fn = (const char*)(dir.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME).mb_str(wxConvUTF8));
 	fn += map.spawnfile;
@@ -1075,7 +1123,7 @@ bool IOMapOTBM::loadSpawns(Map& map, const FileName& dir)
 	return loadSpawns(map, doc);
 }
 
-bool IOMapOTBM::loadSpawns(Map& map, pugi::xml_document& doc)
+bool IOMapOTBM::loadSpawns(Map & map, pugi::xml_document & doc)
 {
 	pugi::xml_node node = doc.child("spawns");
 	if (!node) {
@@ -1199,7 +1247,7 @@ bool IOMapOTBM::loadSpawns(Map& map, pugi::xml_document& doc)
 	return true;
 }
 
-bool IOMapOTBM::loadHouses(Map& map, const FileName& dir)
+bool IOMapOTBM::loadHouses(Map & map, const FileName & dir)
 {
 	std::string fn = (const char*)(dir.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME).mb_str(wxConvUTF8));
 	fn += map.housefile;
@@ -1215,7 +1263,7 @@ bool IOMapOTBM::loadHouses(Map& map, const FileName& dir)
 	return loadHouses(map, doc);
 }
 
-bool IOMapOTBM::loadHouses(Map& map, pugi::xml_document& doc)
+bool IOMapOTBM::loadHouses(Map & map, pugi::xml_document & doc)
 {
 	pugi::xml_node node = doc.child("houses");
 	if (!node) {
@@ -1270,7 +1318,28 @@ bool IOMapOTBM::loadHouses(Map& map, pugi::xml_document& doc)
 	return true;
 }
 
-bool IOMapOTBM::saveMap(Map& map, const FileName& identifier)
+bool IOMapOTBM::loadAudio(Map & map, const FileName & dir)
+{
+	std::string fn = (const char *) (dir.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME).mb_str(wxConvUTF8));
+	fn += map.audioFile;
+
+	FileName filename(wxstr(fn));
+	if (filename.FileExists() == false) return false;
+
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(fn.c_str());
+	if (!result) return false;
+
+	return loadAudio(map, doc);
+}
+
+bool IOMapOTBM::loadAudio(Map & map, pugi::xml_document & doc)
+{
+	// TODO: implement
+	return false;
+}
+
+bool IOMapOTBM::saveMap(Map & map, const FileName & identifier)
 {
 	if (identifier.GetExt() == "otgz") {
 		// Create the archive
@@ -1317,6 +1386,31 @@ bool IOMapOTBM::saveMap(Map& map, const FileName& identifier)
 			// Write to the arhive
 			entry = archive_entry_new();
 			archive_entry_set_pathname(entry, "world/houses.xml");
+			archive_entry_set_size(entry, xmlData.size());
+			archive_entry_set_filetype(entry, AE_IFREG);
+			archive_entry_set_perm(entry, 0644);
+
+			// Write to the archive
+			archive_write_header(a, entry);
+			archive_write_data(a, xmlData.data(), xmlData.size());
+
+			// Free the entry
+			archive_entry_free(entry);
+			streamData.str("");
+		}
+
+		gui.SetLoadDone(0, wxT("Saving audio..."));
+		
+		pugi::xml_document audioDoc;
+		if (saveAudio(map, audioDoc))
+		{
+			// Write the data
+			audioDoc.save(streamData, "", pugi::format_raw, pugi::encoding_utf8);
+			std::string xmlData = streamData.str();
+
+			// Write to the arhive
+			entry = archive_entry_new();
+			archive_entry_set_pathname(entry, "world/audio.xml");
 			archive_entry_set_size(entry, xmlData.size());
 			archive_entry_set_filetype(entry, AE_IFREG);
 			archive_entry_set_perm(entry, 0644);
@@ -1378,6 +1472,9 @@ bool IOMapOTBM::saveMap(Map& map, const FileName& identifier)
 
 		gui.SetLoadDone(99, wxT("Saving houses..."));
 		saveHouses(map, identifier);
+		
+		gui.SetLoadDone(99, wxT("Saving audio..."));
+		saveAudio(map, identifier);
 
 		return true;
 	}
@@ -1386,7 +1483,7 @@ bool IOMapOTBM::saveMap(Map& map, const FileName& identifier)
 	return false;
 }
 
-bool IOMapOTBM::saveMap(Map& map, NodeFileWriteHandle& f)
+bool IOMapOTBM::saveMap(Map & map, NodeFileWriteHandle & f)
 {
 	/* STOP!
 	 * Before you even think about modifying this, please reconsider.
@@ -1424,6 +1521,10 @@ bool IOMapOTBM::saveMap(Map& map, NodeFileWriteHandle& f)
 			
 			f.addU8(OTBM_ATTR_EXT_HOUSE_FILE);
 			fn.Assign(wxstr(map.housefile));
+			f.addString(std::string((const char*)fn.GetFullName().mb_str(wxConvUTF8)));
+			
+			f.addU8(OTBM_ATTR_EXT_AUDIO_FILE);
+			fn.Assign(wxstr(map.audioFile));
 			f.addString(std::string((const char*)fn.GetFullName().mb_str(wxConvUTF8)));
 
 			// Start writing tiles
@@ -1580,7 +1681,7 @@ bool IOMapOTBM::saveMap(Map& map, NodeFileWriteHandle& f)
 	return true;
 }
 
-bool IOMapOTBM::saveSpawns(Map& map, const FileName& dir)
+bool IOMapOTBM::saveSpawns(Map & map, const FileName & dir)
 {
 	wxString wpath = dir.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
 	std::string filename = std::string(wpath.mb_str(wxConvUTF8)) + map.spawnfile;
@@ -1593,7 +1694,7 @@ bool IOMapOTBM::saveSpawns(Map& map, const FileName& dir)
 	return false;
 }
 
-bool IOMapOTBM::saveSpawns(Map& map, pugi::xml_document& doc)
+bool IOMapOTBM::saveSpawns(Map & map, pugi::xml_document & doc)
 {
 	pugi::xml_node decl = doc.prepend_child(pugi::node_declaration);
 	if (!decl) {
@@ -1649,7 +1750,7 @@ bool IOMapOTBM::saveSpawns(Map& map, pugi::xml_document& doc)
 	return true;
 }
 
-bool IOMapOTBM::saveHouses(Map& map, const FileName& dir)
+bool IOMapOTBM::saveHouses(Map & map, const FileName & dir)
 {
 	wxString wpath = dir.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
 	std::string filename = std::string(wpath.mb_str(wxConvUTF8)) + map.housefile;
@@ -1662,7 +1763,7 @@ bool IOMapOTBM::saveHouses(Map& map, const FileName& dir)
 	return false;
 }
 
-bool IOMapOTBM::saveHouses(Map& map, pugi::xml_document& doc)
+bool IOMapOTBM::saveHouses(Map & map, pugi::xml_document & doc)
 {
 	pugi::xml_node decl = doc.prepend_child(pugi::node_declaration);
 	if (!decl) {
@@ -1694,3 +1795,24 @@ bool IOMapOTBM::saveHouses(Map& map, pugi::xml_document& doc)
 	}
 	return true;
 }
+
+bool IOMapOTBM::saveAudio(Map & map, const FileName & dir)
+{
+	wxString wpath = dir.GetPath(wxPATH_GET_SEPARATOR | wxPATH_GET_VOLUME);
+	std::string filename = std::string(wpath.mb_str(wxConvUTF8)) + map.audioFile;
+
+	// Create the XML file
+	pugi::xml_document doc;
+	if (saveAudio(map, doc))
+	{
+		return doc.save_file(filename.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
+	}
+	return false;
+}
+
+bool IOMapOTBM::saveAudio(Map & map, pugi::xml_document & doc)
+{
+	// TODO: implement
+	return false;
+}
+

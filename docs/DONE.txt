@@ -3,4 +3,7 @@
 - Implemented "point" and "area" audio types brushes rendering.
 - Implemented "point" and "area" audio types rendering when they're already drawn by corresponding brush on the map, i.e. when they're associated with particular tile.
 	Point audio source also has red circle drawn, indicating its radius.
+- Improved settings management for audio setup and rendering on the map.
+- Put new icons from Kris for audio sources and areas.
+- Setup some code for audio XML loading and saving. Now need to implement loading / saving methods.
 
