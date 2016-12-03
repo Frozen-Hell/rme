@@ -41,7 +41,6 @@ Map::Map() : BaseMap(),
 
 Map::~Map()
 {
-	// ...
 }
 
 bool Map::open(const std::string file)

@@ -32,7 +32,9 @@ void AudioPointBrush::draw(BaseMap * map, Tile * tile, void * parameter)
 	ASSERT(tile);
 	if (!tile->audio)
 	{
-		tile->audio = newd Audio(audioName, Audio::TYPE_POINT, *wxBLACK, audioSize, audioVolume, audioLooping, audioPauseInterval);
+		tile->audio = newd Audio(audioName, Audio::TYPE_POINT, *wxBLACK, audioSize, audioVolume, audioRepetitive,
+		                         audioPlayTime, audioPlayTimeRandom, audioPauseTime, audioPauseTimeRandom);
+		tile->audio->setPosition(tile->getPosition());
 	}
 }
 
@@ -65,7 +67,8 @@ void AudioAreaBrush::draw(BaseMap * map, Tile * tile, void * parameter)
 	ASSERT(tile);
 	if (!tile->audio)
 	{
-		tile->audio = newd Audio(audioName, Audio::TYPE_AREA, areaColor, audioSize, audioVolume, audioLooping, audioPauseInterval);
+		tile->audio = newd Audio(audioName, Audio::TYPE_AREA, areaColor, audioSize, audioVolume, audioRepetitive,
+		                         audioPlayTime, audioPlayTimeRandom, audioPauseTime, audioPauseTimeRandom);
+		tile->audio->setPosition(tile->getPosition());
 	}
 }
-

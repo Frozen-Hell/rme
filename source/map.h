@@ -25,6 +25,7 @@
 #include "town.h"
 #include "house.h"
 #include "spawn.h"
+#include "audio.h"
 #include "complexitem.h"
 #include "waypoints.h"
 #include "templates.h"
@@ -112,7 +113,7 @@ protected:
 	MapVersion mapVersion;
 
 	// Map Width and Height - for info purposes
-	uint16_t width, height;
+	uint16_t width, height, visibleStartX, visibleStartY, visibleEndX, visibleEndY;
 
 	std::string spawnfile; // The maps spawn file
 	std::string housefile; // The house file
@@ -122,6 +123,7 @@ public:
 	Towns towns;
 	Houses houses;
 	Spawns spawns;
+	Audios audios;
 
 protected:
 	bool has_changed; // If the map has changed

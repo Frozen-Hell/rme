@@ -81,6 +81,7 @@ public:
 	void OnSelectTableBrush(wxCommandEvent& event);
 	void OnSelectCreatureBrush(wxCommandEvent& event);
 	void OnSelectSpawnBrush(wxCommandEvent& event);
+	void OnSelectAudio(wxCommandEvent& event);
 	void OnSelectHouseBrush(wxCommandEvent& event);
 	// ---
 	void OnProperties(wxCommandEvent& event);

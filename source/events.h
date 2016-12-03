@@ -1,0 +1,10 @@
+#ifndef RME_EVENTS_H
+#define RME_EVENTS_H
+
+enum Events
+{
+	RME_EVT_TILES_SELECTED,
+	RME_EVT_AUDIO_SELECTED
+};
+
+#endif // RME_EVENTS_H

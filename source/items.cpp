@@ -154,7 +154,7 @@ bool ItemDatabase::loadFromOtbVer1(BinaryNode* itemNode, wxString& error, wxArra
 
 		switch (t->group)
 		{
-			case  ITEM_GROUP_NONE:
+			case ITEM_GROUP_NONE:
 			case ITEM_GROUP_GROUND:
 			case ITEM_GROUP_SPLASH:
 			case ITEM_GROUP_FLUID:
@@ -169,8 +169,9 @@ bool ItemDatabase::loadFromOtbVer1(BinaryNode* itemNode, wxString& error, wxArra
 			case ITEM_GROUP_RUNE: t->client_chargeable = true; break;
 			case ITEM_GROUP_TELEPORT: t->type = ITEM_TYPE_TELEPORT; break;
 			case ITEM_GROUP_MAGICFIELD: t->type = ITEM_TYPE_MAGICFIELD; break;
-			default:
-				warnings.push_back(wxT("Unknown item group declaration"));
+			default:break;
+				// commented by @dtroitskiy because this warning is annoying and always triggers while reading FoF files
+				// warnings.push_back(wxT("Unknown item group declaration"));
 		}
 
 		uint32_t flags;
@@ -439,8 +440,9 @@ bool ItemDatabase::loadFromOtbVer2(BinaryNode* itemNode, wxString& error, wxArra
 			case   ITEM_GROUP_RUNE: t->client_chargeable = true; break;
 			case   ITEM_GROUP_TELEPORT: t->type = ITEM_TYPE_TELEPORT; break;
 			case   ITEM_GROUP_MAGICFIELD: t->type = ITEM_TYPE_MAGICFIELD; break;
-			default:
-				warnings.push_back(wxT("Unknown item group declaration"));
+			default:break;
+				// commented by @dtroitskiy because this warning is annoying and always triggers while reading FoF files
+				// warnings.push_back(wxT("Unknown item group declaration"));
 		}
 
 		uint32_t flags;
@@ -604,8 +606,9 @@ bool ItemDatabase::loadFromOtbVer3(BinaryNode* itemNode, wxString& error, wxArra
 			case ITEM_GROUP_DOOR:
 			break;
 			case ITEM_GROUP_CONTAINER: t->type = ITEM_TYPE_CONTAINER; break;
-			default:
-				warnings.push_back(wxT("Unknown item group declaration"));
+			default:break;
+				// commented by @dtroitskiy because this warning is annoying and always triggers while reading FoF files
+				// warnings.push_back(wxT("Unknown item group declaration"));
 		}
 
 		uint32_t flags;

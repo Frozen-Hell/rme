@@ -63,6 +63,7 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(IMPORT_MONSTERS, wxITEM_NORMAL, OnImportMonsterData);
 	MAKE_ACTION(IMPORT_MINIMAP, wxITEM_NORMAL, OnImportMinimap);
 	MAKE_ACTION(EXPORT_MINIMAP, wxITEM_NORMAL, OnExportMinimap);
+	MAKE_ACTION(EXPORT_PNG_IMAGE, wxITEM_NORMAL, OnExportPNGImage);
 
 	MAKE_ACTION(RELOAD_DATA, wxITEM_NORMAL, OnReloadDataFiles);
 	//MAKE_ACTION(RECENT_FILES, wxITEM_NORMAL, OnRecent);
@@ -297,6 +298,7 @@ void MainMenuBar::Update()
 	EnableItem(IMPORT_MAP, is_local);
 	EnableItem(IMPORT_MINIMAP, false);
 	EnableItem(EXPORT_MINIMAP, is_local);
+	EnableItem(EXPORT_PNG_IMAGE, is_local);
 	
 	EnableItem(FIND_ITEM, is_host);
 	EnableItem(REPLACE_ITEM, is_local);
@@ -705,6 +707,21 @@ void MainMenuBar::OnExportMinimap(wxCommandEvent& WXUNUSED(event))
 	{
 		ExportMiniMapWindow dlg(frame, *gui.GetCurrentEditor());
 		dlg.ShowModal();
+	}
+}
+
+void MainMenuBar::OnExportPNGImage(wxCommandEvent & WXUNUSED(event))
+{
+	const wxString & lastBrowseDir = settings.getString(Config::LAST_EXPORT_PNG_DIR);
+	wxString name = gui.GetCurrentEditor()->map.getName();
+	name = name.SubString(0, name.Find('.') - 1);
+	name.Append(".png");
+	wxFileDialog browseDialog(frame, "Choose file", lastBrowseDir, name, "*.png|*.png|All files|*", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+	if (browseDialog.ShowModal() == wxID_OK)
+	{
+		const wxString & path = browseDialog.GetPath();
+		settings.setString(Config::LAST_EXPORT_PNG_DIR, path.ToStdString());
+		gui.GetCurrentEditor()->exportPNGImage(browseDialog.GetPath());
 	}
 }
 

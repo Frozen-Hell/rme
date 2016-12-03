@@ -299,10 +299,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\audio.cpp" />
+    <ClCompile Include="..\..\source\audio_brush.cpp" />
     <ClCompile Include="..\..\source\brush_tables.cpp" />
+    <ClCompile Include="..\..\source\client_version.cpp" />
     <ClCompile Include="..\..\source\container_properties_window.cpp" />
+    <ClInclude Include="..\..\source\audio.h" />
+    <ClInclude Include="..\..\source\audio_brush.h" />
     <ClInclude Include="..\..\source\carpet_brush.h" />
     <ClCompile Include="..\..\source\carpet_brush.cpp" />
+    <ClInclude Include="..\..\source\client_version.h" />
     <ClInclude Include="..\..\source\common.h" />
     <ClCompile Include="..\..\source\common.cpp" />
     <ClInclude Include="..\..\source\container_properties_window.h" />
@@ -315,9 +321,11 @@
     <ClInclude Include="..\..\source\doodad_brush.h" />
     <ClCompile Include="..\..\source\doodad_brush.cpp" />
     <ClCompile Include="..\..\source\eraser_brush.cpp" />
+    <ClInclude Include="..\..\source\events.h" />
     <ClInclude Include="..\..\source\extension.h" />
     <ClInclude Include="..\..\source\extension_window.h" />
     <ClInclude Include="..\..\source\filehandle.h" />
+    <ClCompile Include="..\..\source\events.cpp" />
     <ClCompile Include="..\..\source\extension.cpp" />
     <ClCompile Include="..\..\source\extension_window.cpp" />
     <ClCompile Include="..\..\source\filehandle.cpp" />
@@ -343,15 +351,19 @@
     <ClInclude Include="..\..\source\map_allocator.h" />
     <ClInclude Include="..\..\source\map_region.h" />
     <ClCompile Include="..\..\source\map_region.cpp" />
+    <ClInclude Include="..\..\source\mediator.h" />
     <ClInclude Include="..\..\source\mt_rand.h" />
+    <ClCompile Include="..\..\source\mediator.cpp" />
     <ClCompile Include="..\..\source\mt_rand.cpp" />
     <ClInclude Include="..\..\source\net_connection.h" />
     <ClCompile Include="..\..\source\net_connection.cpp" />
     <ClInclude Include="..\..\source\numbertextctrl.h" />
+    <ClInclude Include="..\..\source\palette_audio.h" />
     <ClInclude Include="..\..\source\properties_window.h" />
     <ClInclude Include="..\..\source\pugicast.h" />
     <ClInclude Include="..\..\source\raw_brush.h" />
     <ClCompile Include="..\..\source\numbertextctrl.cpp" />
+    <ClCompile Include="..\..\source\palette_audio.cpp" />
     <ClCompile Include="..\..\source\properties_window.cpp" />
     <ClCompile Include="..\..\source\raw_brush.cpp" />
     <ClInclude Include="..\..\source\rme_forward_declarations.h" />
@@ -414,8 +426,6 @@
     <ClCompile Include="..\..\source\map_window.cpp" />
     <ClInclude Include="..\..\source\action.h" />
     <ClCompile Include="..\..\source\action.cpp" />
-    <ClInclude Include="..\..\source\client_version.h" />
-    <ClCompile Include="..\..\source\client_version.cpp" />
     <ClInclude Include="..\..\source\copybuffer.h" />
     <ClCompile Include="..\..\source\copybuffer.cpp" />
     <ClInclude Include="..\..\source\creatures.h" />
@@ -494,6 +504,8 @@
     <ClInclude Include="..\..\source\waypoint_brush.h" />
     <ClCompile Include="..\..\source\waypoint_brush.cpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\mkpch.cpp">
@@ -532,10 +544,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\data\clients.xml" />
-    <None Include="..\..\data\menubar.xml" />
+    <None Include="..\..\data\menubar.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="rme.rc" />
+    <Image Include="icon1.ico" />
+    <Image Include="icon2.ico" />
+    <Image Include="rme_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RME.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

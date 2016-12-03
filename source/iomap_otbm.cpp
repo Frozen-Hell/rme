@@ -770,10 +770,14 @@ bool IOMapOTBM::loadMap(Map & map, NodeFileReadHandle & f)
 		return false;
 
 	map.width = u16;
+	map.visibleStartX = map.width;
+	map.visibleEndX = 0;
 	if(!root->getU16(u16))
 		return false;
 
 	map.height = u16;
+	map.visibleStartY = map.height;
+	map.visibleEndY = 0;
 
 	if(!root->getU32(u32) || u32 > (unsigned long)item_db.MajorVersion) // OTB major version
 	{ 
@@ -836,7 +840,7 @@ bool IOMapOTBM::loadMap(Map & map, NodeFileReadHandle & f)
 				{
 					warning(wxT("Invalid map audio file tag"));
 				}
-			}
+			} break;
 			default:
 			{
 				warning(wxT("Unknown header node."));
@@ -890,7 +894,16 @@ bool IOMapOTBM::loadMap(Map & map, NodeFileReadHandle & f)
 						continue;
 					}
 					const Position pos(base_x + x_offset, base_y + y_offset, base_z);
-					
+					// coordinates more than that are probably wrong
+					// this happens sometimes with some tiles for unclear reasons
+					map.visibleStartX = min <uint16_t> (pos.x, map.visibleStartX);
+					map.visibleStartY = min <uint16_t> (pos.y, map.visibleStartY);
+					if (pos.x < 10000 && pos.y < 10000)
+					{
+						map.visibleEndX = max <uint16_t> (pos.x, map.visibleEndX);
+						map.visibleEndY = max <uint16_t> (pos.y, map.visibleEndY);
+					}
+
 					if(map.getTile(pos))
 					{
 						warning(wxT("Duplicate tile at %d:%d:%d, discarding duplicate"), pos.x, pos.y, pos.z);
@@ -1103,6 +1116,12 @@ bool IOMapOTBM::loadMap(Map & map, NodeFileReadHandle & f)
 
 	if(!f.isOk())
 		warning(wxstr(f.getErrorMessage()).wc_str());
+
+	// if visibleStartX / visibleStartY are more than map full width / height
+	// then it means they've got incorrect values, so we're resetting them to zero
+	if (map.visibleStartX >= map.width) map.visibleStartX = 0;
+	if (map.visibleStartY >= map.height) map.visibleStartY = 0;
+
 	return true;
 }
 
@@ -1335,8 +1354,53 @@ bool IOMapOTBM::loadAudio(Map & map, const FileName & dir)
 
 bool IOMapOTBM::loadAudio(Map & map, pugi::xml_document & doc)
 {
-	// TODO: implement
-	return false;
+	pugi::xml_node node = doc.child("audios");
+	if (!node)
+	{
+		warnings.push_back(wxT("IOMapOTBM::loadAudio: Invalid rootheader."));
+		return false;
+	}
+
+	std::string name;
+	Audio::Type type = Audio::TYPE_POINT;
+	wxColor areaColor;
+	int size = 0;
+	float volume = 0;
+	bool repetitive = false;
+	float playTime = 0, playTimeRandom = 0, pauseTime = 0, pauseTimeRandom = 0;
+	Position pos;
+	Audio * audio = nullptr;
+	for (pugi::xml_node audioNode = node.first_child(); audioNode; audioNode = audioNode.next_sibling())
+	{
+		name = audioNode.attribute("name").as_string();
+		std::string strType = audioNode.attribute("type").as_string();
+		type = (strType == "point" ? Audio::TYPE_POINT : Audio::TYPE_AREA);
+		if (type == Audio::TYPE_AREA)
+		{
+			areaColor.Set(audioNode.attribute("areaColor").as_string());
+		}
+		size = audioNode.attribute("size").as_int();
+		volume = audioNode.attribute("volume").as_float();
+		repetitive = audioNode.attribute("isRepetitive").as_bool();
+		if (repetitive)
+		{
+			playTime = audioNode.attribute("playTime").as_float();
+			playTimeRandom = audioNode.attribute("playTimeRandom").as_float();
+			pauseTime = audioNode.attribute("pauseTime").as_float();
+			pauseTimeRandom = audioNode.attribute("pauseTimeRandom").as_float();
+		}
+		pos.x = audioNode.attribute("x").as_int();
+		pos.y = audioNode.attribute("y").as_int();
+		pos.z = audioNode.attribute("z").as_int();
+
+		audio = newd Audio(name, type, areaColor, size, volume, repetitive, playTime, playTimeRandom, pauseTime, pauseTimeRandom);
+		audio->setPosition(pos);
+		map.audios.push_back(audio);
+		Tile * tile = map.getTile(pos);
+		tile->audio = audio;
+	}
+
+	return true;
 }
 
 bool IOMapOTBM::saveMap(Map & map, const FileName & identifier)
@@ -1812,7 +1876,37 @@ bool IOMapOTBM::saveAudio(Map & map, const FileName & dir)
 
 bool IOMapOTBM::saveAudio(Map & map, pugi::xml_document & doc)
 {
-	// TODO: implement
-	return false;
-}
+	pugi::xml_node decl = doc.prepend_child(pugi::node_declaration);
+	if (!decl) return false;
+	
+	decl.append_attribute("version") = "1.0";
 
+	pugi::xml_node audioNodes = doc.append_child("audios");
+	for (Audio * audio : map.audios)
+	{
+		pugi::xml_node audioNode = audioNodes.append_child("audio");
+		audioNode.append_attribute("name") = audio->getName();
+		audioNode.append_attribute("type") = (audio->getType() == Audio::TYPE_POINT ? "point" : "area");
+		if (audio->getType() == Audio::TYPE_AREA)
+		{
+			// in the game, the color needed for debugging purposes
+			audioNode.append_attribute("areaColor") = audio->getAreaColor().GetAsString(wxC2S_HTML_SYNTAX);
+		}
+		audioNode.append_attribute("size") = audio->getSize();
+		audioNode.append_attribute("volume") = audio->getVolume();
+		audioNode.append_attribute("isRepetitive") = audio->isRepetitive();
+		if (audio->isRepetitive())
+		{
+			audioNode.append_attribute("playTime") = audio->getPlayTime();
+			audioNode.append_attribute("playTimeRandom") = audio->getPlayTimeRandom();
+			audioNode.append_attribute("pauseTime") = audio->getPauseTime();
+			audioNode.append_attribute("pauseTimeRandom") = audio->getPauseTimeRandom();
+		}
+		const Position & position = audio->getPosition();
+		audioNode.append_attribute("x") = position.x;
+		audioNode.append_attribute("y") = position.y;
+		audioNode.append_attribute("z") = position.z;
+	}
+
+	return true;
+}

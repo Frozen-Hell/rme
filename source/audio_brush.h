@@ -27,17 +27,23 @@ public:
 	inline void setAudioSize(int audioSize) { this->audioSize = audioSize; }
 	inline float getAudioVolume() { return audioVolume; }
 	inline void setAudioVolume(float audioVolume) { this->audioVolume = audioVolume; }
-	inline bool isAudioLooping() { return audioLooping; }
-	inline void setAudioLooping(bool audioLooping) { this->audioLooping = audioLooping; }
-	inline float getAudioPauseInterval() { return audioPauseInterval; }
-	inline void setAudioPauseInterval(float audioPauseInterval) { this->audioPauseInterval = audioPauseInterval; }
+	inline bool isAudioRepetitive() { return audioRepetitive; }
+	inline void setAudioRepetitive(bool repetitive) { this->audioRepetitive = repetitive; }
+	inline float getAudioPlayTime() { return audioPlayTime; }
+	inline void setAudioPlayTime(float playTime) { this->audioPlayTime = playTime; }
+	inline float getAudioPlayTimeRandom() { return audioPlayTimeRandom; }
+	inline void setAudioPlayTimeRandom(float playTimeRandom) { this->audioPlayTimeRandom = playTimeRandom; }
+	inline float getAudioPauseTime() { return audioPauseTime; }
+	inline void setAudioPauseTime(float pauseTime) { this->audioPauseTime = pauseTime; }
+	inline float getAudioPauseTimeRandom() { return audioPauseTimeRandom; }
+	inline void setAudioPauseTimeRandom(float pauseTimeRandom) { this->audioPauseTimeRandom = pauseTimeRandom; }
 
 protected:
 	wxString audioName;
 	int audioSize = 0;
 	float audioVolume = 0;
-	bool audioLooping = false;
-	float audioPauseInterval = 0;
+	bool audioRepetitive = false;
+	float audioPlayTime = 0, audioPlayTimeRandom = 0, audioPauseTime = 0, audioPauseTimeRandom = 0;
 };
 
 class AudioAreaBrush : public Brush
@@ -65,19 +71,25 @@ public:
 	inline int getAudioSize() { return audioSize; }
 	inline void setAudioSize(int audioSize) { this->audioSize = audioSize; }
 	inline float getAudioVolume() { return audioVolume; }
-	inline void setAudioVolume(float audioVolume) { this->audioVolume = audioVolume; }
-	inline bool isAudioLooping() { return audioLooping; }
-	inline void setAudioLooping(bool audioLooping) { this->audioLooping = audioLooping; }
-	inline float getAudioPauseInterval() { return audioPauseInterval; }
-	inline void setAudioPauseInterval(float audioPauseInterval) { this->audioPauseInterval = audioPauseInterval; }
+	inline void setAudioVolume(float volume) { this->audioVolume = volume; }
+	inline bool isAudioRepetitive() { return audioRepetitive; }
+	inline void setAudioRepetitive(bool repetitive) { this->audioRepetitive = repetitive; }
+	inline float getAudioPlayTime() { return audioPlayTime; }
+	inline void setAudioPlayTime(float playTime) { this->audioPlayTime = playTime; }
+	inline float getAudioPlayTimeRandom() { return audioPlayTimeRandom; }
+	inline void setAudioPlayTimeRandom(float playTimeRandom) { this->audioPlayTimeRandom = playTimeRandom; }
+	inline float getAudioPauseTime() { return audioPauseTime; }
+	inline void setAudioPauseTime(float pauseTime) { this->audioPauseTime = pauseTime; }
+	inline float getAudioPauseTimeRandom() { return audioPauseTimeRandom; }
+	inline void setAudioPauseTimeRandom(float pauseTimeRandom) { this->audioPauseTimeRandom = pauseTimeRandom; }
 
 protected:
 	wxString audioName;
 	wxColor areaColor, brushColor;
 	int audioSize = 0;
 	float audioVolume = 0;
-	bool audioLooping = false;
-	float audioPauseInterval = 0;
+	bool audioRepetitive = false;
+	float audioPlayTime = 0, audioPlayTimeRandom = 0, audioPauseTime = 0, audioPauseTimeRandom = 0;
 };
 
 #endif // RME_AUDIO_BRUSH_H

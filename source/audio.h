@@ -21,13 +21,15 @@
 #define RME_AUDIO_H_
 
 #include <wx/wx.h>
+#include "position.h"
 
 class Audio
 {
 public:
 	enum Type { TYPE_POINT, TYPE_AREA };
 
-	Audio(const wxString & name, Type type, const wxColor & areaColor, int size, float volume, bool looping, float pauseInterval);
+	Audio(const wxString & name, Type type, const wxColor & areaColor, int size, float volume, bool repetitive,
+	      float playTime, float playTimeRandom, float pauseTime, float pauseTimeRandom);
 	
 	Audio * deepCopy() const;
 
@@ -41,10 +43,18 @@ public:
 	inline void setSize(int size) { this->size = size; }
 	inline float getVolume() { return volume; }
 	inline void setVolume(float volume) { this->volume = volume; }
-	inline bool isLooping() { return looping; }
-	inline void setLooping(bool looping) { this->looping = looping; }
-	inline float getPauseInterval() { return pauseInterval; }
-	inline void setPauseInterval(float pauseInterval) { this->pauseInterval = pauseInterval; }
+	inline bool isRepetitive() { return repetitive; }
+	inline void setRepetitive(bool repetitive) { this->repetitive = repetitive; }
+	inline float getPlayTime() { return playTime; }
+	inline void setPlayTime(float playTime) { this->playTime = playTime; }
+	inline float getPlayTimeRandom() { return playTimeRandom; }
+	inline void setPlayTimeRandom(float playTimeRandom) { this->playTimeRandom = playTimeRandom; }
+	inline float getPauseTime() { return pauseTime; }
+	inline void setPauseTime(float pauseTime) { this->pauseTime = pauseTime; }
+	inline float getPauseTimeRandom() { return pauseTimeRandom; }
+	inline void setPauseTimeRandom(float pauseTimeRandom) { this->pauseTimeRandom = pauseTimeRandom; }
+	inline const Position & getPosition() { return position; }
+	inline void setPosition(const Position & pos) { this->position = pos; }
 	
 	inline bool isSelected() const { return selected; }
 	inline void select() { selected = true; }
@@ -56,10 +66,12 @@ protected:
 	wxColor areaColor;
 	int size = 0;
 	float volume = 0;
-	bool looping = false;
-	float pauseInterval = 0;
+	bool repetitive = false;
+	float playTime = 0, playTimeRandom = 0, pauseTime = 0, pauseTimeRandom = 0;
+	Position position;
 	bool selected = false;
 };
 
-#endif // RME_AUDIO_H_
+typedef std::list <Audio *> Audios;
 
+#endif // RME_AUDIO_H_

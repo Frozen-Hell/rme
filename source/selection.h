@@ -10,6 +10,7 @@
 class Action;
 class Editor;
 class BatchAction;
+class Audio;
 
 class SelectionThread;
 
@@ -21,14 +22,15 @@ public:
 
 	// Selects the items on the tile/tiles
 	// Won't work outside a selection session
-	void add(Tile* tile, Item* item);
-	void add(Tile* tile, Spawn* spawn);
-	void add(Tile* tile, Creature* creature);
-	void add(Tile* tile);
-	void remove(Tile* tile, Item* item);
-	void remove(Tile* tile, Spawn* spawn);
-	void remove(Tile* tile, Creature* creature);
-	void remove(Tile* tile);
+	void add(Tile * tile, Item * item);
+	void add(Tile * tile, Spawn * spawn);
+	void add(Tile * tile, Creature * creature);
+	void add(Tile * tile, Audio * audio);
+	void add(Tile * tile);
+	void remove(Tile * tile, Item * item);
+	void remove(Tile * tile, Spawn * spawn);
+	void remove(Tile * tile, Creature * creature);
+	void remove(Tile * tile);
 
 	// The tile will be added to the list of selected tiles, however, the items on the tile won't be selected
 	void addInternal(Tile* tile);

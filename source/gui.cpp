@@ -318,8 +318,13 @@ void GUI::CycleTab(bool forward)
 
 bool GUI::LoadDataFiles(wxString& error, wxArrayString& warnings)
 {
-	FileName data_path = getLoadedVersion()->getDataPath();
-	FileName client_path = getLoadedVersion()->getClientPath();
+	// changed by @dtroitskiy - want to avoid using client-versioned paths
+	// FileName data_path = getLoadedVersion()->getDataPath();
+	// FileName client_path = getLoadedVersion()->getClientPath();
+	FileName data_path;
+	data_path.AssignCwd();
+	data_path.AppendDir("data");
+	FileName client_path = data_path;
 	FileName extension_path = GetExtensionsDirectory();
 	
 	FileName exec_directory;
@@ -336,32 +341,33 @@ bool GUI::LoadDataFiles(wxString& error, wxArrayString& warnings)
 	gui.gfx.client_version = getLoadedVersion();
 	
 	gui.CreateLoadBar(wxT("Loading data files"));
-	gui.SetLoadDone(0, wxT("Loading Tibia.dat..."));
-	FileName dat_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.dat"));
+	gui.SetLoadDone(0, wxT("Loading fof.dat..."));
+	wxString path = data_path.GetFullPath();
+	FileName dat_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("fof.dat"));
 	
 	if(!gui.gfx.loadSpriteMetadata(dat_path, error, warnings))
 	{
-		error = wxT("Couldn't load Tibia.dat: ") + error;
+		error = wxT("Couldn't load fof.dat: ") + error;
 		gui.DestroyLoadBar();
 		UnloadVersion();
 		return false;
 	}
 	
-	FileName spr_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.spr"));
+	FileName spr_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("fof.spr"));
 
-	gui.SetLoadDone(10, wxT("Loading Tibia.spr..."));
+	gui.SetLoadDone(10, wxT("Loading fof.spr..."));
 	if(!gui.gfx.loadSpriteData(spr_path.GetFullPath(), error, warnings))
 	{
-		error = wxT("Couldn't load Tibia.spr: ") + error;
+		error = wxT("Couldn't load fof.spr: ") + error;
 		gui.DestroyLoadBar();
 		UnloadVersion();
 		return false;
 	}
 
-	FileName alp_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.alp"));
+	FileName alp_path = wxString(client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("fof.alp"));
 	if (alp_path.FileExists())
 	{
-		gui.SetLoadDone(20, wxT("Loading Tibia.alp..."));
+		gui.SetLoadDone(20, wxT("Loading fof.alp..."));
 		gui.gfx.loadSpriteAlphaTransparency(alp_path.GetFullPath(), error, warnings);
 	}
 
@@ -915,7 +921,7 @@ PaletteWindow* GUI::CreatePalette()
 		return nullptr;
 	
 	PaletteWindow* palette = newd PaletteWindow(root, materials.tilesets);
-	aui_manager->AddPane(palette, wxAuiPaneInfo().Caption(wxT("Palette")).TopDockable(false).BottomDockable(false));
+	aui_manager->AddPane(palette, wxAuiPaneInfo().Caption(wxT("Palette")).TopDockable(false).BottomDockable(false).MinSize(wxSize(250, -1)));
 	aui_manager->Update();
 
 	// Make us the active palette

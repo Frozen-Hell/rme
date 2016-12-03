@@ -243,8 +243,11 @@ void Settings::IO(IOMode mode) {
 	Int(AUDIO_COLOR, 0xFFFF0000);
 	Int(AUDIO_SIZE, 5);
 	Float(AUDIO_VOLUME, 1.0f);
-	Int(AUDIO_LOOPING, 0);
-	Float(AUDIO_PAUSE_INTERVAL, 0);
+	Int(AUDIO_REPETITIVE, 0);
+	Float(AUDIO_PLAY_TIME, 0);
+	Float(AUDIO_PLAY_TIME_RANDOM, 0);
+	Float(AUDIO_PAUSE_TIME, 0);
+	Float(AUDIO_PAUSE_TIME_RANDOM, 0);
 
 	section("Graphics");
 	Int(TEXTURE_MANAGEMENT, 1);
@@ -287,7 +290,7 @@ void Settings::IO(IOMode mode) {
 	String(PALETTE_RAW_STYLE, "listbox");
 
 	section("Window");
-	String(PALETTE_LAYOUT, "name=02c30f6048629894000011bc00000002;caption=Palette;state=2099148;dir=4;layer=0;row=0;pos=0;prop=100000;bestw=245;besth=100;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1");
+	String(PALETTE_LAYOUT, "name=02c30f6048629894000011bc00000002;caption=Palette;state=2099148;dir=4;layer=0;row=0;pos=0;prop=100000;bestw=250;besth=100;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1");
 	Int(MINIMAP_VISIBLE, 0);
 	String(MINIMAP_LAYOUT, "name=066e2bc8486298990000259a00000003;caption=Minimap;state=2099151;dir=4;layer=0;row=0;pos=0;prop=100000;bestw=170;besth=130;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=221;floath=164");
 	Int(WINDOW_HEIGHT, 500);

@@ -47,7 +47,8 @@ PreferencesWindow::PreferencesWindow(wxWindow* parent) : wxDialog(parent, wxID_A
 	book->AddPage(CreateEditorPage(), wxT("Editor"));
 	book->AddPage(CreateGraphicsPage(), wxT("Graphics"));
 	book->AddPage(CreateUIPage(), wxT("Interface"));
-	book->AddPage(CreateClientPage(), wxT("Client Version"));
+	// disabled by @dtroitskiy - we don't need client version selection in RME
+	// book->AddPage(CreateClientPage(), wxT("Client Version"));
 
 	sizer->Add(book, 1, wxEXPAND | wxALL, 10);
 
@@ -485,7 +486,7 @@ wxNotebookPage* PreferencesWindow::CreateClientPage()
         client_list_sizer->Add(dir_picker, 0);
         
         wxString tooltip;
-        tooltip << wxT("The editor will look for ") << wxstr(version->getName()) << wxT(" Tibia.dat & Tibia.spr here.");
+        tooltip << wxT("The editor will look for ") << wxstr(version->getName()) << wxT(" fof.dat & fof.spr here.");
         tmp_text->SetToolTip(tooltip);
         dir_picker->SetToolTip(tooltip);
 

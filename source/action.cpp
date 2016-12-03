@@ -193,24 +193,23 @@ void Action::commit(DirtyList* dirty_list)
 				if(newtile->isSelected())
 					editor.selection.addInternal(newtile);
 
-				if(oldtile)
+				if (oldtile)
 				{
-					if(newtile->getHouseID() != oldtile->getHouseID())
+					if (newtile->getHouseID() != oldtile->getHouseID())
 					{
 						// oooooomggzzz we need to add it to the appropriate house!
-						House* house = editor.map.houses.getHouse(oldtile->getHouseID());
-						if(house)
-							house->removeTile(oldtile);
+						House * house = editor.map.houses.getHouse(oldtile->getHouseID());
+						if (house) house->removeTile(oldtile);
 
 						house = editor.map.houses.getHouse(newtile->getHouseID());
-						if(house)
-							house->addTile(newtile);
+						if (house) house->addTile(newtile);
 					}
-					if(oldtile->spawn)
+
+					if (oldtile->spawn)
 					{
-						if(newtile->spawn)
+						if (newtile->spawn)
 						{
-							if(*oldtile->spawn != *newtile->spawn)
+							if (*oldtile->spawn != *newtile->spawn)
 							{
 								editor.map.removeSpawn(oldtile);
 								editor.map.addSpawn(newtile);
@@ -222,14 +221,40 @@ void Action::commit(DirtyList* dirty_list)
 							editor.map.removeSpawn(oldtile);
 						}
 					}
-					else if(newtile->spawn)
+					else if (newtile->spawn)
 					{
 						editor.map.addSpawn(newtile);
 					}
 
+					Audios & audios = editor.map.audios;
+					if (oldtile->audio)
+					{
+						if (newtile->audio)
+						{
+							if (oldtile->audio != newtile->audio)
+							{
+								Audios::iterator it = find(audios.begin(), audios.end(), oldtile->audio);
+								if (it != audios.end()) audios.erase(it);
+								audios.push_back(newtile->audio);
+							}
+						}
+						else
+						{
+							// Audio has been removed
+							Audios::iterator it = find(audios.begin(), audios.end(), oldtile->audio);
+							if (it != audios.end()) audios.erase(it);
+						}
+					}
+					else if (newtile->audio)
+					{
+						audios.push_back(newtile->audio);
+					}
+
 					//oldtile->update();
-					if(oldtile->isSelected())
+					if (oldtile->isSelected())
+					{
 						editor.selection.removeInternal(oldtile);
+					}
 
 					*data = oldtile;
 				}
@@ -246,9 +271,15 @@ void Action::commit(DirtyList* dirty_list)
 						}
 					}
 
-					if(newtile->spawn)
+					if (newtile->spawn)
+					{
 						editor.map.addSpawn(newtile);
+					}
 
+					if (newtile->audio)
+					{
+						editor.map.audios.push_back(newtile->audio);
+					}
 				}
 				// Mark the tile as modified
 				newtile->modify();
@@ -350,11 +381,11 @@ void Action::undo(DirtyList* dirty_list)
 				if(newtile->isSelected())
 					editor.selection.removeInternal(newtile);
 
-				if(newtile->getHouseID() != oldtile->getHouseID())
+				if (newtile->getHouseID() != oldtile->getHouseID())
 				{
 					// oooooomggzzz we need to remove it from the appropriate house!
-					House* house = editor.map.houses.getHouse(newtile->getHouseID());
-					if(house)
+					House * house = editor.map.houses.getHouse(newtile->getHouseID());
+					if (house)
 					{
 						house->removeTile(newtile);
 					}
@@ -365,16 +396,17 @@ void Action::undo(DirtyList* dirty_list)
 					}
 
 					house = editor.map.houses.getHouse(oldtile->getHouseID());
-					if(house)
+					if (house)
 					{
 						house->addTile(oldtile);
 					}
 				}
-				if(oldtile->spawn)
+
+				if (oldtile->spawn)
 				{
-					if(newtile->spawn)
+					if (newtile->spawn)
 					{
-						if(*oldtile->spawn != *newtile->spawn)
+						if (*oldtile->spawn != *newtile->spawn)
 						{
 							editor.map.removeSpawn(newtile);
 							editor.map.addSpawn(oldtile);
@@ -385,12 +417,35 @@ void Action::undo(DirtyList* dirty_list)
 						editor.map.addSpawn(oldtile);
 					}
 				}
-				else if(newtile->spawn)
+				else if (newtile->spawn)
 				{
 					editor.map.removeSpawn(newtile);
 				}
+
+				Audios & audios = editor.map.audios;
+				if (oldtile->audio)
+				{
+					if (newtile->audio)
+					{
+						if (oldtile->audio != newtile->audio)
+						{
+							Audios::iterator it = find(audios.begin(), audios.end(), newtile->audio);
+							if (it != audios.end()) audios.erase(it);
+							audios.push_back(oldtile->audio);
+						}
+					}
+					else
+					{
+						audios.push_back(oldtile->audio);
+					}
+				}
+				else if (newtile->audio)
+				{
+					Audios::iterator it = find(audios.begin(), audios.end(), newtile->audio);
+					if (it != audios.end()) audios.erase(it);
+				}
+
 				*data = newtile;
-				
 				
 				// Update client dirty list
 				if(editor.IsLiveClient() && dirty_list && type != ACTION_REMOTE)

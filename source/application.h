@@ -46,6 +46,8 @@ public:
 	void FixVersionDiscrapencies();
 	std::pair<bool, FileName> ParseCommandLineMap();
 
+	void testEvtHandler(wxCommandEvent & event);
+
 	virtual void OnFatalException();
 
 #ifdef _USE_PROCESS_COM

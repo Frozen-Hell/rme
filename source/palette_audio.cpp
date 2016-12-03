@@ -17,12 +17,14 @@
 
 // This is custom pallette by @dtroitskiy made for "Frontiers of Fantasy" project specific needs.
 
-#include <wx/wx.h>
+#include "main.h"
 #include <wx/clrpicker.h>
 #include <wx/valnum.h>
 #include <wx/regex.h>
+#include "events.h"
 #include "settings.h"
 #include "gui.h"
+#include "editor.h"
 #include "spawn_brush.h"
 #include "audio_brush.h"
 #include "palette_audio.h"
@@ -35,8 +37,11 @@ BEGIN_EVENT_TABLE(AudioPalettePanel, PalettePanel)
 	EVT_SPINCTRL(PALETTE_AUDIO_SIZE_SPIN, AudioPalettePanel::OnSizeSpinChanged)
 	EVT_COMMAND_SCROLL(PALETTE_AUDIO_VOLUME_SLIDER, AudioPalettePanel::OnVolumeSliderScroll)
 	EVT_TEXT(PALETTE_AUDIO_VOLUME_TEXT, AudioPalettePanel::OnVolumeTextChanged)
-	EVT_CHECKBOX(PALETTE_AUDIO_LOOPING_CHECKBOX, AudioPalettePanel::OnIsLoopingCheckboxChanged)
-	EVT_TEXT(PALETTE_AUDIO_PAUSE_INTERVAL_TEXT, AudioPalettePanel::OnPauseIntervalTextChanged)
+	EVT_CHECKBOX(PALETTE_AUDIO_REPETITIVE_CHECKBOX, AudioPalettePanel::OnIsRepetitiveCheckboxChanged)
+	EVT_TEXT(PALETTE_AUDIO_PLAY_TIME_TEXT, AudioPalettePanel::OnRepetiviveParametersChanged)
+	EVT_TEXT(PALETTE_AUDIO_PLAY_TIME_RANDOM_TEXT, AudioPalettePanel::OnRepetiviveParametersChanged)
+	EVT_TEXT(PALETTE_AUDIO_PAUSE_TIME_TEXT, AudioPalettePanel::OnRepetiviveParametersChanged)
+	EVT_TEXT(PALETTE_AUDIO_PAUSE_TIME_RANDOM_TEXT, AudioPalettePanel::OnRepetiviveParametersChanged)
 	EVT_BUTTON(PALETTE_AUDIO_PLACE_BUTTON, AudioPalettePanel::OnClickPlaceButton)
 END_EVENT_TABLE()
 
@@ -51,6 +56,8 @@ AudioPalettePanel::AudioPalettePanel(wxWindow * parent, wxWindowID id) : Palette
 	wxStaticText * nameLabel = newd wxStaticText(this, wxID_ANY, "Name:");
 	gridSizer->Add(nameLabel, wxGBPosition(currentRow, 0), wxDefaultSpan, wxALIGN_CENTER_VERTICAL);
 	nameText = newd wxTextCtrl(this, PALETTE_AUDIO_NAME_TEXT, settings.getString(Config::AUDIO_NAME));
+	nameText->Bind(wxEVT_SET_FOCUS, &AudioPalettePanel::OnNameTextFocus, this);
+	nameText->Bind(wxEVT_KILL_FOCUS, &AudioPalettePanel::OnNameTextBlur, this);
 	gridSizer->Add(nameText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 	
@@ -84,32 +91,68 @@ AudioPalettePanel::AudioPalettePanel(wxWindow * parent, wxWindowID id) : Palette
 	gridSizer->Add(sizeSpin, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 	
-	wxStaticText * volumeLabel = newd wxStaticText(this, wxID_ANY, "Volume:");
+	wxStaticText * volumeLabel = newd wxStaticText(this, wxID_ANY, "Volume (%):");
 	gridSizer->Add(volumeLabel, wxGBPosition(currentRow, 0), wxGBSpan(1, 2), wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 	hBox = newd wxBoxSizer(wxHORIZONTAL);
-	volumeValue = settings.getFloat(Config::AUDIO_VOLUME);
-	volumeSlider = newd wxSlider(this, PALETTE_AUDIO_VOLUME_SLIDER, round(volumeValue * 100), 0, 100);
+	volumeValue = round(settings.getFloat(Config::AUDIO_VOLUME) * 100);
+	volumeSlider = newd wxSlider(this, PALETTE_AUDIO_VOLUME_SLIDER, volumeValue, 0, 200);
 	hBox->Add(volumeSlider, 1, wxEXPAND);
-	wxFloatingPointValidator <float> volumeValidator(2, &volumeValue, wxNUM_VAL_ZERO_AS_BLANK);
-	volumeValidator.SetRange(0, 1.0f);
-	volumeText = newd wxTextCtrl(this, PALETTE_AUDIO_VOLUME_TEXT, f2ws(volumeValue), wxDefaultPosition, wxSize(50, -1), wxTE_CENTRE, volumeValidator);
+	wxIntegerValidator <int> volumeValidator(&volumeValue, wxNUM_VAL_ZERO_AS_BLANK);
+	volumeValidator.SetRange(0, 200);
+	volumeText = newd wxTextCtrl(this, PALETTE_AUDIO_VOLUME_TEXT, i2ws(volumeValue), wxDefaultPosition, wxSize(50, -1), wxTE_CENTRE, volumeValidator);
 	hBox->Add(volumeText, 0, wxLEFT, 5);
 	gridSizer->Add(hBox, wxGBPosition(currentRow, 0), wxGBSpan(1, 2), wxEXPAND | wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 
-	isLoopingCheckbox = newd wxCheckBox(this, PALETTE_AUDIO_LOOPING_CHECKBOX, "is looping");
-	isLoopingCheckbox->SetValue(settings.getInteger(Config::AUDIO_LOOPING));
-	gridSizer->Add(isLoopingCheckbox, wxGBPosition(currentRow, 0), wxGBSpan(1, 2), wxALIGN_CENTER_VERTICAL);
+	isRepetitiveCheckbox = newd wxCheckBox(this, PALETTE_AUDIO_REPETITIVE_CHECKBOX, "Is repetitive");
+	bool repetitive = settings.getInteger(Config::AUDIO_REPETITIVE);
+	isRepetitiveCheckbox->SetValue(repetitive);
+	gridSizer->Add(isRepetitiveCheckbox, wxGBPosition(currentRow, 0), wxGBSpan(1, 2), wxALIGN_CENTER_VERTICAL);
 	++currentRow;
-		
-	wxStaticText * pauseIntervalLabel = newd wxStaticText(this, wxID_ANY, "Pause interval:");
-	gridSizer->Add(pauseIntervalLabel, wxGBPosition(currentRow, 0), wxDefaultSpan, wxALIGN_CENTER_VERTICAL);
-	pauseIntervalValue = settings.getFloat(Config::AUDIO_PAUSE_INTERVAL);
-	wxFloatingPointValidator <float> pauseIntervalValidator(3, &pauseIntervalValue, wxNUM_VAL_ZERO_AS_BLANK);
-	pauseIntervalValidator.SetRange(0, 100.0f);
-	pauseIntervalText = newd wxTextCtrl(this, PALETTE_AUDIO_PAUSE_INTERVAL_TEXT, f2ws(pauseIntervalValue), wxDefaultPosition, wxDefaultSize, 0, pauseIntervalValidator);
-	gridSizer->Add(pauseIntervalText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
+	
+	playTimeLabel = newd wxStaticText(this, wxID_ANY, "Play time:");
+	playTimeLabel->Enable(repetitive);
+	gridSizer->Add(playTimeLabel, wxGBPosition(currentRow, 0), wxDefaultSpan, wxALIGN_CENTER_VERTICAL);
+	playTimeValue = settings.getFloat(Config::AUDIO_PLAY_TIME);
+	wxFloatingPointValidator <float> playTimeValidator(3, &playTimeValue, wxNUM_VAL_ZERO_AS_BLANK | wxNUM_VAL_NO_TRAILING_ZEROES);
+	playTimeValidator.SetRange(0, 100.0f);
+	playTimeText = newd wxTextCtrl(this, PALETTE_AUDIO_PLAY_TIME_TEXT, f2ws(playTimeValue), wxDefaultPosition, wxDefaultSize, 0, playTimeValidator);
+	playTimeText->Enable(repetitive);
+	gridSizer->Add(playTimeText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
+	++currentRow;
+
+	playTimeRandomLabel = newd wxStaticText(this, wxID_ANY, "Play random:");
+	playTimeRandomLabel->Enable(repetitive);
+	gridSizer->Add(playTimeRandomLabel, wxGBPosition(currentRow, 0), wxDefaultSpan, wxALIGN_CENTER_VERTICAL);
+	playTimeRandomValue = settings.getFloat(Config::AUDIO_PLAY_TIME_RANDOM);
+	wxFloatingPointValidator <float> playTimeRandomValidator(3, &playTimeRandomValue, wxNUM_VAL_ZERO_AS_BLANK | wxNUM_VAL_NO_TRAILING_ZEROES);
+	playTimeRandomValidator.SetRange(0, 100.0f);
+	playTimeRandomText = newd wxTextCtrl(this, PALETTE_AUDIO_PLAY_TIME_RANDOM_TEXT, f2ws(playTimeRandomValue), wxDefaultPosition, wxDefaultSize, 0, playTimeRandomValidator);
+	playTimeRandomText->Enable(repetitive);
+	gridSizer->Add(playTimeRandomText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
+	++currentRow;
+
+	pauseTimeLabel = newd wxStaticText(this, wxID_ANY, "Pause time:");
+	pauseTimeLabel->Enable(repetitive);
+	gridSizer->Add(pauseTimeLabel, wxGBPosition(currentRow, 0), wxDefaultSpan, wxALIGN_CENTER_VERTICAL);
+	pauseTimeValue = settings.getFloat(Config::AUDIO_PAUSE_TIME);
+	wxFloatingPointValidator <float> pauseTimeValidator(3, &pauseTimeValue, wxNUM_VAL_ZERO_AS_BLANK | wxNUM_VAL_NO_TRAILING_ZEROES);
+	pauseTimeValidator.SetRange(0, 100.0f);
+	pauseTimeText = newd wxTextCtrl(this, PALETTE_AUDIO_PAUSE_TIME_TEXT, f2ws(pauseTimeValue), wxDefaultPosition, wxDefaultSize, 0, pauseTimeValidator);
+	pauseTimeText->Enable(repetitive);
+	gridSizer->Add(pauseTimeText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
+	++currentRow;
+
+	pauseTimeRandomLabel = newd wxStaticText(this, wxID_ANY, "Pause random:");
+	pauseTimeRandomLabel->Enable(repetitive);
+	gridSizer->Add(pauseTimeRandomLabel, wxGBPosition(currentRow, 0), wxDefaultSpan, wxALIGN_CENTER_VERTICAL);
+	pauseTimeRandomValue = settings.getFloat(Config::AUDIO_PLAY_TIME);
+	wxFloatingPointValidator <float> pauseTimeRandomValidator(3, &pauseTimeRandomValue, wxNUM_VAL_ZERO_AS_BLANK | wxNUM_VAL_NO_TRAILING_ZEROES);
+	pauseTimeRandomValidator.SetRange(0, 100.0f);
+	pauseTimeRandomText = newd wxTextCtrl(this, PALETTE_AUDIO_PAUSE_TIME_RANDOM_TEXT, f2ws(pauseTimeRandomValue), wxDefaultPosition, wxDefaultSize, 0, pauseTimeRandomValidator);
+	pauseTimeRandomText->Enable(repetitive);
+	gridSizer->Add(pauseTimeRandomText, wxGBPosition(currentRow, 1), wxDefaultSpan, wxEXPAND | wxALIGN_CENTER_VERTICAL);
 	++currentRow;
 
 	wxButton * placeButton = newd wxButton(this, PALETTE_AUDIO_PLACE_BUTTON, "Place audio");
@@ -120,11 +163,31 @@ AudioPalettePanel::AudioPalettePanel(wxWindow * parent, wxWindowID id) : Palette
 	sideSizer->Add(gridSizer, 0, wxEXPAND);
 	topSizer->Add(sideSizer, 0, wxEXPAND);
 	SetSizerAndFit(topSizer);
+
+	Mediator::subscribeEvent(RME_EVT_TILES_SELECTED, this);
+	Mediator::subscribeEvent(RME_EVT_AUDIO_SELECTED, this);
 }
 
 PaletteType AudioPalettePanel::GetType() const
 {
 	return TILESET_AUDIO;
+}
+
+Brush * AudioPalettePanel::GetSelectedBrush() const
+{
+	return currentBrush;
+}
+
+void AudioPalettePanel::OnNameTextFocus(wxFocusEvent & event)
+{
+	event.Skip();
+	gui.DisableHotkeys();
+}
+
+void AudioPalettePanel::OnNameTextBlur(wxFocusEvent & event)
+{
+	event.Skip();
+	gui.EnableHotkeys();
 }
 
 void AudioPalettePanel::OnNameTextChanged(wxCommandEvent & event)
@@ -133,11 +196,14 @@ void AudioPalettePanel::OnNameTextChanged(wxCommandEvent & event)
 	const wxString & name = nameText->GetValue();
 	if (pointBrush) pointBrush->setAudioName(name);
 	if (areaBrush) areaBrush->setAudioName(name);
+	if (selectedAudio) selectedAudio->setName(name);
 	settings.setString(Config::AUDIO_NAME, name.ToStdString());
 }
 
 void AudioPalettePanel::OnTypeRadioChanged(wxCommandEvent & event)
 {
+	if (isChangingWhileSelection) return;
+
 	bool isAreaTypeSelected = typeAreaRadio->GetValue();
 	colorLabel->Enable(isAreaTypeSelected);
 	areaColorPicker->Enable(isAreaTypeSelected);
@@ -145,11 +211,27 @@ void AudioPalettePanel::OnTypeRadioChanged(wxCommandEvent & event)
 	{
 		currentBrush = areaBrush;
 		gui.SetBrushSize(sizeSpin->GetValue());
+		if (selectedAudio)
+		{
+			selectedAudio->setType(Audio::TYPE_AREA);
+			// if previously audio was point, we need to set some color for the area
+			// so we're picking last picked color
+			if (selectedAudio->getAreaColor() == *wxBLACK)
+			{
+				selectedAudio->setAreaColor(areaColorPicker->GetColour());
+			}
+			gui.RefreshView();
+		}
 	}
 	else
 	{
 		currentBrush = pointBrush;
 		gui.SetBrushSize(0);
+		if (selectedAudio)
+		{
+			selectedAudio->setType(Audio::TYPE_POINT);
+			gui.RefreshView();
+		}
 	}
 	gui.ActivatePalette(GetParentPalette());
 	gui.SelectBrush();
@@ -158,60 +240,130 @@ void AudioPalettePanel::OnTypeRadioChanged(wxCommandEvent & event)
 
 void AudioPalettePanel::OnAreaColorChanged(wxColourPickerEvent & event)
 {
+	if (isChangingWhileSelection) return;
+
+	const wxColour & color = event.GetColour();
 	if (areaBrush)
 	{
-		const wxColour & color = event.GetColour();
 		areaBrush->setAreaColor(color);
 		wxColour brushColor(color.Red(), color.Green(), color.Blue(), 128);
 		areaBrush->setColor(brushColor);
 		settings.setInteger(Config::AUDIO_COLOR, color.GetRGB());
 	}
+	if (selectedAudio && selectedAudio->getType() == Audio::TYPE_AREA)
+	{
+		selectedAudio->setAreaColor(color);
+		gui.RefreshView();
+	}
 }
 
 void AudioPalettePanel::OnSizeSpinChanged(wxSpinEvent & event)
 {
+	if (isChangingWhileSelection) return;
+
 	int size = event.GetPosition();
 	if (pointBrush) pointBrush->setAudioSize(size);
 	if (areaBrush) areaBrush->setAudioSize(size);
 	if (currentBrush == areaBrush) gui.SetBrushSize(size);
+	if (selectedAudio)
+	{
+		selectedAudio->setSize(size);
+		gui.RefreshView();
+	}
 	settings.setInteger(Config::AUDIO_SIZE, size);
 }
 
 void AudioPalettePanel::OnVolumeSliderScroll(wxScrollEvent & event)
 {
-	float volume = event.GetPosition() / 100.0f;
-	volumeText->ChangeValue(f2ws(volume));
+	if (isChangingWhileSelection) return;
+
+	int volumeValue = event.GetPosition();
+	volumeText->ChangeValue(i2ws(volumeValue));
+	float volume = volumeValue / 100.0f;
 	if (pointBrush) pointBrush->setAudioVolume(volume);
 	if (areaBrush) areaBrush->setAudioVolume(volume);
+	if (selectedAudio) selectedAudio->setVolume(volume);
 	settings.setFloat(Config::AUDIO_VOLUME, volume);
 }
 
 void AudioPalettePanel::OnVolumeTextChanged(wxCommandEvent & event)
 {
 	if (!volumeText) return;
-	float volume = atof(volumeText->GetValue());
-	volumeSlider->SetValue(volume * 100);
+	if (isChangingWhileSelection) return;
+
+	int volumeValue = atoi(volumeText->GetValue());
+	volumeSlider->SetValue(volumeValue);
+	float volume = volumeValue / 100.0f;
 	if (pointBrush) pointBrush->setAudioVolume(volume);
 	if (areaBrush) areaBrush->setAudioVolume(volume);
+	if (selectedAudio) selectedAudio->setVolume(volume);
 	settings.setFloat(Config::AUDIO_VOLUME, volume);
 }
 
-void AudioPalettePanel::OnIsLoopingCheckboxChanged(wxCommandEvent & event)
+void AudioPalettePanel::OnIsRepetitiveCheckboxChanged(wxCommandEvent & event)
 {
-	if (!isLoopingCheckbox) return;
-	bool looping = isLoopingCheckbox->GetValue();
-	if (pointBrush) pointBrush->setAudioLooping(looping);
-	if (areaBrush) areaBrush->setAudioLooping(looping);
-	settings.setInteger(Config::AUDIO_LOOPING, (int) looping);
+	if (!isRepetitiveCheckbox) return;
+	if (isChangingWhileSelection) return;
+
+	bool repetitive = isRepetitiveCheckbox->GetValue();
+	playTimeLabel->Enable(repetitive);
+	playTimeText->Enable(repetitive);
+	playTimeRandomLabel->Enable(repetitive);
+	playTimeRandomText->Enable(repetitive);
+	pauseTimeLabel->Enable(repetitive);
+	pauseTimeText->Enable(repetitive);
+	pauseTimeRandomLabel->Enable(repetitive);
+	pauseTimeRandomText->Enable(repetitive);
+	if (pointBrush) pointBrush->setAudioRepetitive(repetitive);
+	if (areaBrush) areaBrush->setAudioRepetitive(repetitive);
+	if (selectedAudio) selectedAudio->setRepetitive(repetitive);
+	settings.setInteger(Config::AUDIO_REPETITIVE, (int) repetitive);
 }
 
-void AudioPalettePanel::OnPauseIntervalTextChanged(wxCommandEvent & event)
+void AudioPalettePanel::OnRepetiviveParametersChanged(wxCommandEvent & event)
 {
-	if (!pauseIntervalText) return;
-	float pauseInterval = atof(pauseIntervalText->GetValue());
-	if (pointBrush) pointBrush->setAudioPauseInterval(pauseInterval);
-	if (areaBrush) areaBrush->setAudioPauseInterval(pauseInterval);
-	settings.setFloat(Config::AUDIO_PAUSE_INTERVAL, pauseInterval);
+	if (!playTimeText || !playTimeRandomText || !pauseTimeText || !pauseTimeRandomText) return;
+	if (isChangingWhileSelection) return;
+
+	switch (event.GetId())
+	{
+		case PALETTE_AUDIO_PLAY_TIME_TEXT:
+		{
+			float playTime = atof(playTimeText->GetValue());
+			if (pointBrush) pointBrush->setAudioPlayTime(playTime);
+			if (areaBrush) areaBrush->setAudioPlayTime(playTime);
+			if (selectedAudio) selectedAudio->setPlayTime(playTime);
+			settings.setFloat(Config::AUDIO_PLAY_TIME, playTime);
+		}
+		break;
+		case PALETTE_AUDIO_PLAY_TIME_RANDOM_TEXT:
+		{
+			float playTimeRandom = atof(playTimeRandomText->GetValue());
+			if (pointBrush) pointBrush->setAudioPlayTimeRandom(playTimeRandom);
+			if (areaBrush) areaBrush->setAudioPlayTimeRandom(playTimeRandom);
+			if (selectedAudio) selectedAudio->setPlayTimeRandom(playTimeRandom);
+			settings.setFloat(Config::AUDIO_PLAY_TIME_RANDOM, playTimeRandom);
+		}
+		break;
+		case PALETTE_AUDIO_PAUSE_TIME_TEXT:
+		{
+			float pauseTime = atof(pauseTimeText->GetValue());
+			if (pointBrush) pointBrush->setAudioPauseTime(pauseTime);
+			if (areaBrush) areaBrush->setAudioPauseTime(pauseTime);
+			if (selectedAudio) selectedAudio->setPauseTime(pauseTime);
+			settings.setFloat(Config::AUDIO_PAUSE_TIME, pauseTime);
+		}
+		break;
+		case PALETTE_AUDIO_PAUSE_TIME_RANDOM_TEXT:
+		{
+			float pauseTimeRandom = atof(pauseTimeRandomText->GetValue());
+			if (pointBrush) pointBrush->setAudioPauseTimeRandom(pauseTimeRandom);
+			if (areaBrush) areaBrush->setAudioPauseTimeRandom(pauseTimeRandom);
+			if (selectedAudio) selectedAudio->setPauseTimeRandom(pauseTimeRandom);
+			settings.setFloat(Config::AUDIO_PAUSE_TIME_RANDOM, pauseTimeRandom);
+		}
+		break;
+	}
 }
 
 void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
@@ -220,9 +372,12 @@ void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
 	int type = typeAreaRadio->GetValue();
 	int size = sizeSpin->GetValue();
 	unsigned int color = areaColorPicker->GetColour().GetRGB();
-	float volume = atof(volumeText->GetValue());
-	bool looping = isLoopingCheckbox->GetValue();
-	float pauseInterval = atof(pauseIntervalText->GetValue());
+	float volume = atoi(volumeText->GetValue()) / 100.0f;
+	bool repetitive = isRepetitiveCheckbox->GetValue();
+	float playTime = atof(playTimeText->GetValue());
+	float playTimeRandom = atof(playTimeRandomText->GetValue());
+	float pauseTime = atof(pauseTimeText->GetValue());
+	float pauseTimeRandom = atof(pauseTimeRandomText->GetValue());
 
 	if (name.IsEmpty())
 	{
@@ -242,8 +397,11 @@ void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
 	settings.setInteger(Config::AUDIO_COLOR, color);
 	settings.setInteger(Config::AUDIO_SIZE, size);
 	settings.setFloat(Config::AUDIO_VOLUME, volume);
-	settings.setInteger(Config::AUDIO_LOOPING, (int) looping);
-	settings.setFloat(Config::AUDIO_PAUSE_INTERVAL, pauseInterval);
+	settings.setInteger(Config::AUDIO_REPETITIVE, (int) repetitive);
+	settings.setFloat(Config::AUDIO_PLAY_TIME, playTime);
+	settings.setFloat(Config::AUDIO_PLAY_TIME_RANDOM, playTimeRandom);
+	settings.setFloat(Config::AUDIO_PAUSE_TIME, pauseTime);
+	settings.setFloat(Config::AUDIO_PAUSE_TIME_RANDOM, pauseTimeRandom);
 
 	if (type == 0)
 	{
@@ -251,8 +409,11 @@ void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
 		pointBrush->setAudioName(name);
 		pointBrush->setAudioSize(size);
 		pointBrush->setAudioVolume(volume);
-		pointBrush->setAudioLooping(looping);
-		pointBrush->setAudioPauseInterval(pauseInterval);
+		pointBrush->setAudioRepetitive(repetitive);
+		pointBrush->setAudioPlayTime(playTime);
+		pointBrush->setAudioPlayTimeRandom(playTimeRandom);
+		pointBrush->setAudioPauseTime(pauseTime);
+		pointBrush->setAudioPauseTimeRandom(pauseTimeRandom);
 		currentBrush = pointBrush;
 		gui.SetBrushSize(0);
 	}
@@ -260,14 +421,17 @@ void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
 	{
 		areaBrush = newd AudioAreaBrush();
 		areaBrush->setAudioName(name);
-		areaBrush->setAreaColor(areaColorPicker->GetColour());
+		const wxColour & areaColor = areaColorPicker->GetColour();
+		areaBrush->setAreaColor(areaColor);
 		areaBrush->setAudioSize(size);
 		areaBrush->setAudioVolume(volume);
-		areaBrush->setAudioLooping(looping);
-		areaBrush->setAudioPauseInterval(pauseInterval);
+		areaBrush->setAudioRepetitive(repetitive);
+		areaBrush->setAudioPlayTime(playTime);
+		areaBrush->setAudioPlayTimeRandom(playTimeRandom);
+		areaBrush->setAudioPauseTime(pauseTime);
+		areaBrush->setAudioPauseTimeRandom(pauseTimeRandom);
 		
-		wxColour brushColor;
-		brushColor.SetRGBA(color | 0x80000000);
+		wxColour brushColor(areaColor.Red(), areaColor.Green(), areaColor.Blue(), 128);
 		areaBrush->setColor(brushColor);
 		currentBrush = areaBrush;
 		gui.SetBrushSize(size);
@@ -277,9 +441,81 @@ void AudioPalettePanel::OnClickPlaceButton(wxCommandEvent & event)
 	gui.SelectBrush();
 }
 
-Brush * AudioPalettePanel::GetSelectedBrush() const
+void AudioPalettePanel::onEvent(unsigned int eventID, void * eventData)
 {
-	return currentBrush;
+	switch (eventID)
+	{
+		case RME_EVT_AUDIO_SELECTED:
+		{
+			Tile * tile = (Tile *) eventData;
+			selectedAudio = tile->audio;
+			isChangingWhileSelection = true;
+			nameText->ChangeValue(selectedAudio->getName());
+			Audio::Type type = selectedAudio->getType();
+			typePointRadio->SetValue(type == Audio::TYPE_POINT);
+			typeAreaRadio->SetValue(type == Audio::TYPE_AREA);
+			if (type == Audio::TYPE_AREA)
+			{
+				areaColorPicker->SetColour(selectedAudio->getAreaColor());
+			}
+			else
+			{
+				areaColorPicker->Enable(false);
+			}
+			sizeSpin->SetValue(selectedAudio->getSize());
+			int volume = selectedAudio->getVolume() * 100;
+			volumeSlider->SetValue(volume);
+			volumeText->ChangeValue(i2ws(volume));
+			isRepetitiveCheckbox->SetValue(selectedAudio->isRepetitive());
+			playTimeText->ChangeValue(f2ws(selectedAudio->getPlayTime()));
+			playTimeRandomText->ChangeValue(f2ws(selectedAudio->getPlayTimeRandom()));
+			pauseTimeText->ChangeValue(f2ws(selectedAudio->getPauseTime()));
+			pauseTimeRandomText->ChangeValue(f2ws(selectedAudio->getPauseTimeRandom()));
+			isChangingWhileSelection = false;
+
+			if (type == Audio::TYPE_POINT)
+			{
+				if (!pointBrush) pointBrush = newd AudioPointBrush();
+				pointBrush->setAudioName(selectedAudio->getName());
+				pointBrush->setAudioSize(selectedAudio->getSize());
+				pointBrush->setAudioVolume(selectedAudio->getVolume());
+				pointBrush->setAudioRepetitive(selectedAudio->isRepetitive());
+				pointBrush->setAudioPlayTime(selectedAudio->getPlayTime());
+				pointBrush->setAudioPlayTimeRandom(selectedAudio->getPlayTimeRandom());
+				pointBrush->setAudioPauseTime(selectedAudio->getPauseTime());
+				pointBrush->setAudioPauseTimeRandom(selectedAudio->getPauseTimeRandom());
+				currentBrush = pointBrush;
+				gui.SetBrushSize(0);
+			}
+			else if (type == Audio::TYPE_AREA)
+			{
+				if (!areaBrush) areaBrush = newd AudioAreaBrush();
+				areaBrush->setAudioName(selectedAudio->getName());
+				const wxColour & areaColor = selectedAudio->getAreaColor();
+				areaBrush->setAreaColor(areaColor);
+				areaBrush->setAudioSize(selectedAudio->getSize());
+				areaBrush->setAudioVolume(selectedAudio->getVolume());
+				areaBrush->setAudioRepetitive(selectedAudio->isRepetitive());
+				areaBrush->setAudioPlayTime(selectedAudio->getPlayTime());
+				areaBrush->setAudioPlayTimeRandom(selectedAudio->getPlayTimeRandom());
+				areaBrush->setAudioPauseTime(selectedAudio->getPauseTime());
+				areaBrush->setAudioPauseTimeRandom(selectedAudio->getPauseTimeRandom());
+		
+				wxColour brushColor(areaColor.Red(), areaColor.Green(), areaColor.Blue(), 128);
+				areaBrush->setColor(brushColor);
+				currentBrush = areaBrush;
+				gui.SetBrushSize(selectedAudio->getSize());
+			}
+
+			gui.ActivatePalette(GetParentPalette());
+			gui.SelectBrush();
+		}
+		break;
+		default:
+		{
+			selectedAudio = nullptr;
+		}
+	}
 }
 
 AudioPalettePanel::~AudioPalettePanel()

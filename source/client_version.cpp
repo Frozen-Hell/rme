@@ -434,8 +434,8 @@ bool ClientVersion::hasValidPaths() const
 		return false;
 	}
 	
-	FileName dat_path = client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.dat");
-	FileName spr_path = client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("Tibia.spr");
+	FileName dat_path = client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("fof.dat");
+	FileName spr_path = client_path.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + wxT("fof.spr");
 	if (!dat_path.FileExists() || !spr_path.FileExists()) {
 		return false;
 	}
@@ -447,7 +447,7 @@ bool ClientVersion::hasValidPaths() const
 	// Peek the version of the files
 	FileReadHandle dat_file(static_cast<const char*>(dat_path.GetFullPath().mb_str()));
 	if (!dat_file.isOk()) {
-		wxLogError(wxT("Could not open Tibia.dat."));
+		wxLogError(wxT("Could not open fof.dat."));
 		return false;
 	}
 
@@ -457,7 +457,7 @@ bool ClientVersion::hasValidPaths() const
 
 	FileReadHandle spr_file(static_cast<const char*>(spr_path.GetFullPath().mb_str()));
 	if (!spr_file.isOk()) {
-		wxLogError(wxT("Could not open Tibia.spr."));
+		wxLogError(wxT("Could not open fof.spr."));
 		return false;
 	}
 
@@ -482,12 +482,10 @@ bool ClientVersion::loadValidPaths()
 	{
 		gui.PopupDialog(
 			wxT("Error"),
-			wxT("Could not locate Tibia.dat and/or Tibia.spr, please navigate to your Tibia ") +
-				name + wxT(" installation folder."),
+			wxT("Could not locate fof.dat and / or fof.spr, please navigate to the directory containing these files."),
 			wxOK);
 
-		wxString dirHelpText(wxT("Select Tibia "));
-		dirHelpText << name << " directory.";
+		wxString dirHelpText(wxT("Select directory"));
 
 		wxDirDialog file_dlg(nullptr, dirHelpText, wxT(""), wxDD_DIR_MUST_EXIST);
 		int ok = file_dlg.ShowModal();

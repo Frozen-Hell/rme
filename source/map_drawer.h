@@ -46,9 +46,9 @@ class MapCanvas;
 
 class MapDrawer
 {
-	MapCanvas* canvas;
-	Editor& editor;
-	wxPaintDC& pdc;
+	MapCanvas * canvas = nullptr;
+	Editor & editor;
+	wxPaintDC * pdc;
 	DrawingOptions options;
 
 	int mouse_map_x, mouse_map_y;
@@ -65,9 +65,12 @@ protected:
 	std::vector<MapTooltip> tooltips;
 
 public:
-	MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC& pdc);
+	MapDrawer(const DrawingOptions & options, MapCanvas * canvas, wxPaintDC * pdc);
+	// special contstuctor for drawing to offscreen buffer (for exporting map as image)
+	MapDrawer(Editor & editor, const DrawingOptions & options, wxGLCanvas * canvas, const wxPoint & renderStartPos, const wxSize & renderSize, int renderFloor);
 	~MapDrawer();
 
+	bool isDrawingOffscreen = false;
 	bool dragging;
 	bool dragging_draw;
 

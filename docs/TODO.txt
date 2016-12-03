@@ -1,4 +1,5 @@
 - Fix sprites drawn on spawn and waypoint (probably replace them with appropriate sprites from fof.dat).
-- Implement audio saving into XML. Make additional field in map properties to set audio XML file.
-- Implement "View" menu options to show audio areas and audio point sources (separate items).
+- Need to be able to modify parameters of existing audio points and areas.
 - Try to get rid off "Unknown item group declaration message".
+- Probably get rid of versioned directories in RME and leave only plain "data" directory with files from "960" version.
+- Export map as whole PNG image.

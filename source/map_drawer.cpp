@@ -22,7 +22,7 @@
 #include "audio.h"
 #include "audio_brush.h"
 
-MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC& pdc) : canvas(canvas), editor(canvas->editor), pdc(pdc), options(options)
+MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC * pdc) : canvas(canvas), editor(canvas->editor), pdc(pdc), options(options)
 {
 	canvas->MouseToMap(&mouse_map_x, &mouse_map_y);
 	canvas->GetViewBox(&view_scroll_x, &view_scroll_y, &screensize_x, &screensize_y);
@@ -34,6 +34,27 @@ MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC
 	tile_size = int(32/zoom); // after zoom
 	floor = canvas->GetFloor();
 	
+	SetupVars();
+	SetupGL();
+}
+
+MapDrawer::MapDrawer(Editor & editor, const DrawingOptions & options, wxGLCanvas * canvas, const wxPoint & renderStartPos, const wxSize & renderSize, int renderFloor)
+	: editor(editor), options(options)
+{
+	isDrawingOffscreen = true;
+	mouse_map_x = mouse_map_y = 0;
+	view_scroll_x = renderStartPos.x;
+	view_scroll_y = renderStartPos.y;
+	screensize_x = renderSize.GetWidth();
+	screensize_y = renderSize.GetHeight();
+	
+	dragging = false;
+	dragging_draw = false;
+
+	zoom = 1.0;
+	tile_size = 32;
+	floor = renderFloor;
+
 	SetupVars();
 	SetupGL();
 }
@@ -159,15 +180,19 @@ void MapDrawer::Draw()
 	DrawBackground();
 	DrawMap();
 	DrawAudio();
-	DrawDraggingShadow();
+	if (!isDrawingOffscreen) DrawDraggingShadow();
 	DrawHigherFloors();
-	if(options.dragging)
+	if (options.dragging && !isDrawingOffscreen)
+	{
 		DrawSelectionBox();
+	}
 	DrawLiveCursors();
-	DrawBrush();
+	if (!isDrawingOffscreen) DrawBrush();
 	DrawIngameBox();
-	if(options.show_grid)
+	if (options.show_grid)
+	{
 		DrawGrid();
+	}
 	//DrawTooltips();
 }
 
@@ -292,7 +317,7 @@ void MapDrawer::DrawMap()
 			Position normalPos;
 			Position to(mouse_map_x, mouse_map_y, floor);
 
-			if(canvas->isPasting())
+			if(canvas && canvas->isPasting())
 			{
 				normalPos = editor.copybuffer.getPosition();
 			}
@@ -414,6 +439,7 @@ void MapDrawer::DrawAudio()
 				for (int map_y = 0; map_y < 4; ++map_y)
 				{
 					TileLocation * location = nd->getTile(map_x, map_y, floor);
+					if (!location) continue;
 					Tile * tile = location->get();
 					if (tile && tile->audio)
 					{
@@ -437,7 +463,7 @@ void MapDrawer::DrawAudio()
 							// drawing point audio radius as a circle
 							glColor4ub(255, 0, 0, 255);
 							glBegin(GL_LINE_LOOP);
-							for (int i = 0; i <= 32; i++)
+							for (int i = 0; i <= 32; ++i)
 							{
 								float angle = 2 * M_PI * i / 32;
 								float x = drawX + 16 + radius * cos(angle);
@@ -447,7 +473,14 @@ void MapDrawer::DrawAudio()
 							glEnd();
 							
 							glEnable(GL_TEXTURE_2D);
-							glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 255, 255, 255, 255);
+							if (audio->isSelected())
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 128, 128, 128, 255);
+							}
+							else
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 255, 255, 255, 255);
+							}
 							glDisable(GL_TEXTURE_2D);
 						}
 						else if (audio->getType() == Audio::TYPE_AREA && options.showAudioAreas)
@@ -462,7 +495,14 @@ void MapDrawer::DrawAudio()
 							glEnd();
 							
 							glEnable(GL_TEXTURE_2D);
-							glBlitTexture(drawX, drawY, gui.gfx.getAudioAreaTexture(), 255, 255, 255, 255);
+							if (audio->isSelected())
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioAreaTexture(), 128, 128, 128, 255);
+							}
+							else
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioAreaTexture(), 255, 255, 255, 255);
+							}
 							glDisable(GL_TEXTURE_2D);
 						}
 					}
@@ -612,10 +652,14 @@ void MapDrawer::DrawDraggingShadow()
 						BlitItem(draw_x, draw_y, pos, *iit, true, 160,160,160,160);
 				}
 
-				if(tile->creature && tile->creature->isSelected() && options.show_creatures)
+				if (tile->creature && tile->creature->isSelected() && options.show_creatures)
+				{
 					BlitCreature(draw_x, draw_y, tile->creature);
-				if(tile->spawn && tile->spawn->isSelected())
+				}
+				if (tile->spawn && tile->spawn->isSelected())
+				{
 					BlitSpriteType(draw_x, draw_y, SPRITE_SPAWN, 160, 160, 160, 160);
+				}
 			}
 		}
 	}
@@ -1620,7 +1664,7 @@ void MapDrawer::DrawTooltips()
 	{
 		wxCoord width, height;
 		wxCoord lineHeight;
-		pdc.GetMultiLineTextExtent(wxstr(tooltip->tip), &width, &height, &lineHeight);
+		pdc->GetMultiLineTextExtent(wxstr(tooltip->tip), &width, &height, &lineHeight);
 
 		int start_sx = tooltip->x + 16 - width / 2;
 		int start_sy = tooltip->y + 16 - 7 - height;

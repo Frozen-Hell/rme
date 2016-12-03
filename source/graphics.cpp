@@ -605,7 +605,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer74(FileReadHandle& file, GameSpri
 			default:
 			{
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< optbyte << wxT("'") << wxT(" after '") 
 					<< lastopt << wxT("'");
 				warnings.push_back(err);
@@ -794,7 +794,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer76(FileReadHandle& file, GameSpri
 			default:
 			{
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< (int)optbyte << wxT("'") << wxT(" after '") 
 					<< (int)lastopt << wxT("'");
 				warnings.push_back(err);
@@ -941,7 +941,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer78(FileReadHandle& file, GameSpri
 				break;
 			default: {
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< (int)optbyte << wxT("'") << wxT(" after '") 
 					<< (int)lastopt << wxT("'");
 				warnings.push_back(err);
@@ -1099,7 +1099,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer86(FileReadHandle& file, GameSpri
 				break;
 			default: {
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< (int)optbyte << wxT("'") << wxT(" after '") 
 					<< (int)lastopt << wxT("'");
 				warnings.push_back(err);

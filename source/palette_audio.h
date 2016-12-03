@@ -20,6 +20,7 @@
 #ifndef RME_PALETTE_AUDIO_H_
 #define RME_PALETTE_AUDIO_H_
 
+#include "mediator.h"
 #include "palette_common.h"
 
 class wxColourPickerCtrl;
@@ -27,41 +28,51 @@ class wxColourPickerEvent;
 class AudioPointBrush;
 class AudioAreaBrush;
 
-class AudioPalettePanel : public PalettePanel
+class AudioPalettePanel : public PalettePanel, public IEventReceiver
 {
 public:
 	AudioPalettePanel(wxWindow * parent, wxWindowID id = wxID_ANY);
 	
 	PaletteType GetType() const;
 	Brush * GetSelectedBrush() const;
+	void OnNameTextFocus(wxFocusEvent & event);
+	void OnNameTextBlur(wxFocusEvent & event);
 	void OnNameTextChanged(wxCommandEvent & event);
 	void OnTypeRadioChanged(wxCommandEvent & event);
 	void OnAreaColorChanged(wxColourPickerEvent & event);
 	void OnSizeSpinChanged(wxSpinEvent & event);
 	void OnVolumeSliderScroll(wxScrollEvent & event);
 	void OnVolumeTextChanged(wxCommandEvent & event);
-	void OnIsLoopingCheckboxChanged(wxCommandEvent & event);
-	void OnPauseIntervalTextChanged(wxCommandEvent & event);
+	void OnIsRepetitiveCheckboxChanged(wxCommandEvent & event);
+	void OnRepetiviveParametersChanged(wxCommandEvent & event);
 	void OnClickPlaceButton(wxCommandEvent & event);
+
+	virtual void onEvent(unsigned int eventID, void * eventData);
 	
 	virtual ~AudioPalettePanel();
 
 protected:
-	float volumeValue = 0, pauseIntervalValue = 0;
+	int volumeValue = 0;
+	float playTimeValue = 0, playTimeRandomValue = 0, pauseTimeValue = 0, pauseTimeRandomValue = 0;
+	bool isChangingWhileSelection = false;
 
-	wxTextCtrl * nameText = NULL;
-	wxRadioButton * typePointRadio = NULL, * typeAreaRadio = NULL;
-	wxStaticText * colorLabel = NULL;
-	wxColourPickerCtrl * areaColorPicker = NULL;
-	wxSpinCtrl * sizeSpin = NULL;
-	wxSlider * volumeSlider = NULL;
-	wxTextCtrl * volumeText = NULL;
-	wxCheckBox * isLoopingCheckbox = NULL;
-	wxTextCtrl * pauseIntervalText = NULL;
+	wxTextCtrl * nameText = nullptr;
+	wxRadioButton * typePointRadio = nullptr, * typeAreaRadio = nullptr;
+	wxStaticText * colorLabel = nullptr;
+	wxColourPickerCtrl * areaColorPicker = nullptr;
+	wxSpinCtrl * sizeSpin = nullptr;
+	wxSlider * volumeSlider = nullptr;
+	wxTextCtrl * volumeText = nullptr;
+	wxCheckBox * isRepetitiveCheckbox = nullptr;
+	wxStaticText * playTimeLabel = nullptr, * playTimeRandomLabel = nullptr;
+	wxTextCtrl * playTimeText = nullptr, * playTimeRandomText = nullptr;
+	wxStaticText * pauseTimeLabel = nullptr, * pauseTimeRandomLabel = nullptr;
+	wxTextCtrl * pauseTimeText = nullptr, * pauseTimeRandomText = nullptr;
 
-	AudioPointBrush * pointBrush = NULL;
-	AudioAreaBrush * areaBrush = NULL;
-	Brush * currentBrush = NULL;
+	AudioPointBrush * pointBrush = nullptr;
+	AudioAreaBrush * areaBrush = nullptr;
+	Brush * currentBrush = nullptr;
+	Audio * selectedAudio = nullptr;
 
 	DECLARE_EVENT_TABLE();
 };

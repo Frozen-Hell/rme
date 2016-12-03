@@ -15,6 +15,7 @@
         </menu>
         <menu name="$Export">
             <item name="$Export Minimap..." action="EXPORT_MINIMAP" help="Export minimap to an image file."/>
+						<item name="$PNG image..." action="EXPORT_PNG_IMAGE" help="Export map as a single PNG image."/>
         </menu>
         <menu name="$Reload">
             <item name="$Reload" hotkey="F5" action="RELOAD_DATA" help="Reloads all data files."/>
@@ -112,7 +113,7 @@
         <item name="$House Palette" hotkey="H" action="SELECT_HOUSE" help="Select the House palette."/>
         <item name="$Creature Palette" hotkey="C" action="SELECT_CREATURE" help="Select the Creature palette."/>
         <item name="$Waypoint Palette" hotkey="W" action="SELECT_WAYPOINT" help="Select the Waypoint palette."/>
-        <item name="$Audio Palette" hotkey="A" action="SELECT_AUDIO" help="Select the Audio palette."/>
+        <item name="$Audio Palette" hotkey="U" action="SELECT_AUDIO" help="Select the Audio palette."/>
         <item name="$RAW Palette" hotkey="R" action="SELECT_RAW" help="Select the RAW palette."/>
     </menu>
     <!--

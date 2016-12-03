@@ -13,6 +13,7 @@
 #include "settings.h"
 #include "gui.h"
 #include "map_display.h"
+#include "map_drawer.h"
 #include "brush.h"
 #include "ground_brush.h"
 #include "wall_brush.h"
@@ -23,6 +24,7 @@
 #include "doodad_brush.h"
 #include "creature_brush.h"
 #include "spawn_brush.h"
+#include "audio_brush.h"
 
 #include "live_server.h"
 #include "live_client.h"
@@ -393,6 +395,48 @@ bool Editor::exportMiniMap(FileName filename, int floor /*= 7*/, bool displaydia
 	return false;
 }
 
+bool Editor::exportPNGImage(const wxString & filename)
+{
+	// emulating regular map draw, but using whole map size
+	DrawingOptions options;
+	options.transparent_floors = settings.getInteger(Config::TRANSPARENT_FLOORS);
+	options.transparent_items = settings.getInteger(Config::TRANSPARENT_ITEMS);
+	options.show_ingame_box = settings.getInteger(Config::SHOW_INGAME_BOX);
+	options.show_grid = settings.getInteger(Config::SHOW_GRID);
+	options.ingame = settings.getInteger(Config::SHOW_EXTRA) == 0;
+	options.show_all_floors = settings.getInteger(Config::SHOW_ALL_FLOORS);
+	options.show_creatures = settings.getInteger(Config::SHOW_CREATURES);
+	options.show_spawns = settings.getInteger(Config::SHOW_SPAWNS);
+	options.show_houses = settings.getInteger(Config::SHOW_HOUSES);
+	options.show_shade = settings.getInteger(Config::SHOW_SHADE);
+	options.show_special_tiles = settings.getInteger(Config::SHOW_SPECIAL_TILES);
+	options.show_items = settings.getInteger(Config::SHOW_ITEMS);
+	options.highlight_items = settings.getInteger(Config::HIGHLIGHT_ITEMS);
+	options.show_blocking = settings.getInteger(Config::SHOW_BLOCKING);
+	options.show_only_colors = settings.getInteger(Config::SHOW_ONLY_TILEFLAGS);
+	options.show_only_modified = settings.getInteger(Config::SHOW_ONLY_MODIFIED_TILES);
+	options.hide_items_when_zoomed = settings.getInteger(Config::HIDE_ITEMS_WHEN_ZOOMED);
+	options.showAudioPointSources = settings.getInteger(Config::SHOW_AUDIO_POINT_SOURCES);
+	options.showAudioAreas = settings.getInteger(Config::SHOW_AUDIO_AREAS);
+	options.dragging = false;
+
+	wxPoint renderStartPos(map.visibleStartX * 32, map.visibleStartY * 32);
+	wxSize renderSize((map.visibleEndX - map.visibleStartX + 1) * 32, (map.visibleEndY - map.visibleStartY + 1) * 32);
+	if (renderSize.GetWidth() <= 0 || renderSize.GetHeight() <= 0)
+	{
+		return false; // incorrect values in the map data probably
+	}
+	wxGLCanvas * canvas = newd wxGLCanvas(wxTheApp->GetTopWindow(), wxID_ANY, nullptr, wxDefaultPosition, renderSize);
+	canvas->SetCurrent(*gui.GetGLContext(canvas));
+	MapDrawer drawer(*this, options, canvas, renderStartPos, renderSize, gui.GetCurrentFloor());
+	drawer.Draw();
+	uint8_t * buffer = newd uint8_t[3 * renderSize.GetWidth() * renderSize.GetHeight()];
+	drawer.TakeScreenshot(buffer);
+	wxImage image(renderSize, buffer);
+	image.SaveFile(filename, wxBITMAP_TYPE_PNG);
+	delete canvas;
+	return true;
+}
 
 bool Editor::importMap(FileName filename, int import_x_offset, int import_y_offset, ImportType house_import_type, ImportType spawn_import_type)
 {
@@ -1159,6 +1203,12 @@ void Editor::destroySelection() {
 				newtile->spawn = nullptr;
 			}
 
+			if (newtile->audio && newtile->audio->isSelected())
+			{
+				delete newtile->audio;
+				newtile->audio = nullptr;
+			}
+
 			if(settings.getInteger(Config::USE_AUTOMAGIC)) {
 				for(int y = -1; y <= 1; y++) {
 					for(int x = -1; x <= 1; x++) {
@@ -1245,13 +1295,15 @@ void removeDuplicateWalls(Tile* buffer, Tile* tile) {
 
 void Editor::drawInternal(Position offset, bool alt, bool dodraw)
 {
-	Brush* brush = gui.GetCurrentBrush();
-	DoodadBrush* doodad_brush = dynamic_cast<DoodadBrush*>(brush);
-	HouseExitBrush* house_exit_brush = dynamic_cast<HouseExitBrush*>(brush);
-	WaypointBrush* waypoint_brush = dynamic_cast<WaypointBrush*>(brush);
-	WallBrush* wall_brush = dynamic_cast<WallBrush*>(brush);
-	SpawnBrush* spawn_brush = dynamic_cast<SpawnBrush*>(brush);
-	CreatureBrush* creature_brush = dynamic_cast<CreatureBrush*>(brush);
+	Brush * brush = gui.GetCurrentBrush();
+	DoodadBrush * doodad_brush = dynamic_cast <DoodadBrush *> (brush);
+	HouseExitBrush * house_exit_brush = dynamic_cast <HouseExitBrush *> (brush);
+	WaypointBrush * waypoint_brush = dynamic_cast <WaypointBrush *> (brush);
+	WallBrush * wall_brush = dynamic_cast <WallBrush *> (brush);
+	SpawnBrush * spawn_brush = dynamic_cast <SpawnBrush *> (brush);
+	CreatureBrush * creature_brush = dynamic_cast <CreatureBrush *> (brush);
+	AudioPointBrush * audioPointBrush = dynamic_cast <AudioPointBrush *> (brush);
+	AudioAreaBrush * audioAreaBrush = dynamic_cast <AudioAreaBrush *> (brush);
 
 	BatchAction* batch = actionQueue->createBatch(ACTION_DRAW);
 
@@ -1391,7 +1443,7 @@ void Editor::drawInternal(Position offset, bool alt, bool dodraw)
 		}
 		action->addChange(newd Change(new_tile));
 		batch->addAndCommitAction(action);
-	} else if(spawn_brush || creature_brush) {
+	} else if(spawn_brush || creature_brush || audioPointBrush || audioAreaBrush) {
 		Action* action = actionQueue->createAction(batch);
 
 		Tile* t = map.getTile(offset);

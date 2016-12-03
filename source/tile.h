@@ -47,12 +47,12 @@ enum {
 class Tile
 {
 public: // Members
-	TileLocation * location = NULL;
-	Item * ground = NULL;
+	TileLocation * location = nullptr;
+	Item * ground = nullptr;
 	ItemVector items;
-	Creature * creature = NULL;
-	Spawn * spawn = NULL;
-	Audio * audio = NULL;
+	Creature * creature = nullptr;
+	Spawn * spawn = nullptr;
+	Audio * audio = nullptr;
 	uint32_t house_id = 0; // House id for this tile (pointer not safe)
 
 public:

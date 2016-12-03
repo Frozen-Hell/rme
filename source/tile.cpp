@@ -26,6 +26,7 @@
 #include "house.h"
 #include "basemap.h"
 #include "spawn.h"
+#include "audio.h"
 #include "ground_brush.h"
 #include "wall_brush.h"
 #include "carpet_brush.h"
@@ -36,6 +37,7 @@ Tile::Tile(int x, int y, int z) :
 	ground(nullptr),
 	creature(nullptr),
 	spawn(nullptr),
+	audio(nullptr),
 	house_id(0),
 	mapflags(0),
 	statflags(0)
@@ -47,6 +49,7 @@ Tile::Tile(TileLocation& loc) :
 	ground(nullptr),
 	creature(nullptr),
 	spawn(nullptr),
+	audio(nullptr),
 	house_id(0),
 	mapflags(0),
 	statflags(0)
@@ -63,6 +66,7 @@ Tile::~Tile()
 	//printf("%d,%d,%d,%p\n", tilePos.x, tilePos.y, tilePos.z, ground);
 	delete ground;
 	delete spawn;
+	delete audio;
 }
 
 Tile* Tile::deepCopy(BaseMap& map)
@@ -70,15 +74,17 @@ Tile* Tile::deepCopy(BaseMap& map)
 	Tile* copy = map.allocator.allocateTile(location);
 	copy->flags = flags;
 	copy->house_id = house_id;
-	if(spawn) copy->spawn = spawn->deepCopy();
-	if(creature) copy->creature = creature->deepCopy();
+	if (spawn) copy->spawn = spawn->deepCopy();
+	if (audio) copy->audio = audio->deepCopy();
+	if (creature) copy->creature = creature->deepCopy();
 	// Spawncount & exits are not transferred on copy!
-	if(ground) copy->ground = ground->deepCopy();
+	if (ground) copy->ground = ground->deepCopy();
 
 	ItemVector::iterator it;
 
 	it = items.begin();
-	while(it != items.end()) {
+	while (it != items.end())
+	{
 		copy->items.push_back((*it)->deepCopy());
 		++it; 
 	}
@@ -107,53 +113,68 @@ uint Tile::memsize() const
 int Tile::size() const
 {
 	int sz = 0;
-	if(ground) ++sz;
+	if (ground) ++sz;
 	sz += items.size();
-	if(creature) ++sz;
-	if(spawn) ++sz;
+	if (creature) ++sz;
+	if (spawn) ++sz;
+	if (audio) ++sz;
 	if(location)
 	{
-		if(location->getHouseExits()) ++sz;
-		if(location->getSpawnCount()) ++sz;
-		if(location->getWaypointCount()) ++ sz;
+		if (location->getHouseExits()) ++sz;
+		if (location->getSpawnCount()) ++sz;
+		if (location->getWaypointCount()) ++sz;
 	}
 	return sz;
 }
 
-void Tile::merge(Tile* other) {
-	if(other->isPZ()) setPZ(true);
-	if(other->house_id) {
+void Tile::merge(Tile * other)
+{
+	if (other->isPZ()) setPZ(true);
+	if (other->house_id)
+	{
 		house_id = other->house_id;
 	}
 
-	if(other->ground) {
+	if (other->ground)
+	{
 		delete ground;
 		ground = other->ground;
 		other->ground = nullptr;
 	}
 
-	if(other->creature) {
+	if (other->creature)
+	{
 		delete creature;
 		creature = other->creature;
 		other->creature = nullptr;
 	}
 
-	if(other->spawn) {
+	if (other->spawn)
+	{
 		delete spawn;
 		spawn = other->spawn;
 		other->spawn = nullptr;
 	}
 
-	if(other->creature) {
+	if (other->creature)
+	{
 		delete creature;
 		creature = other->creature;
 		other->creature = nullptr;
 	}
 
+	if (other->audio)
+	{
+		delete audio;
+		audio = other->audio;
+		other->audio = nullptr;
+	}
+
 	ItemVector::iterator it;
 
 	it = other->items.begin();
-	while(it != other->items.end()) {
+	while (it != other->items.end())
+	{
 		addItem(*it);
 		++it; 
 	}
@@ -231,16 +252,19 @@ void Tile::addItem(Item* item) {
 	}
 }
 
-void Tile::select() {
-	if(size() == 0) return;
-	if(ground) ground->select();
-	if(spawn) spawn->select();
-	if(creature) creature->select();
+void Tile::select()
+{
+	if (size() == 0) return;
+	if (ground) ground->select();
+	if (spawn) spawn->select();
+	if (creature) creature->select();
+	if (audio) audio->select();
 
 	ItemVector::iterator it;
 
 	it = items.begin();
-	while(it != items.end()) {
+	while (it != items.end())
+	{
 		(*it)->select();
 		++it;
 	}
@@ -249,15 +273,18 @@ void Tile::select() {
 }
 
 
-void Tile::deselect() {
-	if(ground) ground->deselect();
-	if(spawn) spawn->deselect();
-	if(creature) creature->deselect();
+void Tile::deselect()
+{
+	if (ground) ground->deselect();
+	if (spawn) spawn->deselect();
+	if (creature) creature->deselect();
+	if (audio) audio->deselect();
 
 	ItemVector::iterator it;
 
 	it = items.begin();
-	while(it != items.end()) {
+	while(it != items.end())
+	{
 		(*it)->deselect();
 		++it;
 	}
@@ -265,7 +292,8 @@ void Tile::deselect() {
 	statflags &= ~TILESTATE_SELECTED;
 }
 
-Item* Tile::getTopSelectedItem() {
+Item * Tile::getTopSelectedItem()
+{
 	for(ItemVector::reverse_iterator iter = items.rbegin();
 			iter != items.rend();
 			++iter)
@@ -374,10 +402,16 @@ void Tile::update()
 {
 	statflags &= TILESTATE_MODIFIED;
 	
-	if(spawn && spawn->isSelected()) {
+	if (spawn && spawn->isSelected())
+	{
 		statflags |= TILESTATE_SELECTED;
 	}
-	if(creature && creature->isSelected()) {
+	if (creature && creature->isSelected())
+	{
+		statflags |= TILESTATE_SELECTED;
+	}
+	if (audio && audio->isSelected())
+	{
 		statflags |= TILESTATE_SELECTED;
 	}
 

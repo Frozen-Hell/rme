@@ -61,14 +61,14 @@ protected:
 	
 	wxChoicebook * choicebook;
 
-	BrushPalettePanel * terrain_palette = NULL;
-	BrushPalettePanel * doodad_palette = NULL;
-	BrushPalettePanel * item_palette = NULL;
-	CreaturePalettePanel * creature_palette = NULL;
-	HousePalettePanel * house_palette = NULL;
-	WaypointPalettePanel * waypoint_palette = NULL;
-	AudioPalettePanel * audioPalette = NULL;
-	BrushPalettePanel * raw_palette = NULL;
+	BrushPalettePanel * terrain_palette = nullptr;
+	BrushPalettePanel * doodad_palette = nullptr;
+	BrushPalettePanel * item_palette = nullptr;
+	CreaturePalettePanel * creature_palette = nullptr;
+	HousePalettePanel * house_palette = nullptr;
+	WaypointPalettePanel * waypoint_palette = nullptr;
+	AudioPalettePanel * audioPalette = nullptr;
+	BrushPalettePanel * raw_palette = nullptr;
 
 	DECLARE_EVENT_TABLE()
 };
