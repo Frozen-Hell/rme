@@ -461,6 +461,7 @@ void MapDrawer::DrawAudio()
 						if (audio->getType() == Audio::TYPE_POINT && options.showAudioPointSources)
 						{
 							// drawing point audio radius as a circle
+							int radius = audio->getSize() * 32 - 16;
 							glColor4ub(255, 0, 0, 255);
 							glBegin(GL_LINE_LOOP);
 							for (int i = 0; i <= 32; ++i)
@@ -486,12 +487,13 @@ void MapDrawer::DrawAudio()
 						else if (audio->getType() == Audio::TYPE_AREA && options.showAudioAreas)
 						{
 							const wxColor & renderColor = audio->getAreaColor();
+							int size = audio->getSize() * 32;
 							glColor4ub(renderColor.Red(), renderColor.Green(), renderColor.Blue(), 128);
 							glBegin(GL_QUADS);
-								glVertex2f(drawX - radius, drawY + radius + 32);
-								glVertex2f(drawX + radius + 32, drawY + radius + 32);
-								glVertex2f(drawX + radius + 32, drawY - radius);
-								glVertex2f(drawX - radius, drawY - radius);
+								glVertex2f(drawX - size, drawY + size + 32);
+								glVertex2f(drawX + size + 32, drawY + size + 32);
+								glVertex2f(drawX + size + 32, drawY - size);
+								glVertex2f(drawX - size, drawY - size);
 							glEnd();
 							
 							glEnable(GL_TEXTURE_2D);

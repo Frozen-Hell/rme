@@ -34,7 +34,6 @@ ${CMAKE_CURRENT_LIST_DIR}/house.cpp
 ${CMAKE_CURRENT_LIST_DIR}/house_exit_brush.cpp
 ${CMAKE_CURRENT_LIST_DIR}/iomap.cpp
 ${CMAKE_CURRENT_LIST_DIR}/iomap_otbm.cpp
-#${CMAKE_CURRENT_LIST_DIR}/iomap_otmm.cpp
 ${CMAKE_CURRENT_LIST_DIR}/item_attributes.cpp
 ${CMAKE_CURRENT_LIST_DIR}/item.cpp
 ${CMAKE_CURRENT_LIST_DIR}/items.cpp
@@ -52,6 +51,7 @@ ${CMAKE_CURRENT_LIST_DIR}/map_region.cpp
 ${CMAKE_CURRENT_LIST_DIR}/map_tab.cpp
 ${CMAKE_CURRENT_LIST_DIR}/map_window.cpp
 ${CMAKE_CURRENT_LIST_DIR}/materials.cpp
+${CMAKE_CURRENT_LIST_DIR}/mediator.cpp
 ${CMAKE_CURRENT_LIST_DIR}/minimap_window.cpp
 ${CMAKE_CURRENT_LIST_DIR}/mkpch.cpp
 ${CMAKE_CURRENT_LIST_DIR}/mt_rand.cpp

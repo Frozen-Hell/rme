@@ -1885,12 +1885,12 @@ bool IOMapOTBM::saveAudio(Map & map, pugi::xml_document & doc)
 	for (Audio * audio : map.audios)
 	{
 		pugi::xml_node audioNode = audioNodes.append_child("audio");
-		audioNode.append_attribute("name") = audio->getName();
+		audioNode.append_attribute("name") = audio->getName().ToStdString().c_str();
 		audioNode.append_attribute("type") = (audio->getType() == Audio::TYPE_POINT ? "point" : "area");
 		if (audio->getType() == Audio::TYPE_AREA)
 		{
 			// in the game, the color needed for debugging purposes
-			audioNode.append_attribute("areaColor") = audio->getAreaColor().GetAsString(wxC2S_HTML_SYNTAX);
+			audioNode.append_attribute("areaColor") = audio->getAreaColor().GetAsString(wxC2S_HTML_SYNTAX).ToStdString().c_str();
 		}
 		audioNode.append_attribute("size") = audio->getSize();
 		audioNode.append_attribute("volume") = audio->getVolume();
