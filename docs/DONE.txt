@@ -6,7 +6,7 @@
 - Improved settings management for audio setup and rendering on the map.
 - Put new icons from Kris for audio sources and areas.
 - Setup some code for audio XML loading and saving. Now need to implement loading / saving methods.
-- Implmented audio XML file saving and loading.
+- Implemented audio XML file saving and loading.
 - Fixed name text input blocking by palette hotkeys mechanism.
 - Made RME load fof.dat / fof.spr files instead of Tibia.dat / Tibia.spr.
 - Refactored audio setup UI: changed "Is looping" to "Is repetitive" and added "play time" / "play random time" and "pause time" / "pause random time" fields.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <creatures>
 	<creature name="traveler" type="monster" looktype="1" />
-	<creature name="bandit" type="npc" looktype="2" />
+	<creature name="bandit" type="monster" looktype="2" />
 	<creature name="bear" type="monster" looktype="3" />
 	<creature name="rat" type="monster" looktype="4" />
 	<creature name="spider" type="monster" looktype="5" />

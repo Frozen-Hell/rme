@@ -1,1 +1,1128 @@
-<materials></materials>
+<materials>
+
+	<!-- ALL BORDERS GO HERE -->
+	<!-- Instructions for borders -->
+	<!-- "w" is actually east, "s" is actually north, etc. (everything is reversed) -->
+	<!-- D borders (dnw, dne, dse, dsw) are the fat corner borders -->
+	<!-- C borders (cnw, cne, cse, csw) are the small corner borders (the most outer edges) -->
+	
+<border id="1">
+ -- vintage snow -- 
+<borderitem edge="s" item="576"/> 
+<borderitem edge="e" item="582"/> 
+<borderitem edge="w" item="586"/> 
+<borderitem edge="n" item="591"/> 
+
+<borderitem edge="dnw" item="592"/>
+<borderitem edge="dne" item="590"/>
+<borderitem edge="dse" item="575"/>
+<borderitem edge="dsw" item="578"/>
+
+<borderitem edge="cnw" item="589"/>
+<borderitem edge="cne" item="587"/>
+<borderitem edge="cse" item="579"/>
+<borderitem edge="csw" item="581"/>
+</border>
+
+<border id="2">
+ -- desert sand NOT FULL MISSING unused sprites for directions -- 
+<borderitem edge="n" item="611"/>
+<borderitem edge="w" item="615"/>
+<borderitem edge="e" item="616"/>
+<borderitem edge="s" item="624"/>
+
+<borderitem edge="dnw" item="610"/>
+<borderitem edge="dne" item="614"/>
+<borderitem edge="dse" item="627"/>
+<borderitem edge="dsw" item="623"/>
+
+</border>
+
+<border id="3">
+ -- mud ground OT FULL MISSING unused sprites for directions -- 
+<borderitem edge="n" item="629"/>
+<borderitem edge="w" item="635"/>
+<borderitem edge="e" item="636"/>
+<borderitem edge="s" item="642"/>
+
+<borderitem edge="dnw" item="628"/>
+<borderitem edge="dne" item="630"/>
+<borderitem edge="dse" item="640"/>
+<borderitem edge="dsw" item="637"/>
+
+<borderitem edge="cnw" item="632"/>
+<borderitem edge="cne" item="633"/>
+<borderitem edge="cse" item="639"/>
+<borderitem edge="csw" item="638"/>
+</border>
+
+<border id="4">
+ -- underwater -- 
+<borderitem edge="n" item="646"/>
+<borderitem edge="w" item="650"/>
+<borderitem edge="e" item="652"/>
+<borderitem edge="s" item="656"/>
+
+<borderitem edge="dnw" item="645"/>
+<borderitem edge="dne" item="647"/>
+<borderitem edge="dse" item="655"/>
+<borderitem edge="dsw" item="657"/>
+
+<borderitem edge="cnw" item="648"/>
+<borderitem edge="cne" item="649"/>
+<borderitem edge="cse" item="654"/>
+<borderitem edge="csw" item="653"/>
+</border>
+
+<border id="5">
+ -- milky ice -- 
+<borderitem edge="n" item="659"/>
+<borderitem edge="w" item="663"/>
+<borderitem edge="e" item="665"/>
+<borderitem edge="s" item="670"/>
+
+<borderitem edge="dnw" item="658"/>
+<borderitem edge="dne" item="660"/>
+<borderitem edge="dse" item="669"/>
+<borderitem edge="dsw" item="666"/>
+
+<borderitem edge="cnw" item="661"/>
+<borderitem edge="cne" item="662"/>
+<borderitem edge="cse" item="668"/>
+<borderitem edge="csw" item="667"/>
+</border>
+
+<border id="6">
+ -- snow -- 
+<borderitem edge="n" item="1202"/>
+<borderitem edge="s" item="672"/>
+<borderitem edge="w" item="678"/>
+<borderitem edge="e" item="676"/>
+
+<borderitem edge="dnw" item="681"/>
+<borderitem edge="dne" item="680"/>
+<borderitem edge="dse" item="674"/>
+<borderitem edge="dsw" item="675"/>
+
+<borderitem edge="cnw" item="682"/>
+<borderitem edge="cne" item="679"/>
+<borderitem edge="cse" item="671"/>
+<borderitem edge="csw" item="673"/>
+</border>
+
+<border id="7">
+ -- wooden planks UNSURE -- 
+<borderitem edge="n" item="693"/>
+<borderitem edge="s" item="710"/>
+
+<borderitem edge="dnw" item="692"/>
+<borderitem edge="dne" item="694"/>
+<borderitem edge="dse" item="707"/>
+<borderitem edge="dsw" item="704"/>
+
+<borderitem edge="cnw" item="695"/>
+<borderitem edge="cne" item="696"/>
+<borderitem edge="cse" item="705"/>
+<borderitem edge="csw" item="706"/>
+</border>
+
+<border id="8">
+ -- frozen ground -- 
+<borderitem edge="n" item="712"/>
+<borderitem edge="s" item="726"/>
+<borderitem edge="w" item="717"/>
+<borderitem edge="e" item="721"/>
+
+<borderitem edge="dnw" item="711"/>
+<borderitem edge="dne" item="713"/>
+<borderitem edge="dse" item="724"/>
+<borderitem edge="dsw" item="722"/>
+
+<borderitem edge="cnw" item="714"/>
+<borderitem edge="cne" item="716"/>
+<borderitem edge="cse" item="727"/>
+<borderitem edge="csw" item="725"/>
+</border>
+
+<border id="9">
+ -- royal tile -- 
+<borderitem edge="n" item="729"/>
+<borderitem edge="s" item="738"/>
+
+<borderitem edge="dnw" item="728"/>
+<borderitem edge="dne" item="730"/>
+<borderitem edge="dse" item="737"/>
+<borderitem edge="dsw" item="734"/>
+
+<borderitem edge="cnw" item="731"/>
+<borderitem edge="cne" item="733"/>
+<borderitem edge="cse" item="736"/>
+<borderitem edge="csw" item="735"/>
+</border>
+
+<border id="10">
+ -- snowy cobbled street -- 
+<borderitem edge="n" item="755"/>
+<borderitem edge="s" item="740"/>
+<borderitem edge="w" item="749"/>
+<borderitem edge="e" item="745"/>
+
+<borderitem edge="dnw" item="753"/>
+<borderitem edge="dne" item="751"/>
+<borderitem edge="dse" item="742"/>
+<borderitem edge="dsw" item="744"/>
+
+<borderitem edge="cnw" item="754"/>
+<borderitem edge="cne" item="750"/>
+<borderitem edge="cse" item="739"/>
+<borderitem edge="csw" item="741"/>
+</border>
+
+<border id="11">
+ -- black stone tile -- 
+<borderitem edge="n" item="768"/>
+<borderitem edge="s" item="757"/>
+<borderitem edge="w" item="763"/>
+<borderitem edge="e" item="762"/>
+
+<borderitem edge="dnw" item="766"/>
+<borderitem edge="dne" item="765"/>
+<borderitem edge="dse" item="759"/>
+<borderitem edge="dsw" item="761"/>
+
+<borderitem edge="cnw" item="767"/>
+<borderitem edge="cne" item="764"/>
+<borderitem edge="cse" item="756"/>
+<borderitem edge="csw" item="758"/>
+</border>
+
+<border id="12">
+ -- igneous rock soil -- 
+<borderitem edge="n" item="778"/>
+<borderitem edge="s" item="792"/>
+<borderitem edge="w" item="783"/>
+<borderitem edge="e" item="787"/>
+
+<borderitem edge="dnw" item="777"/>
+<borderitem edge="dne" item="779"/>
+<borderitem edge="dse" item="793"/>
+<borderitem edge="dsw" item="791"/>
+
+<borderitem edge="cnw" item="780"/>
+<borderitem edge="cne" item="782"/>
+<borderitem edge="cse" item="790"/>
+<borderitem edge="csw" item="788"/>
+</border>
+
+<border id="13">
+ -- stone soil -- 
+<borderitem edge="n" item="966"/>
+<borderitem edge="s" item="967"/>
+<borderitem edge="w" item="970"/>
+<borderitem edge="e" item="971"/>
+
+<borderitem edge="dnw" item="964"/>
+<borderitem edge="dne" item="969"/>
+<borderitem edge="dse" item="968"/>  -- WRONG SPRITE!
+<borderitem edge="dsw" item="965"/>
+
+</border>
+
+<border id="14">
+ -- snowy stone soil -- 
+<borderitem edge="n" item="978"/>
+<borderitem edge="s" item="979"/>
+<borderitem edge="w" item="974"/>
+<borderitem edge="e" item="975"/>
+
+<borderitem edge="dnw" item="972"/>
+<borderitem edge="dne" item="973"/>
+<borderitem edge="dse" item="976"/> -- WRONG SPRITE!
+<borderitem edge="dsw" item="977"/>
+</border>
+
+<border id="15">
+ -- ornate tile REQUIRED FOR ROYAL TILE SET-- 
+<borderitem edge="n" item="1017"/>
+<borderitem edge="s" item="1008"/>
+<borderitem edge="w" item="1012"/>
+<borderitem edge="e" item="1013"/>
+
+<borderitem edge="dnw" item="1007"/>
+<borderitem edge="dne" item="1009"/>
+<borderitem edge="dse" item="1018"/>
+<borderitem edge="dsw" item="1016"/>
+
+<borderitem edge="cnw" item="1015"/>
+<borderitem edge="cne" item="1014"/>
+<borderitem edge="cse" item="1010"/>
+<borderitem edge="csw" item="1011"/>
+</border>
+
+<border id="16">
+ -- unanimated water MISSING SOME SPRITES LIKE DESERT ETC - FOR EXAMPLE 1051 and 1052 -- 
+<borderitem edge="n" item="1049"/>
+<borderitem edge="s" item="1062"/>
+<borderitem edge="w" item="1056"/>
+<borderitem edge="e" item="1057"/>
+
+<borderitem edge="dnw" item="1048"/>
+<borderitem edge="dne" item="1050"/>
+<borderitem edge="dse" item="1061"/>
+<borderitem edge="dsw" item="1058"/>
+
+<borderitem edge="cnw" item="1053"/>
+<borderitem edge="cne" item="1055"/>
+<borderitem edge="cse" item="1060"/>
+<borderitem edge="csw" item="1059"/>
+</border>
+
+<border id="17">
+ -- animated water to snow out border -- 
+<borderitem edge="n" item="1073"/>
+<borderitem edge="s" item="1077"/>
+<borderitem edge="w" item="1079"/>
+<borderitem edge="e" item="1075"/>
+
+<borderitem edge="dnw" item="1084"/>
+<borderitem edge="dne" item="1087"/>
+<borderitem edge="dse" item="1084"/>
+<borderitem edge="dsw" item="1088"/>
+
+<borderitem edge="cnw" item="1083"/>
+<borderitem edge="cne" item="1086"/>
+<borderitem edge="cse" item="1082"/>
+<borderitem edge="csw" item="1081"/>
+</border>
+
+<border id="18">
+ -- animated water to snow inner border -- 
+
+</border>
+
+<border id="19">
+ -- unanimated snowy water -- 
+<borderitem edge="n" item="1470"/>
+<borderitem edge="s" item="1459"/>
+<borderitem edge="w" item="1465"/>
+<borderitem edge="e" item="1464"/>
+
+<borderitem edge="cnw" item="1469"/>
+<borderitem edge="cne" item="1466"/>
+<borderitem edge="cse" item="1458"/>
+<borderitem edge="csw" item="1460"/>
+
+<borderitem edge="dnw" item="1468"/>
+<borderitem edge="dne" item="1467"/>
+<borderitem edge="dse" item="1461"/>
+<borderitem edge="dsw" item="1463"/>
+</border>
+
+<border id="20">
+ -- dun gras -- 
+<borderitem edge="n" item="1603"/>
+<borderitem edge="s" item="1594"/>
+<borderitem edge="w" item="1599"/>
+<borderitem edge="e" item="1598"/>
+
+<borderitem edge="cnw" item="1604"/>
+<borderitem edge="cne" item="1602"/>
+<borderitem edge="cse" item="1593"/>
+<borderitem edge="csw" item="1595"/>
+
+<borderitem edge="dnw" item="1601"/>
+<borderitem edge="dne" item="1600"/>
+<borderitem edge="dse" item="1596"/>
+<borderitem edge="dsw" item="1597"/>
+</border>
+
+<border id="21">
+ -- plains -- 
+<borderitem edge="n" item="1647"/>
+<borderitem edge="s" item="1638"/>
+<borderitem edge="w" item="1655"/>
+<borderitem edge="e" item="1654"/>
+
+<borderitem edge="cnw" item="1648"/>
+<borderitem edge="cne" item="1646"/>
+<borderitem edge="cse" item="1637"/>
+<borderitem edge="csw" item="1639"/>
+
+<borderitem edge="dnw" item="1645"/>
+<borderitem edge="dne" item="1644"/>
+<borderitem edge="dse" item="1640"/>
+<borderitem edge="dsw" item="1641"/>
+</border>
+
+<border id="22">
+ -- ice -- 
+<borderitem edge="n" item="1983"/>
+<borderitem edge="s" item="1986"/>
+<borderitem edge="w" item="1994"/>
+<borderitem edge="e" item="1993"/>
+
+<borderitem edge="cnw" item="1998"/>
+<borderitem edge="cne" item="1995"/>
+<borderitem edge="cse" item="1985"/>
+<borderitem edge="csw" item="1992"/>
+
+<borderitem edge="dnw" item="1997"/>
+<borderitem edge="dne" item="1996"/>
+<borderitem edge="dse" item="1989"/>
+<borderitem edge="dsw" item="1991"/>
+</border>
+
+<border id="23">
+ -- dirt -- 
+<borderitem edge="n" item="1547"/>
+<borderitem edge="s" item="1538"/>
+<borderitem edge="w" item="1543"/>
+<borderitem edge="e" item="1542"/>
+
+<borderitem edge="cnw" item="1548"/>
+<borderitem edge="cne" item="1546"/>
+<borderitem edge="cse" item="1537"/>
+<borderitem edge="csw" item="1539"/>
+
+<borderitem edge="dnw" item="1545"/>
+<borderitem edge="dne" item="1544"/>
+<borderitem edge="dse" item="1540"/>
+<borderitem edge="dsw" item="1541"/>
+</border>
+
+<border id="24">
+ -- ice mountain -- 
+<borderitem edge="n" item="2015"/>
+<borderitem edge="s" item="2003"/>
+<borderitem edge="w" item="2021"/>
+<borderitem edge="e" item="2007"/>
+
+<borderitem edge="dnw" item="2010"/>
+<borderitem edge="dne" item="2012"/>
+<borderitem edge="dse" item="1999"/>
+<borderitem edge="dsw" item="2013"/>
+
+<borderitem edge="cnw" item="2022"/>
+<borderitem edge="cne" item="2019"/>
+<borderitem edge="cse" item="2000"/>
+<borderitem edge="csw" item="2018"/>
+</border>
+
+<border id="25">
+ -- white mountain -- 
+<borderitem edge="n" item="2133"/>
+<borderitem edge="s" item="2117"/>
+<borderitem edge="w" item="2128"/>
+<borderitem edge="e" item="2118"/>
+
+<borderitem edge="dnw" item="2136"/>
+<borderitem edge="dne" item="2131"/>
+<borderitem edge="dse" item="2120"/>
+<borderitem edge="dsw" item="2130"/>
+
+<borderitem edge="cnw" item="2135"/>
+<borderitem edge="cne" item="2139"/>
+<borderitem edge="cse" item="2121"/>
+<borderitem edge="csw" item="2138"/>
+</border>
+
+<border id="26">
+ -- stone soil -- 
+<borderitem edge="n" item="2102"/>
+<borderitem edge="s" item="2092"/>
+<borderitem edge="w" item="2098"/>
+<borderitem edge="e" item="2097"/>
+
+<borderitem edge="dnw" item="2100"/>
+<borderitem edge="dne" item="2099"/>
+<borderitem edge="dse" item="2094"/>
+<borderitem edge="dsw" item="2095"/>
+
+<borderitem edge="cnw" item="2103"/>
+<borderitem edge="cne" item="2101"/>
+<borderitem edge="cse" item="2091"/>
+<borderitem edge="csw" item="2093"/>
+</border>
+
+<border id="27">
+ -- snowy mountain -- 
+<borderitem edge="n" item="2444"/>
+<borderitem edge="s" item="2434"/>
+<borderitem edge="w" item="2436"/>
+<borderitem edge="e" item="2432"/>
+
+<borderitem edge="dnw" item="2452"/>
+<borderitem edge="dne" item="2453"/>
+<borderitem edge="dse" item="2454"/>
+<borderitem edge="dsw" item="2451"/>
+
+<borderitem edge="cnw" item="2443"/>
+<borderitem edge="cne" item="2450"/>
+<borderitem edge="cse" item="2433"/>
+<borderitem edge="csw" item="2435"/>
+</border>
+
+<border id="28">
+ -- black mountain soil ground-- 
+<borderitem edge="n" item="2496"/>
+<borderitem edge="s" item="2488"/>
+<borderitem edge="w" item="2492"/>
+<borderitem edge="e" item="2500"/>
+
+<borderitem edge="dnw" item="2494"/>
+<borderitem edge="dne" item="2498"/>
+<borderitem edge="dse" item="2486"/>
+<borderitem edge="dsw" item="2490"/>
+
+<borderitem edge="cnw" item="2495"/>
+<borderitem edge="cne" item="2497"/>
+<borderitem edge="cse" item="2487"/>
+<borderitem edge="csw" item="2489"/>
+</border>
+
+<border id="29">
+ -- black mountain soil top-- 
+<borderitem edge="n" item="2527"/>
+<borderitem edge="s" item="2519"/>
+<borderitem edge="w" item="2523"/>
+<borderitem edge="e" item="2531"/>
+
+<borderitem edge="dnw" item="2525"/>
+<borderitem edge="dne" item="2529"/>
+<borderitem edge="dse" item="2521"/>
+<borderitem edge="dsw" item="2517"/>
+
+<borderitem edge="cnw" item="2526"/>
+<borderitem edge="cne" item="2528"/>
+<borderitem edge="cse" item="2518"/>
+<borderitem edge="csw" item="2520"/>
+</border>
+
+<border id="30">
+ -- black mountain -- 
+<borderitem edge="n" item="2543"/>
+<borderitem edge="s" item="2532"/>
+<borderitem edge="w" item="2539"/>
+<borderitem edge="e" item="2536"/>
+
+<borderitem edge="dnw" item="2542"/>
+<borderitem edge="dne" item="2533"/>
+<borderitem edge="dse" item="2534"/>
+<borderitem edge="dsw" item="2535"/>
+
+<borderitem edge="cse" item="2537"/>
+</border>
+
+
+<!--- GROUNDS GO BELOW --->
+
+<brush name="ice mountain" type="ground" server_lookid="2038" z-order="3500">
+		<item id="2038" chance="250"/>
+	</brush>	
+
+<brush name="ice" type="ground" server_lookid="1990" z-order="3500">
+		<item id="1990" chance="1"/>
+		<border align="outer" id="22"/>
+		<border align="inner" to="ice mountain" id="24"/>			
+</brush>	
+
+<brush name="stony mountain" type="ground" server_lookid="2109" z-order="3500">
+		<item id="2109" chance="1"/>		
+</brush>	
+
+<brush name="stone soil" type="ground" server_lookid="2096" z-order="3500">
+		<item id="2096" chance="1"/>
+		<border align="outer" id="26"/>
+		<border align="inner" to="stony mountain" id="25"/>			
+</brush>	
+
+<brush name="black mountain" type="ground" server_lookid="2469" z-order="3500">
+		<item id="2469" chance="1"/>
+</brush>	
+
+<brush name="black mountain soil" type="ground" server_lookid="2468" z-order="3500">
+		<item id="2468" chance="1"/>
+		<border align="outer" id="28"/>
+		<border align="inner" to="black mountain" id="30"/>			
+</brush>	
+
+<brush name="black mountain soil deeper" type="ground" server_lookid="2597" z-order="3500">
+		<item id="2597" chance="1"/>
+		<border align="outer" id="28"/>
+		<border align="inner" to="black mountain" id="30"/>			
+</brush>	
+
+<brush name="snowy mountain" type="ground" server_lookid="2455" z-order="3500">
+		<item id="2455" chance="1"/>
+		<border align="outer" id="27"/>		
+</brush>	
+
+<brush name="ocean water" type="ground" server_lookid="1462" z-order="3500">
+		<item id="1462" chance="1"/>
+		<border align="inner" to="ice" id="22"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="stony mountain" id="25"/>
+		<border align="inner" to="stone soil" id="26"/>	
+		<border align="inner" to="snowy mountain" id="27"/>		
+		<border align="inner" to="black mountain soil" id="28"/>				
+</brush>	
+
+<brush name="plains" type="ground" server_lookid="1632" z-order="3500">
+		<item id="1632" chance="400"/>
+		<item id="1636" chance="400"/>
+		<item id="1619" chance="10"/>		
+		<item id="1620" chance="10"/>
+		<item id="1625" chance="10"/>		
+		<item id="1626" chance="10"/>		
+		<item id="1617" chance="10"/>	
+		<item id="1618" chance="10"/>
+		<item id="1621" chance="1"/>
+		<item id="1622" chance="1"/>
+		<item id="1623" chance="10"/>
+		<item id="1624" chance="10"/>
+		<item id="1627" chance="10"/>
+		<item id="1628" chance="10"/>
+		<item id="1629" chance="10"/>
+		<item id="1630" chance="10"/>	
+		<item id="1631" chance="100"/>
+		<item id="1633" chance="10"/>
+		<item id="1634" chance="10"/>
+		<item id="1635" chance="10"/>
+		<border align="outer" id="21"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="snowy mountain" id="27"/>	
+	</brush>	
+<brush name="dirt" type="ground" server_lookid="1532" z-order="3500">
+		<item id="1532" chance="2500"/>
+		<item id="1533" chance="2500"/>
+		<item id="1534" chance="2500"/>		
+		<item id="1535" chance="2500"/>
+		<item id="1536" chance="2500"/>
+
+		<border align="outer" id="23"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="plains" id="21"/>	
+		<border align="inner" to="snowy mountain" id="27"/>	
+</brush>	
+<brush name="snowy cobbled street" type="ground" server_lookid="743" z-order="3500">
+		<item id="743" chance="250"/>
+		<item id="746" chance="250"/>		
+		<item id="747" chance="250"/>
+		<item id="748" chance="250"/>	
+		<item id="752" chance="250"/>		
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="snowy mountain" id="27"/>	
+	</brush>
+<brush name="dun gras" type="ground" server_lookid="1583" z-order="3500">
+		<item id="1583" chance="200"/>
+		<item id="1584" chance="200"/>
+		<item id="1589" chance="200"/>		
+		<item id="1590" chance="200"/>
+		<item id="1577" chance="10"/>		
+		<item id="1578" chance="10"/>		
+		<item id="1569" chance="10"/>	
+		<item id="1570" chance="10"/>
+		<item id="1571" chance="10"/>
+		<item id="1572" chance="10"/>
+		<item id="1573" chance="1"/>
+		<item id="1574" chance="1"/>
+		<item id="1575" chance="10"/>
+		<item id="1576" chance="10"/>
+		<item id="1579" chance="1"/>
+		<item id="1580" chance="1"/>
+		<item id="1581" chance="1"/>
+		<item id="1582" chance="1"/>	
+		<item id="1585" chance="10"/>
+		<item id="1586" chance="10"/>
+		<item id="1587" chance="1"/>
+		<item id="1588" chance="1"/>
+		<item id="1591" chance="10"/>
+		<item id="1592" chance="10"/>		
+		<border align="outer" id="20"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>	
+		<border align="inner" to="plains" id="21"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>	
+<brush name="snow" type="ground" server_lookid="684" z-order="3500">
+		<item id="690" chance="25"/>
+		<item id="684" chance="2500"/>
+		<item id="686" chance="2500"/>		
+		<item id="683" chance="25"/>
+		<item id="685" chance="25"/>
+		<item id="687" chance="25"/>
+		<item id="688" chance="25"/>
+		<item id="689" chance="25"/>
+		<item id="691" chance="25"/>	
+
+		<border align="outer" id="1"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="snowy cobbled street" id="10"/>	
+		<border align="inner" to="dun gras" id="20"/>	
+		<border align="inner" to="ice" id="22"/>	
+		<border align="inner" to="stony mountain" id="25"/>
+		<border align="inner" to="stone soil" id="26"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+		
+</brush>	
+<brush name="dirt" type="ground" server_lookid="1532" z-order="3500">
+		<item id="1532" chance="2500"/>
+		<item id="1533" chance="2500"/>
+		<item id="1534" chance="2500"/>		
+		<item id="1535" chance="2500"/>
+		<item id="1536" chance="2500"/>
+
+		<border align="outer" id="23"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="plains" id="21"/>	
+		<border align="inner" to="snow" id="6"/>	
+		<border align="inner" to="dun gras" id="20"/>
+		<border align="inner" to="snowy mountain" id="27"/>			
+</brush>
+
+<brush name="sand" type="ground" server_lookid="1453" z-order="3500">
+		<item id="1453" chance="25"/>
+		<item id="1454" chance="25"/>
+		<item id="1455" chance="25"/>		
+		<item id="1456" chance="25"/>
+		<item id="1457" chance="25"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="dun gras" id="20"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>	
+<brush name="wodden floor" type="ground" server_lookid="698" z-order="3500">
+		<item id="697" chance="50"/>
+		<item id="698" chance="250"/>
+		<item id="699" chance="250"/>		
+		<item id="700" chance="250"/>
+		<item id="701" chance="250"/>
+		<item id="702" chance="250"/>
+		<item id="703" chance="50"/>
+		<item id="708" chance="50"/>
+		<item id="709" chance="50"/>	
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>		
+<brush name="frozen ground" type="ground" server_lookid="718" z-order="3500">
+		<item id="718" chance="250"/>
+		<item id="719" chance="250"/>		
+		<item id="720" chance="250"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>			
+<brush name="black stone tile" type="ground" server_lookid="760" z-order="3500">
+		<item id="760" chance="250"/>
+		<item id="769" chance="20"/>		
+		<item id="770" chance="20"/>
+		<item id="771" chance="20"/>
+		<item id="772" chance="20"/>
+		<item id="773" chance="20"/>
+		<item id="774" chance="20"/>
+		<item id="775" chance="20"/>	
+		<item id="776" chance="20"/>	
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="snowy mountain" id="27"/>	
+		<border align="outer" id="11"/>		
+	</brush>	
+<brush name="igneous rock soil" type="ground" server_lookid="781" z-order="3500">
+		<item id="781" chance="250"/>
+		<item id="784" chance="250"/>		
+		<item id="785" chance="250"/>
+		<item id="786" chance="50"/>	
+		<item id="789" chance="250"/>	
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>	
+		<border align="inner" to="dun gras" id="20"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>	
+<brush name="icy mountain" type="ground" server_lookid="1184" z-order="3500">
+		<item id="1184" chance="250"/>
+		<item id="1185" chance="250"/>		
+		<item id="1186" chance="250"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>		
+		<border align="inner" to="snow" id="6"/>	
+		<border align="inner" to="snowy mountain" id="27"/>	
+	</brush>	
+<brush name="mountain" type="ground" server_lookid="1192" z-order="3500">
+		<item id="1187" chance="250"/>
+		<item id="1188" chance="250"/>		
+		<item id="1192" chance="250"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>	
+<brush name="cobblestone pavement" type="ground" server_lookid="1375" z-order="3500">
+		<item id="1375" chance="250"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>	
+		<border align="inner" to="dun gras" id="20"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>	
+<brush name="blueish cobblestone pavement" type="ground" server_lookid="1401" z-order="3500">
+		<item id="1401" chance="250"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>		
+<brush name="oak planks" type="ground" server_lookid="1384" z-order="3500">
+		<item id="1384" chance="250"/>
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>	
+<brush name="dry sand" type="ground" server_lookid="1800" z-order="3500">
+		<item id="1800" chance="250"/>
+		<item id="1801" chance="250"/>		
+		<item id="1808" chance="250"/>
+		<item id="1809" chance="250"/>	
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>	
+		<border align="inner" to="snowy mountain" id="27"/>			
+	</brush>	
+<brush name="sand cobblestone pavement" type="ground" server_lookid="1816" z-order="3500">
+		<item id="1816" chance="250"/>
+		<item id="1817" chance="250"/>		
+		<item id="1818" chance="250"/>
+		<item id="1825" chance="250"/>	
+		<border align="inner" to="ice mountain" id="24"/>	
+		<border align="inner" to="ocean water" id="19"/>	
+		<border align="inner" to="snowy mountain" id="27"/>	
+	</brush>	
+	
+	<tileset name="Nature">
+		<terrain>	
+			<brush name="snow"/>		
+			<brush name="ocean water"/>		
+			<brush name="sand"/>	
+			<brush name="wodden floor"/>	
+			<brush name="frozen ground"/>		
+			<brush name="snowy cobbled street"/>		
+			<brush name="black stone tile"/>	
+			<brush name="igneous rock soil"/>			
+			<brush name="icy mountain"/>		
+			<brush name="mountain"/>		
+			<brush name="dun gras"/>
+			<brush name="plains"/>		
+			<brush name="ice"/>		
+			<brush name="ice mountain"/>				
+			<brush name="dirt"/>	
+			<brush name="cobblestone pavement"/>
+			<brush name="blueish cobblestone pavement"/>
+			<brush name="sand cobblestone pavement"/>				
+			<brush name="oak planks"/>	
+			<brush name="dry sand"/>
+			<brush name="stony mountain"/>	
+			<brush name="stone soil"/>	
+			<brush name="snowy mountain"/>	
+			<brush name="black mountain soil"/>		
+			<brush name="black mountain soil deeper"/>		
+			<brush name="black mountain"/>				
+		</terrain>
+	</tileset>	
+
+<tileset name="# MISC Trees">
+		<raw>
+				<item fromid="116" toid="119"/>
+				<item fromid="189" toid="190"/>	
+				<item fromid="362" toid="369"/>		
+				<item fromid="371" toid="375"/>		
+				<item fromid="913" toid="922"/>			
+				<item fromid="1020" toid="1022"/>	
+				<item fromid="1027" toid="1037"/>
+				<item fromid="1040" toid="1041"/>				
+				<item fromid="1211" toid="1213"/>	
+				<item fromid="1499" toid="1502"/>	
+				<item fromid="1504" toid="1505"/>	
+				<item fromid="1507" toid="1515"/>					
+				<item fromid="2147" toid="2153"/>
+				<item fromid="2168" toid="2188"/>
+				<item id="2191"/>	
+				<item fromid="2268" toid="2269"/>				
+		</raw>
+	</tileset>
+<tileset name="# MISC Trees and flowers for dark gras">
+		<raw>
+				<item fromid="2372" toid="2391"/>
+				<item fromid="2401" toid="2431"/>					
+		</raw>
+	</tileset>
+<tileset name="# MISC Trees and flowers for Plains">
+		<raw>
+				<item fromid="2280" toid="2299"/>
+				<item fromid="2308" toid="2338"/>					
+		</raw>
+	</tileset>
+<tileset name="# MISC Dead Trees">
+		<raw>
+				<item fromid="307" toid="310"/>
+				<item fromid="1023" toid="1026"/>				
+				<item fromid="1189" toid="1190"/>	
+				<item fromid="2209" toid="2218"/>	
+				<item fromid="2221" toid="2224"/>				
+		</raw>
+	</tileset>	
+	<tileset name="# MISC Bushes">
+		<raw>
+				<item fromid="123" toid="133"/>			
+				<item id="214"/>	
+				<item id="220"/>	
+				<item fromid="358" toid="361"/>		
+				<item id="370"/>		
+				<item id="1039"/>	
+				<item id="1503"/>	
+				<item id="1506"/>		
+				<item id="1516"/>		
+				<item id="1520"/>					
+				<item fromid="2154" toid="2167"/>						
+		</raw>
+	</tileset>
+	<tileset name="# MISC Small Plants">
+		<raw>
+				<item fromid="179" toid="182"/>		
+				<item fromid="186" toid="188"/>						
+				<item fromid="173" toid="178"/>		
+				<item id="907"/>				
+				<item fromid="204" toid="208"/>	
+				<item fromid="908" toid="912"/>		
+				<item fromid="2598" toid="2605"/>						
+				<item fromid="351" toid="357"/>			
+				<item fromid="940" toid="953"/>	
+				<item fromid="1065" toid="1072"/>	
+				<item fromid="1205" toid="1210"/>	
+				<item fromid="1517" toid="1519"/>	
+				<item fromid="1521" toid="1531"/>	
+				<item fromid="1661" toid="1789"/>		
+				<item id="1791"/>					
+		</raw>
+	</tileset>	
+	<tileset name="# MISC Frozen Small Plants">
+		<raw>
+				<item fromid="2261" toid="2267"/>			
+				
+		</raw>
+	</tileset>
+	<tileset name="# MISC Stuff for Ground to lay around">
+		<raw>
+				<item fromid="108" toid="111"/>			
+				<item fromid="209" toid="211"/>	
+				<item id="158"/>				
+				<item id="154"/>	
+				<item id="155"/>	
+				<item id="157"/>
+				<item id="160"/>		
+				<item id="184"/>		
+				<item id="886"/>			
+				<item id="1019"/>				
+				<item fromid="2300" toid="2307"/>		
+				<item fromid="2392" toid="2400"/>						
+		</raw>
+	</tileset>		
+	<tileset name="# MISC Stones">
+		<raw>
+				<item fromid="135" toid="153"/>		
+				<item id="156"/>	
+				<item fromid="191" toid="203"/>		
+				<item id="212"/>
+				<item fromid="215" toid="219"/>	
+				<item fromid="221" toid="222"/>		
+				<item fromid="312" toid="350"/>			
+				<item id="462"/>
+				<item fromid="964" toid="974"/>					
+				<item fromid="1214" toid="1216"/>
+				<item fromid="2141" toid="2146"/>				
+				<item fromid="2189" toid="2190"/>		
+				<item fromid="2192" toid="2208"/>	
+				<item fromid="2231" toid="2241"/>
+				<item fromid="2243" toid="2255"/>				
+		</raw>
+	</tileset>
+	<tileset name="# MISC Furniture">
+		<raw>
+				<item fromid="100" toid="107"/>						
+				<item fromid="161" toid="171"/>	
+				<item id="224"/>					
+				<item id="311"/>		
+				<item fromid="376" toid="392"/>		
+				<item fromid="401" toid="404"/>		
+				<item fromid="414" toid="427"/>		
+				<item fromid="430" toid="461"/>	
+				<item fromid="463" toid="466"/>			
+				<item fromid="488" toid="500"/>				
+				<item fromid="507" toid="517"/>	
+				<item fromid="933" toid="936"/>
+				<item id="1001"/>					
+				<item id="1217"/>	
+				<item fromid="1349" toid="1359"/>	
+				<item id="1408"/>
+				<item id="1410"/>	
+				<item fromid="1877" toid="1890"/>
+				<item id="1966"/>					
+				<item fromid="2363" toid="2365"/>	
+				<item fromid="2366" toid="2371"/>	
+				<item fromid="2459" toid="2461"/>				
+		</raw>
+		</tileset>
+	<tileset name="# MISC Cutted trees and wood">
+		<raw>
+				<item fromid="2343" toid="2362"/>		
+				<item fromid="2366" toid="2367"/>					
+					
+		</raw>
+		</tileset>		
+	<tileset name="# MISC Lightsources">
+		<raw>
+				<item id="122"/>	
+				<item id="172"/>	
+				<item id="213"/>				
+				<item id="223"/>				
+				<item id="278"/>			
+				<item fromid="409" toid="413"/>			
+				<item fromid="501" toid="502"/>	
+				<item id="1003"/>					
+				<item id="1160"/>
+				<item fromid="2225" toid="2227"/>			
+				<item id="2458"/>		
+				<item fromid="2606" toid="2607"/>						
+		</raw>		
+	</tileset>	
+	<tileset name="# MISC Ammo">
+		<raw>
+				<item fromid="1237" toid="1246"/>			
+		</raw>		
+	</tileset>	
+	<tileset name="# MISC Statues and Monuments">
+		<raw>
+				<item fromid="112" toid="115"/>		
+				<item id="134"/>				
+				<item fromid="120" toid="121"/>	
+				<item id="183"/>					
+				<item id="185"/>	
+				<item fromid="262" toid="265"/>		
+				<item fromid="975" toid="979"/>		
+				<item fromid="1193" toid="1196"/>						
+				<item id="1409"/>					
+				<item fromid="2228" toid="2230"/>	
+				<item id="2242"/>	
+				<item fromid="2466" toid="2467"/>				
+		</raw>		
+	</tileset>	
+	<tileset name="# MISC Bones and Corpses">
+		<raw>
+				<item fromid="1197" toid="1200"/>			
+				<item fromid="2256" toid="2260"/>	
+				<item id="2242"/>
+				<item fromid="2463" toid="2465"/>				
+		</raw>		
+	</tileset>
+	<tileset name="# MISC Equipment">
+		<raw>
+			<item id="159"/>	
+			<item fromid="1247" toid="1323"/>			
+			<item fromid="1165" toid="1167"/>	
+			<item id="1414"/>				
+		</raw>		
+	</tileset>		
+	<tileset name="# MISC Tools">
+		<raw>
+				<item fromid="1106" toid="1108"/>			
+		</raw>		
+	</tileset>		
+	<tileset name="# MISC Additions for Mountains">
+		<raw>
+				<item fromid="980" toid="999"/>	
+				<item fromid="1114" toid="1137"/>	
+				<item fromid="1999" toid="2025"/>			
+				<item fromid="2117" toid="2140"/>				
+				<item fromid="2437" toid="2441"/>		
+				<item fromid="2445" toid="2449"/>	
+				<item fromid="2456" toid="2457"/>		
+				<item fromid="2502" toid="2515"/>		
+				<item id="2540"/>		
+				<item fromid="2544" toid="2551"/>					
+		</raw>		
+	</tileset>	
+	<tileset name="# MISC Animations">
+		<raw>
+				<item id="1000"/>	
+				<item id="1002"/>	
+				<item fromid="1004" toid="1006"/>		
+				<item id="1138"/>		
+				<item id="1411"/>					
+				<item id="2462"/>	
+				<item id="2220"/>					
+		</raw>		
+	</tileset>		
+	<tileset name="# MISC Doors">
+		<raw>
+				<item fromid="231" toid="236"/>	
+				<item fromid="558" toid="560"/>	
+				<item fromid="562" toid="563"/>	
+				<item fromid="566" toid="568"/>	
+				<item id="570"/>					
+				<item id="1325"/>	
+				<item id="1338"/>			
+				<item id="1343"/>				
+				<item fromid="1329" toid="1333"/>	
+				<item fromid="1495" toid="1498"/>	
+				<item id="1856"/>	
+				<item id="1857"/>	
+				<item id="1863"/>		
+				<item id="1864"/>					
+				<item fromid="2552" toid="2555"/>					
+		</raw>		
+	</tileset>		
+
+	<tileset name="# MISC Stairs">
+		<raw>
+				<item fromid="393" toid="400"/>			
+				<item fromid="467" toid="470"/>			
+				<item fromid="547" toid="550"/>				
+				<item fromid="954" toid="963"/>			
+				<item fromid="1218" toid="1219"/>			
+				<item fromid="1412" toid="1413"/>					
+		</raw>		
+	</tileset>			
+	
+	<tileset name="# MISC Walls and Fences">
+		<raw>
+				<item fromid="237" toid="244"/>	
+				<item id="266"/>	
+				<item fromid="405" toid="408"/>		
+				<item fromid="472" toid="487"/>			
+				<item fromid="503" toid="506"/>		
+				<item fromid="518" toid="546"/>	
+				<item fromid="551" toid="557"/>		
+				<item id="561"/>	
+				<item fromid="564" toid="565"/>	
+				<item id="569"/>
+				<item fromid="571" toid="574"/>	
+				<item fromid="1143" toid="1155"/>		
+				<item id="1157"/>					
+				<item id="1324"/>	
+				<item fromid="1326" toid="1328"/>	
+				<item fromid="1334" toid="1337"/>			
+				<item fromid="1339" toid="1342"/>		
+				<item fromid="1344" toid="1348"/>		
+				<item fromid="1484" toid="1494"/>	
+				<item fromid="1792" toid="1799"/>				
+				<item fromid="1832" toid="1855"/>			
+				<item fromid="1858" toid="1862"/>		
+				<item fromid="1865" toid="1876"/>		
+				<item fromid="1891" toid="1965"/>	
+				<item fromid="2270" toid="2279"/>
+				<item fromid="2339" toid="2342"/>				
+				<item fromid="2556" toid="2596"/>					
+		</raw>		
+	</tileset>		
+	
+</materials>
