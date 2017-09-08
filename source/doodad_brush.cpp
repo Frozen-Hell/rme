@@ -201,8 +201,12 @@ bool DoodadBrush::load(pugi::xml_node node, wxArrayString& warnings)
 	if(!thicknessString.empty()) {
 		size_t slash = thicknessString.find('/');
 		if(slash != std::string::npos) {
-			thickness = boost::lexical_cast<int32_t>(thicknessString.substr(0, slash));
-			thickness_ceiling = std::max<int32_t>(thickness, boost::lexical_cast<int32_t>(thicknessString.substr(slash + 1)));
+			try {
+				thickness = boost::lexical_cast<int32_t>(thicknessString.substr(0, slash));
+				thickness_ceiling = std::max<int32_t>(thickness, boost::lexical_cast<int32_t>(thicknessString.substr(slash + 1)));
+			} catch(boost::bad_lexical_cast e) {
+				warnings.push_back("Unable to parse thickness values");
+			}
 		}
 	}
 
