@@ -1,4 +1,4 @@
-<materialsextension name="Better creature categories (8.40)" author="Remere" description="Added the creatures of the 8.4 update." client="8.40"> 
+<materialsextension name="Better creature categories (8.40)" author="Remere" description="Added the creatures of the 8.4 update." client="8.54;8.40"> 
     	<tileset name="Water creatures">
 		<creatures>
 			<creature name="Young Sea Serpent"/>

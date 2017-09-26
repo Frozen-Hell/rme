@@ -233,7 +233,7 @@
 		</composite>
 	</brush>
 	
-	<brush name="small rocks" type="doodad" server_lookid="3610" draggable="true" on_blocking="true" thickness="50/100">
+	<brush name="small rocks" type="doodad" server_lookid="3608" draggable="true" on_blocking="true" thickness="50/100">
 		<item id="3607" chance="3"/>
 		<item id="3615" chance="3"/>
 		<item id="1285" chance="3"/>
@@ -248,7 +248,25 @@
 		<!-- <item id="3621" chance="20"/>
 		<item id="3622" chance="20"/>
 		<item id="3623" chance="20"/> -->
-		<!-- <item id="3665" chance="10"/> -->
+		<item id="3665" chance="10"/>
+	</brush>
+
+	<brush name="micro non-blocking rocks" type="doodad" server_lookid="3610" draggable="true" on_blocking="false" thickness="50/100">
+		<item id="3608" chance="1"/>
+		<item id="3610" chance="6"/>
+		<item id="3611" chance="10"/>
+		<item id="3612" chance="12"/>
+		<item id="3613" chance="8"/>
+		<item id="3614" chance="8"/>
+		<item id="3648" chance="2"/>
+		<item id="3649" chance="2"/>
+		<item id="3650" chance="2"/>
+		<item id="3651" chance="2"/>
+		<item id="3652" chance="2"/>
+		<item id="1293" chance="5"/>
+		<!--item id="3621" chance="20"/>
+		<item id="3622" chance="20"/>
+		<item id="3623" chance="20"/-->
 	</brush>
 	
 	<brush name="debris" type="doodad" server_lookid="3648" draggable="true" on_blocking="true" thickness="25/100">
@@ -755,22 +773,6 @@
 		<carpet align="center" id="6374"/>
 	</brush>
 	
-	<brush name="sand gravel" type="carpet" server_lookid="8033">
-		<carpet align="n"      id="8036"/>
-		<carpet align="e"      id="8037"/>
-		<carpet align="s"      id="8034"/>
-		<carpet align="w"      id="8035"/>
-		<carpet align="cnw"    id="8039"/>
-		<carpet align="cne"    id="8040"/>
-		<carpet align="cse"    id="8041"/>
-		<carpet align="csw"    id="8038"/>
-		<carpet align="dnw"    id="8044"/>
-		<carpet align="dne"    id="8045"/>
-		<carpet align="dse"    id="8042"/>
-		<carpet align="dsw"    id="8043"/>
-		<carpet align="center" id="8033"/>
-	</brush>
-
 	<brush name="gravel" type="carpet" server_lookid="6476">
 		<carpet align="n"      id="6478"/>
 		<carpet align="e"      id="6479"/>
@@ -1518,37 +1520,6 @@
 				<tile x="0" y="0"> <item id="1388"/> </tile>
 				<tile x="0" y="0" z="-1"> <item id="459"/> </tile>
 				<tile x="-1" y="0"> <item id="1389"/> </tile>
-			</composite>
-		</alternate>
-	</brush>
-	
-	<brush name="dirt ramp" type="doodad" server_lookid="8375" draggable="false" on_blocking="true" one_size="true" redo_borders="true">
-		<alternate> -- south --
-			<composite chance="10">
-				<tile x="0" y="0"> <item id="8378"/> </tile>
-				<tile x="0" y="0" z="-1"> <item id="459"/> </tile>
-				<tile x="0" y="1"> <item id="8379"/> </tile>
-			</composite>
-		</alternate>
-		<alternate> -- east --
-			<composite chance="10">
-				<tile x="0" y="0"> <item id="8374"/> </tile>
-				<tile x="0" y="0" z="-1"> <item id="459"/> </tile>
-				<tile x="1" y="0"> <item id="8375"/> </tile>
-			</composite>
-		</alternate>
-		<alternate> -- north --
-			<composite chance="10">
-				<tile x="0" y="0"> <item id="8376"/> </tile>
-				<tile x="0" y="0" z="-1"> <item id="459"/> </tile>
-				<tile x="0" y="-1"> <item id="8377"/> </tile>
-			</composite>
-		</alternate>
-		<alternate> -- west --
-			<composite chance="10">
-				<tile x="0" y="0"> <item id="8372"/> </tile>
-				<tile x="0" y="0" z="-1"> <item id="459"/> </tile>
-				<tile x="-1" y="0"> <item id="8373"/> </tile>
 			</composite>
 		</alternate>
 	</brush>
@@ -3369,28 +3340,6 @@
 			<tile x="0" y="1"> <item id="8159"/> </tile>
 			<tile x="1" y="1"> <item id="8158"/> </tile>
 		</composite>
-	</brush>
-	
-	<brush name="sand dune" type="doodad" server_lookid="8315" draggable="true" on_blocking="true" redo_borders="true" thickness="12/100">
-		<composite chance="10">
-			<tile x="0" y="0"> <item id="8315"/> </tile>
-			<tile x="1" y="0"> <item id="8316"/> </tile>
-			<tile x="0" y="1"> <item id="8318"/> </tile>
-			<tile x="1" y="1"> <item id="8317"/> </tile>
-		</composite>
-		<composite chance="10">
-			<tile x="0" y="0"> <item id="8319"/> </tile>
-			<tile x="1" y="0"> <item id="8320"/> </tile>
-			<tile x="0" y="1"> <item id="8322"/> </tile>
-			<tile x="1" y="1"> <item id="8321"/> </tile>
-		</composite>
-	</brush>
-
-	<brush name="sand pile" type="doodad" server_lookid="8416" draggable="true" on_blocking="true" thickness="11/90"> 
-		<item id="8324" chance="10"/> 
-		<item id="8325" chance="10"/> 
-		<item id="8416" chance="10"/> 
-		<item id="8417" chance="10"/> 
 	</brush>
 	
 	<brush name="lumberjack stuff" type="doodad" server_lookid="3872" draggable="true" on_blocking="true" thickness="6/10">

@@ -154,14 +154,12 @@
 			<brush name="walkable sea"/>
 			<brush name="mountain"/>
 			<brush name="ramp"/>
-			<brush name="dirt ramp"/>
 			<brush name="bamboo ramp"/>
 			<brush name="grass"/>
 			<brush name="grass (alternate border)"/>
 			<brush name="grass open stone pile"/>
 			<brush name="grass closed stone pile"/>
 			<brush name="grass pitfall"/>
-			<brush name="dried grass"/>
 			<brush name="dirt"/>
 			<brush name="dry earth"/>
 			<brush name="sand"/>
@@ -169,10 +167,6 @@
 			<brush name="sand closed stone pile"/>
 			<brush name="sand scarab hole"/>
 			<brush name="sand (thick border)"/>
-			<brush name="sand gravel"/>
-			<brush name="sand dune"/>
-			<brush name="sand pile"/>
-			<brush name="sand dark dune"/>
 			<brush name="snow"/>
 			<brush name="ice"/>
 			<brush name="ice open stone pile"/>
@@ -191,8 +185,6 @@
 			<brush name="gravel"/>
 			<brush name="mountain ground"/>
 			<brush name="mountain top ground"/>
-			<brush name="dirt mountain ground"/>
-			<brush name="dirt mountain ground (thick border)"/>
 			<brush name="rocky ground"/>
 			<brush name="frozen mud"/>
 			<brush name="frozen mud (thick border)"/>
@@ -275,6 +267,7 @@
 			<brush name="gray rocks"/>
 			<brush name="brown rocks"/>
 			<brush name="small rocks"/>
+			<brush name="micro non-blocking rocks"/>
 			<brush name="staglamites"/>
 			<brush name="weird shaped stones"/>
 			<brush name="debris"/>

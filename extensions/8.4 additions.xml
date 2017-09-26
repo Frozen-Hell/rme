@@ -3,7 +3,7 @@
 	author="Xenios"
 	authorurl="http://otland.net/members/xenios/"
 	description="8.4 additions"
-	client="8.40">
+	client="8.54;8.40">
 
 	<brush name="Yalahar wall" type="wall" server_lookid="9370">
 		<wall type="horizontal">
@@ -192,71 +192,6 @@
 		<borderitem edge="dse" item="9557"/>
 	</border>
 	
-	<brush name="yalahar roof down" type="ground" server_lookid="9535" z-order="8000">
-		<item id="9535" chance="1"/>
-
-		<border align="outer" to="none" id="4025"/>
-	</brush>
-	
-	<brush name="yalahar roof right" type="ground" server_lookid="9536" z-order="8000">
-		<item id="9536" chance="1"/>
-
-		<border align="outer" to="none" id="4026"/>
-	</brush>
-	
-	<brush name="yalahar roof ramp" type="doodad" server_lookid="9097" draggable="true" on_blocking="true" thickness="100/100" z-order="1100">
-		<alternate>
-			-- south--
-			<composite chance="10">
-				<tile x="0" y="0">
-					<item id="9096"/>
-				</tile>
-				<tile x="0" y="1">
-					<item id="9097"/>
-				</tile>
-				<tile x="0" y= "2">
-					<item id="9553"/>
-				</tile>
-			</composite>
-		</alternate>
-		<alternate>
-			-- west  --
-			<composite chance="10">
-				<tile x="0" y="0">
-					<item id="9092"/>
-				</tile>
-				<tile x="-1" y="0">
-					<item id="9093"/>
-				</tile>
-			</composite>
-		</alternate>
-		<alternate>
-			-- north --
-			<composite chance="10">
-				<tile x="0" y="0">
-					<item id="9098"/>
-				</tile>
-				<tile x="0" y="-1">
-					<item id="9099"/>
-				</tile>
-			</composite>
-		</alternate>
-		<alternate>
-			-- east --
-			<composite chance="10">
-				<tile x="0" y="0">
-					<item id="9094"/>
-				</tile>
-				<tile x="1" y="0">
-					<item id="9095"/>
-				</tile>
-				<tile x= "2" y="0">
-					<item id="9544"/>
-				</tile>
-			</composite>
-		</alternate>
-	</brush>
-	
 	<brush name="Yalahar marble floor I" type="ground" server_lookid="9146" z-order="1">
 		<item id="9146" chance="1"/>
 	</brush>
@@ -269,14 +204,14 @@
 		<item id="9145" chance="1"/>
 	</brush>
 	
-	<brush name="Crystal pillar" type="doodad" server_lookid="9784" draggable="true" on_blocking="true" thickness=" 0/0">
+	<brush name="Crystal pillar" type="doodad" server_lookid="9784" draggable="true" on_blocking="true" thickness="0/0">
 		<item id="9784" chance="100"/> 
 		<item id="9785" chance="100"/>  
 		<item id="9786" chance="100"/>  
 		<item id="9787" chance="100"/>
 	</brush>
 		
-	<brush name="yalahar pillar 2" type="doodad" server_lookid="9399" draggable="true" on_blocking="true" thickness=" 0/0">
+	<brush name="yalahar pillar 2" type="doodad" server_lookid="9399" draggable="true" on_blocking="true" thickness="0/0">
 		<item id="9399" chance="100"/> 
 	</brush>  
 	
@@ -1099,21 +1034,6 @@
 		<item id="9198" chance="8"/>
 		<item id="9200" chance="30"/>
 		<item id="9206" chance="10"/>
-	</brush>
-	
-	<brush name="Yalahar wooden floor" type="ground" server_lookid="9224" z-order="110">
-		<item id="9224" chance="800"/>
-		<item id="9225" chance="200"/>
-		<item id="9226" chance="10"/>
-		<item id="9231" chance="50"/>
-		<item id="9228" chance="50"/>
-		<item id="9227" chance="50"/>
-		<item id="9232" chance="10"/>
-		<item id="9229" chance="50"/>
-		<item id="9230" chance="50"/>
-		
-		<border id="27915" align="outer"/>
-		<border id="27915" to="none" align="outer"/>
 	</brush>
 	
 	<border id="27916"> -- raft border --
@@ -2134,18 +2054,7 @@
 			<brush name="Yalahar marble floor I" after="white marble floor"/>
 			<brush name="Yalahar marble floor II" after="white marble floor"/>
 			<brush name="Yalahar marble floor III" after="white marble floor"/>
-			<brush name="Yalahar wooden floor" after="dark wooden floor"/>
 			<brush name="Yalahar iron floor" after="black marble floor"/> 
-		</terrain>
-	</tileset>
-	
-	<tileset name="Roofs">
-		<terrain>
-			-- 8.40 roof --
-			<brush name="yalahar roof down" after="flat roof"/>
-			<brush name="yalahar roof right" after="yalahar roof down"/>
-			<brush name="yalahar roof ramp" after="yalahar roof right"/>
-
 		</terrain>
 	</tileset>
 	
