@@ -55,4 +55,8 @@ extern unsigned char window_hatch_png[910];
 extern unsigned char window_hatch_small_png[641];
 extern unsigned char window_normal_png[947];
 extern unsigned char window_normal_small_png[641];
+extern unsigned char no_bike_png[1246];
+extern unsigned char no_legend_png[1502];
+extern unsigned char no_legend_small_png[810];
+extern unsigned char no_bike_small_png[764];
 #endif //_RME_PNG_HEADER_FILE_H_

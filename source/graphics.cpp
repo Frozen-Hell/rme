@@ -292,6 +292,18 @@ bool GraphicManager::loadEditorSprites()
 			loadPNGFile(no_pvp_png)
 		);
 
+	sprite_space[EDITOR_SPRITE_NOLEGEND_TOOL] =
+		newd EditorSprite(
+			loadPNGFile(no_legend_small_png),
+			loadPNGFile(no_legend_png)
+		);
+
+	sprite_space[EDITOR_SPRITE_NOBIKE_TOOL] =
+		newd EditorSprite(
+			loadPNGFile(no_bike_small_png),
+			loadPNGFile(no_bike_png)
+		);
+
 	sprite_space[EDITOR_SPRITE_DOOR_NORMAL] =
 		newd EditorSprite(
 			loadPNGFile(door_normal_small_png),
