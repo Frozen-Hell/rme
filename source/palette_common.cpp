@@ -503,10 +503,6 @@ void BrushToolPanel::LoadAllContents()
 		sub_sizer->Add(nolegendBrushButton = newd BrushButton(this, g_gui.nolegend_brush, RENDER_SIZE_32x32, PALETTE_TERRAIN_NOLEGEND_TOOL));
 			nolegendBrushButton->SetToolTip("No Legend Tool");
 
-		ASSERT(g_gui.nobike_brush);
-		sub_sizer->Add(nobikeBrushButton = newd BrushButton(this, g_gui.nobike_brush, RENDER_SIZE_32x32, PALETTE_TERRAIN_NOBIKE_TOOL));
-			nobikeBrushButton->SetToolTip("No Bike Tool");
-
 		// New row
 		size_sizer->Add(sub_sizer);
 		sub_sizer = newd wxBoxSizer(wxHORIZONTAL);
@@ -534,6 +530,10 @@ void BrushToolPanel::LoadAllContents()
 		ASSERT(g_gui.window_door_brush);
 		sub_sizer->Add(windowDoorButton = newd BrushButton(this, g_gui.window_door_brush, RENDER_SIZE_32x32, PALETTE_TERRAIN_WINDOW_DOOR));
 			windowDoorButton->SetToolTip("Window Tool");
+
+		ASSERT(g_gui.nobike_brush);
+		sub_sizer->Add(nobikeBrushButton = newd BrushButton(this, g_gui.nobike_brush, RENDER_SIZE_32x32, PALETTE_TERRAIN_NOBIKE_TOOL));
+			nobikeBrushButton->SetToolTip("No Bike Tool");
 	} else {
 		// Create the tool page with 16x16 icons
 		// Create tool window #1
