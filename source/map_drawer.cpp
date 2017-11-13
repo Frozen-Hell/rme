@@ -1436,7 +1436,7 @@ void MapDrawer::DrawTile(TileLocation* location)
 			BlitItem(draw_x, draw_y, tile, tile->ground, false, r, g, b);
 		}
 
-		if(options.show_tooltips && map_z == floor)
+		if(options.show_tooltips && map_z == floor && tile->ground)
 			WriteTooltip(tile->ground, tooltip);
 	}
 
