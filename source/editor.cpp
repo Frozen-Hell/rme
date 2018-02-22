@@ -63,8 +63,7 @@ Editor::Editor(CopyBuffer& copybuffer) :
 	version.client = gui.GetCurrentVersionID();
 	map.convert(version);
 
-	map.height = 2048;
-	map.width = 2048;
+	map.width = map.height = 64;
 
 	static int unnamed_counter = 0;
 
@@ -1295,6 +1294,8 @@ void removeDuplicateWalls(Tile* buffer, Tile* tile) {
 
 void Editor::drawInternal(Position offset, bool alt, bool dodraw)
 {
+	if (offset.x >= map.width || offset.y >= map.height) return;
+
 	Brush * brush = gui.GetCurrentBrush();
 	DoodadBrush * doodad_brush = dynamic_cast <DoodadBrush *> (brush);
 	HouseExitBrush * house_exit_brush = dynamic_cast <HouseExitBrush *> (brush);
@@ -1490,6 +1491,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, bool alt, bool dodr
 		// We actually need to do borders, but on the same tiles we draw to
 		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 			Position pos = *it;
+			if (pos.x >= map.width || pos.y >= map.height) continue;
 			TileLocation* location = map.createTileL(pos);
 			Tile* tile = location->get();
 
@@ -1519,6 +1521,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, bool alt, bool dodr
 	} else {
 		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 			Position pos = *it;
+			if (pos.x >= map.width || pos.y >= map.height) continue;
 			TileLocation* location = map.createTileL(pos);
 			Tile* tile = location->get();
 
@@ -1558,6 +1561,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 
 		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 			Position pos = *it;
+			if (pos.x >= map.width || pos.y >= map.height) continue;
 			TileLocation* location = map.createTileL(pos);
 			Tile* tile = location->get();
 
@@ -1612,6 +1616,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 			action = actionQueue->createAction(batch);
 			for(PositionVector::const_iterator it = tilestoborder.begin(); it != tilestoborder.end(); ++it) {
 				Position pos = *it;
+				if (pos.x >= map.width || pos.y >= map.height) continue;
 				TileLocation* location = map.createTileL(pos);
 				Tile* tile = location->get();
 
@@ -1650,6 +1655,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 
 		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 			Position pos = *it;
+			if (pos.x >= map.width || pos.y >= map.height) continue;
 			TileLocation* location = map.createTileL(pos);
 			Tile* tile = location->get();
 
@@ -1674,6 +1680,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 		action = actionQueue->createAction(batch);
 		for(PositionVector::const_iterator it = tilestoborder.begin(); it != tilestoborder.end(); ++it) {
 			Position pos = *it;
+			if (pos.x >= map.width || pos.y >= map.height) continue;
 			Tile* tile = map.getTile(pos);
 			if(table_brush) {
 				if(tile && tile->hasTable()) {
@@ -1703,6 +1710,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 
 			for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 				Position pos = *it;
+				if (pos.x >= map.width || pos.y >= map.height) continue;
 				TileLocation* location = map.createTileL(pos);
 				Tile* tile = location->get();
 
@@ -1719,6 +1727,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 			}
 			for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 				Position pos = *it;
+				if (pos.x >= map.width || pos.y >= map.height) continue;
 				// Get the correct tiles from the draw map instead of the editor map
 				Tile* tile = draw_map->getTile(pos);
 
@@ -1733,6 +1742,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 		} else {
 			for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 				Position pos = *it;
+				if (pos.x >= map.width || pos.y >= map.height) continue;
 				TileLocation* location = map.createTileL(pos);
 				Tile* tile = location->get();
 				
@@ -1760,6 +1770,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 				action = actionQueue->createAction(batch);
 				for(PositionVector::const_iterator it = tilestoborder.begin(); it != tilestoborder.end(); ++it) {
 					Position pos = *it;
+					if (pos.x >= map.width || pos.y >= map.height) continue;
 					Tile* tile = map.getTile(pos);
 
 					if(tile) {
@@ -1781,6 +1792,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 		// Loop is kind of redundant since there will only ever be one index.
 		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 			Position pos = *it;
+			if (pos.x >= map.width || pos.y >= map.height) continue;
 			TileLocation* location = map.createTileL(pos);
 			Tile* tile = location->get();
 
@@ -1808,6 +1820,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 			action = actionQueue->createAction(batch);
 			for(PositionVector::const_iterator it = tilestoborder.begin(); it != tilestoborder.end(); ++it) {
 				Position pos = *it;
+				if (pos.x >= map.width || pos.y >= map.height) continue;
 				Tile* tile = map.getTile(pos);
 
 				if(tile) {
@@ -1825,6 +1838,7 @@ void Editor::drawInternal(const PositionVector& tilestodraw, PositionVector& til
 		Action* action = actionQueue->createAction(ACTION_DRAW);
 		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 			Position pos = *it;
+			if (pos.x >= map.width || pos.y >= map.height) continue;
 			TileLocation* location = map.createTileL(pos);
 			Tile* tile = location->get();
 

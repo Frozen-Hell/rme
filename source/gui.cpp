@@ -262,15 +262,8 @@ bool GUI::LoadVersion(ClientVersionID ver, wxString& error, wxArrayString& warni
 		UnloadVersion();
 
 		loaded_version = ver;
-		if(getLoadedVersion()->hasValidPaths() == false)
-		{
-			if(getLoadedVersion()->loadValidPaths() == false)
-			{
-				error = wxT("Couldn't load relevant data files");
-				loaded_version = CLIENT_VERSION_NONE;
-				return false;
-			}
-		}
+		// change by @dtroitskiy
+		// removed client version checking code, instead loading files immediately
 		bool ret = LoadDataFiles(error, warnings);
 
 		if(ret)

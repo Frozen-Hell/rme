@@ -24,7 +24,7 @@
 // xxyyzzt (major, minor, subversion)
 #define __RME_VERSION_MAJOR__      2
 #define __RME_VERSION_MINOR__      3
-#define __RME_SUBVERSION__         3
+#define __RME_SUBVERSION__         5
 
 #define __LIVE_NET_VERSION__       5
 
@@ -39,13 +39,8 @@
     __RME_VERSION_MINOR__, \
     __RME_SUBVERSION__)
 
-#ifdef __EXPERIMENTAL__
-#   define __RME_VERSION__ std::string(i2s(__RME_VERSION_MAJOR__) + "." + i2s(__RME_VERSION_MINOR__) + + " BETA")
-#   define __W_RME_VERSION__ (wxString() << __RME_VERSION_MAJOR__ << wxT(".") << __RME_VERSION_MINOR__ << wxT(" BETA"))
-#else
-#   define __RME_VERSION__ std::string(i2s(__RME_VERSION_MAJOR__) + "." + i2s(__RME_VERSION_MINOR__))
-#   define __W_RME_VERSION__ (wxString() << __RME_VERSION_MAJOR__ << wxT(".") << __RME_VERSION_MINOR__ << wxT(".") << __RME_SUBVERSION__)
-#endif
+#define __RME_VERSION__ (std::string() + i2s(__RME_VERSION_MAJOR__) + "." + i2s(__RME_VERSION_MINOR__) + "." + i2s(__RME_SUBVERSION__))
+#define __W_RME_VERSION__ __RME_VERSION_MAJOR__ << wxT(".") << __RME_VERSION_MINOR__ << wxT(".") << __RME_SUBVERSION__
 // OS
 
 #define OTGZ_SUPPORT 1

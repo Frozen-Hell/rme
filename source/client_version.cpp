@@ -20,9 +20,6 @@ ClientVersion::OtbMap ClientVersion::otb_versions;
 
 void ClientVersion::loadVersions()
 {
-	// Clean up old stuff
-	ClientVersion::unloadVersions();
-
 	// Locate the clients.xml file
 	wxFileName file_to_load;
 
@@ -104,37 +101,6 @@ void ClientVersion::loadVersions()
 	if (!latest_version && !client_versions.empty()) {
 		latest_version = client_versions.begin()->second;
 	}
-
-	// Load the data directory info
-	try
-	{
-		json::mValue read_obj;
-		json::read_or_throw(settings.getString(Config::TIBIA_DATA_DIRS), read_obj);
-		json::mArray& vers_obj = read_obj.get_array();
-		for(json::mArray::iterator ver_iter = vers_obj.begin(); ver_iter != vers_obj.end(); ++ver_iter)
-		{
-			json::mObject& ver_obj = ver_iter->get_obj();
-			ClientVersion* version = get(ver_obj["id"].get_str());
-			if (version == nullptr)
-				continue;
-			version->setClientPath(wxstr(ver_obj["path"].get_str()));
-		}
-	}
-	catch (std::runtime_error&)
-	{
-		// pass
-		;
-	}
-}
-
-void ClientVersion::unloadVersions()
-{
-	for (VersionMap::iterator it = client_versions.begin(); it != client_versions.end(); ++it)
-		delete it->second;
-	client_versions.clear();
-	latest_version = nullptr;
-	otb_versions.clear();
-
 }
 
 void ClientVersion::loadOTBInfo(pugi::xml_node otbNode)
@@ -336,23 +302,6 @@ void ClientVersion::loadVersionExtensions(pugi::xml_node versionNode)
 	}
 }
 
-void ClientVersion::saveVersions()
-{
-	json::Array vers_obj;
-
-	for(VersionMap::iterator i = client_versions.begin(); i != client_versions.end(); ++i)
-	{
-		ClientVersion* version = i->second;
-		json::Object ver_obj;
-		ver_obj.push_back(json::Pair("id", version->getName()));
-		ver_obj.push_back(json::Pair("path", nstr(version->getClientPath().GetFullPath())));
-		vers_obj.push_back(ver_obj);
-	}
-	std::ostringstream out;
-	json::write(vers_obj, out);
-	settings.setString(Config::TIBIA_DATA_DIRS, out.str());
-}
-
 // Client version class
 
 ClientVersion::ClientVersion(OtbVersion otb, std::string versionName, wxString path) :
@@ -494,8 +443,6 @@ bool ClientVersion::loadValidPaths()
 
 		client_path.Assign(file_dlg.GetPath() + FileName::GetPathSeparator());
 	}
-
-	ClientVersion::saveVersions();
 
 	return true;
 }

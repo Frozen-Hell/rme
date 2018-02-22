@@ -85,7 +85,8 @@ namespace Config {
 		PALETTE_ITEM_STYLE,
 		PALETTE_RAW_STYLE,
 		
-		TIBIA_DATA_DIRS,
+		// change by @dtroitskiy
+		// TIBIA_DATA_DIRS removed
 		DEFAULT_CLIENT_VERSION,
 		CHECK_SIGNATURES,
 		

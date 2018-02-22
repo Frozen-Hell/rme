@@ -1606,7 +1606,7 @@ bool IOMapOTBM::saveMap(Map & map, NodeFileWriteHandle & f)
 					gui.SetLoadDone(int(tiles_saved / double(map.getTileCount()) * 100.0));
 
 				// Get tile
-				Tile* save_tile = (*map_iterator)->get();
+				Tile * save_tile = (*map_iterator)->get();
 
 				// Is it an empty tile that we can skip? (Leftovers...)
 				if(!save_tile || save_tile->size() == 0)
@@ -1615,7 +1615,13 @@ bool IOMapOTBM::saveMap(Map & map, NodeFileWriteHandle & f)
 					continue;
 				}
 
-				const Position& pos = save_tile->getPosition();
+				const Position & pos = save_tile->getPosition();
+				// addition by @dtroitskiy, not saving files that are outside of map dimensions
+				if (pos.x >= map.width || pos.y >= map.height)
+				{
+					++map_iterator;
+					continue;
+				}
 
 				// Decide if newd node should be created
 				if(pos.x < local_x || pos.x >= local_x + 256 ||

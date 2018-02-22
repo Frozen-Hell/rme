@@ -91,12 +91,12 @@ MapPropertiesWindow::MapPropertiesWindow(wxWindow* parent, MapTab* view, Editor&
 		subsizer->Add(
 			width_spin = 
 				newd wxSpinCtrl(this, wxID_ANY, wxstr(i2s(map.getWidth())),
-					wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 256, 65000), wxSizerFlags(1).Expand()
+					wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 32, 1024), wxSizerFlags(1).Expand()
 			);
 		subsizer->Add(
 			height_spin = 
 				newd wxSpinCtrl(this, wxID_ANY, wxstr(i2s(map.getHeight())),
-				wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 256, 65000), wxSizerFlags(1).Expand()
+				wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 32, 1024), wxSizerFlags(1).Expand()
 			);
 		grid_sizer->Add(subsizer, 1, wxEXPAND);
 	}

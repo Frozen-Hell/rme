@@ -436,8 +436,7 @@ wxNotebookPage* PreferencesWindow::CreateClientPage()
 	wxNotebookPage* client_page = newd wxPanel(book, wxID_ANY);
 
 	// Refresh settings
-	ClientVersion::saveVersions();
-    ClientVersionList versions = ClientVersion::getAllVisible();
+	ClientVersionList versions = ClientVersion::getAllVisible();
 
 	wxSizer* topsizer = newd wxBoxSizer(wxVERTICAL);
 
@@ -595,23 +594,13 @@ void PreferencesWindow::Apply()
 		settings.setInteger(Config::CURSOR_RED, clr.Red());
 		settings.setInteger(Config::CURSOR_GREEN, clr.Green());
 		settings.setInteger(Config::CURSOR_BLUE, clr.Blue());
-		//settings.setInteger(Config::CURSOR_ALPHA, clr.Alpha());
 
 	clr = cursor_alt_color_pick->GetColour();
 		settings.setInteger(Config::CURSOR_ALT_RED, clr.Red());
 		settings.setInteger(Config::CURSOR_ALT_GREEN, clr.Green());
 		settings.setInteger(Config::CURSOR_ALT_BLUE, clr.Blue());
-		//settings.setInteger(Config::CURSOR_ALT_ALPHA, clr.Alpha());
 
 	settings.setInteger(Config::HIDE_ITEMS_WHEN_ZOOMED, hide_items_when_zoomed_chkbox->GetValue());
-	/*
-	settings.setInteger(Config::TEXTURE_MANAGEMENT, texture_managment_chkbox->GetValue());
-	settings.setInteger(Config::TEXTURE_CLEAN_PULSE, clean_interval_spin->GetValue());
-	settings.setInteger(Config::TEXTURE_LONGEVITY, texture_longevity_spin->GetValue());
-	settings.setInteger(Config::TEXTURE_CLEAN_THRESHOLD, texture_threshold_spin->GetValue());
-	settings.setInteger(Config::SOFTWARE_CLEAN_THRESHOLD, software_threshold_spin->GetValue());
-	settings.setInteger(Config::SOFTWARE_CLEAN_SIZE, software_clean_amount_spin->GetValue());
-	*/
 
 	// Interface
 	SetPaletteStyleChoice(terrain_palette_style_choice, Config::PALETTE_TERRAIN_STYLE);
@@ -626,7 +615,6 @@ void PreferencesWindow::Apply()
 	settings.setInteger(Config::USE_LARGE_CONTAINER_ICONS, large_container_icons_chkbox->GetValue());
 	settings.setInteger(Config::USE_LARGE_CHOOSE_ITEM_ICONS, large_pick_item_icons_chkbox->GetValue());
 
-	
 	settings.setInteger(Config::SWITCH_MOUSEBUTTONS, switch_mousebtn_chkbox->GetValue());
 	settings.setInteger(Config::DOUBLECLICK_PROPERTIES, doubleclick_properties_chkbox->GetValue());
 
@@ -657,10 +645,6 @@ void PreferencesWindow::Apply()
 		version_counter++;
     }
 	settings.setInteger(Config::CHECK_SIGNATURES, check_sigs_chkbox->GetValue());
-
-	// Make sure to reload client paths
-	ClientVersion::saveVersions();
-	ClientVersion::loadVersions();
 
 	settings.save();
 

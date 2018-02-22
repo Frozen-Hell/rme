@@ -195,10 +195,11 @@ void Settings::IO(IOMode mode) {
 	section("Version");
 	Int(VERSION_ID, 0);
 	Int(CHECK_SIGNATURES, 1);
-	Int(USE_CUSTOM_DATA_DIRECTORY, 0);
-	String(DATA_DIRECTORY, "");
+	Int(USE_CUSTOM_DATA_DIRECTORY, 1);
+	// changes by @dtroitskiy
+	// TIBIA_DATA_DIRS removed and other
+	String(DATA_DIRECTORY, "data");
 	String(EXTENSIONS_DIRECTORY, "");
-	String(TIBIA_DATA_DIRS, "");
 
 	section("Editor");
 	String(RECENT_FILES, "");
@@ -231,7 +232,9 @@ void Settings::IO(IOMode mode) {
 	Int(DEFAULT_SPAWNTIME, 60);
 	Int(MAX_SPAWN_RADIUS, 30);
 	Int(CURRENT_SPAWN_RADIUS, 5);
-	Int(CREATE_MAP_ON_STARTUP, 1);
+	// change by @dtroitskiy
+	// CREATE_MAP_ON_STARTUP is 0 by default
+	Int(CREATE_MAP_ON_STARTUP, 0);
 	Int(DEFAULT_CLIENT_VERSION, CLIENT_VERSION_NONE);
 	Int(RAW_LIKE_SIMONE, 1);
 	Int(ONLY_ONE_INSTANCE, 1);
