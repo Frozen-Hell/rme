@@ -357,7 +357,7 @@ void MapDrawer::DrawMap()
 								r = r/3*2;
 								g = g/3*2;
 							}
-							BlitItem(draw_x, draw_y, tile, tile->ground, true, r, g, b, 160);
+							BlitItem(draw_x, draw_y, tile, tile->ground, true, r, g, b);
 						}
 
 						// Draw items on the tile
@@ -365,7 +365,7 @@ void MapDrawer::DrawMap()
 							ItemVector::iterator it;
 							for(it = tile->items.begin(); it != tile->items.end(); it++) {
 								if((*it)->isBorder()) {
-									BlitItem(draw_x, draw_y, tile, *it, true, 160, r, g, b);
+									BlitItem(draw_x, draw_y, tile, *it, true, r, g, b);
 								} else {
 									BlitItem(draw_x, draw_y, tile, *it, true, 160, 160, 160, 160);
 								}

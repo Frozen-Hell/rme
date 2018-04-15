@@ -1189,8 +1189,6 @@ uint8_t* GameSprite::NormalImage::getRGBAData()
 	// decompress pixels
 	while(read < size && write < pixels_data_size) {
 		int transparent = dump[read] | dump[read + 1] << 8;
-		if(use_alpha && transparent >= size) // Corrupted sprite?
-			break;
 		read += 2;
 		for(int i = 0; i < transparent && write < pixels_data_size; i++) {
 			data[write + 0] = 0x00; // red
