@@ -143,6 +143,7 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(SHOW_PATHING, wxITEM_CHECK, OnChangeViewSettings);
 	MAKE_ACTION(SHOW_TOOLTIPS, wxITEM_CHECK, OnChangeViewSettings);
 	MAKE_ACTION(SHOW_PREVIEW, wxITEM_CHECK, OnChangeViewSettings);
+	MAKE_ACTION(SHOW_UNDERGROUND, wxITEM_CHECK, OnChangeViewSettings);
 
 	MAKE_ACTION(WIN_MINIMAP, wxITEM_NORMAL, OnMinimapWindow);
 	MAKE_ACTION(NEW_PALETTE, wxITEM_NORMAL, OnNewPalette);
@@ -404,6 +405,7 @@ void MainMenuBar::LoadValues()
 	CheckItem(SHOW_PATHING, g_settings.getBoolean(Config::SHOW_BLOCKING));
 	CheckItem(SHOW_TOOLTIPS, g_settings.getBoolean(Config::SHOW_TOOLTIPS));
 	CheckItem(SHOW_PREVIEW, g_settings.getBoolean(Config::SHOW_PREVIEW));
+	CheckItem(SHOW_UNDERGROUND, g_settings.getBoolean(Config::SHOW_UNDERGROUND));
 }
 
 void MainMenuBar::LoadRecentFiles()
@@ -1728,6 +1730,7 @@ void MainMenuBar::OnChangeViewSettings(wxCommandEvent& event)
 	g_settings.setInteger(Config::SHOW_BLOCKING, IsItemChecked(MenuBar::SHOW_PATHING));
 	g_settings.setInteger(Config::SHOW_TOOLTIPS, IsItemChecked(MenuBar::SHOW_TOOLTIPS));
 	g_settings.setInteger(Config::SHOW_PREVIEW, IsItemChecked(MenuBar::SHOW_PREVIEW));
+	g_settings.setInteger(Config::SHOW_UNDERGROUND, IsItemChecked(MenuBar::SHOW_UNDERGROUND));
 
 	g_gui.RefreshView();
 }
