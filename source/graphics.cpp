@@ -727,8 +727,9 @@ bool GraphicManager::loadSpriteData(const FileName& datafile, wxString& error, w
 	for(std::vector<uint32_t>::iterator sprite_iter = sprite_indexes.begin(); sprite_iter != sprite_indexes.end(); ++sprite_iter, ++id) {
 		uint32_t index = *sprite_iter + 3;
 		fh.seek(index);
-		uint16_t size;
-		safe_get(U16, size);
+		uint16_t size = 0;
+		if (*sprite_iter)
+			safe_get(U16, size);
 
 		ImageMap::iterator it = image_space.find(id);
 		if(it != image_space.end()) {
@@ -780,6 +781,12 @@ bool GraphicManager::loadSpriteDump(uint8_t*& target, uint16_t& size, int sprite
 
 	uint32_t to_seek = 0;
 	if(fh.getU32(to_seek)) {
+		if (!to_seek) {
+			// Empty GameSprite
+			size = 0;
+			target = nullptr;
+			return true;
+		}
 		fh.seek(to_seek+3);
 		uint16_t sprite_size;
 		if(fh.getU16(sprite_size)) {
@@ -1118,7 +1125,7 @@ void GameSprite::NormalImage::clean(int time)
 
 uint8_t* GameSprite::NormalImage::getRGBData()
 {
-	if(!dump) {
+	if(!dump && size > 0) {
 		if(g_settings.getInteger(Config::USE_MEMCACHED_SPRITES)) {
 			return nullptr;
 		}
@@ -1169,15 +1176,9 @@ uint8_t* GameSprite::NormalImage::getRGBData()
 
 uint8_t* GameSprite::NormalImage::getRGBAData()
 {
-	if(!dump) {
-		if(g_settings.getInteger(Config::USE_MEMCACHED_SPRITES)) {
-			return nullptr;
-		}
-
-		if(!g_gui.gfx.loadSpriteDump(dump, size, id)) {
-			return nullptr;
-		}
-	}
+	bool use_memcached = g_settings.getInteger(Config::USE_MEMCACHED_SPRITES);
+	if (!dump && (use_memcached ? size : !g_gui.gfx.loadSpriteDump(dump, size, id)))
+		return nullptr;
 
 	const int pixels_data_size = SPRITE_PIXELS * SPRITE_PIXELS * 4;
 	uint8_t* data = newd uint8_t[pixels_data_size];
