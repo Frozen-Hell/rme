@@ -1125,15 +1125,10 @@ void GameSprite::NormalImage::clean(int time)
 
 uint8_t* GameSprite::NormalImage::getRGBData()
 {
-	if(!dump && size > 0) {
-		if(g_settings.getInteger(Config::USE_MEMCACHED_SPRITES)) {
-			return nullptr;
-		}
 
-		if(!g_gui.gfx.loadSpriteDump(dump, size, id)) {
-			return nullptr;
-		}
-	}
+	bool use_memcached = g_settings.getInteger(Config::USE_MEMCACHED_SPRITES);
+	if (!dump && (use_memcached ? size : !g_gui.gfx.loadSpriteDump(dump, size, id)))
+		return nullptr;
 
 	const int pixels_data_size = SPRITE_PIXELS * SPRITE_PIXELS * 3;
 	uint8_t* data = newd uint8_t[pixels_data_size];
