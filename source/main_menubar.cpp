@@ -115,6 +115,7 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(MAP_REMOVE_CORPSES, wxITEM_NORMAL, OnMapRemoveCorpses);
 	MAKE_ACTION(MAP_REMOVE_UNREACHABLE_TILES, wxITEM_NORMAL, OnMapRemoveUnreachable);
 	MAKE_ACTION(MAP_CLEANUP, wxITEM_NORMAL, OnMapCleanup);
+	MAKE_ACTION(MAP_WATER_CLEANUP, wxITEM_NORMAL, OnMapWaterCleanup);
 	MAKE_ACTION(MAP_CLEAN_HOUSE_ITEMS, wxITEM_NORMAL, OnMapCleanHouseItems);
 	MAKE_ACTION(MAP_PROPERTIES, wxITEM_NORMAL, OnMapProperties);
 	MAKE_ACTION(MAP_STATISTICS, wxITEM_NORMAL, OnMapStatistics);
@@ -204,11 +205,11 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	// Tie all events to this handler!
 
 	for(std::map<std::string, MenuBar::Action*>::iterator ai = actions.begin(); ai != actions.end(); ++ai) {
-		frame->Connect(MAIN_FRAME_MENU + ai->second->id, wxEVT_COMMAND_MENU_SELECTED,
+		frame->Connect(MAIN_FRAME_MENU + ai->second->id, wxEVT_MENU,
 			(wxObjectEventFunction)(wxEventFunction)(ai->second->handler), nullptr, this);
 	}
 	for(size_t i = 0; i < 10; ++i) {
-		frame->Connect(recentFiles.GetBaseId() + i, wxEVT_COMMAND_MENU_SELECTED,
+		frame->Connect(recentFiles.GetBaseId() + i, wxEVT_MENU,
 			wxCommandEventHandler(MainMenuBar::OnOpenRecent), nullptr, this);
 	}
 }
@@ -333,6 +334,7 @@ void MainMenuBar::Update()
 	EnableItem(EDIT_MONSTERS, false);
 
 	EnableItem(MAP_CLEANUP, is_local);
+	EnableItem(MAP_WATER_CLEANUP, is_local);
 	EnableItem(MAP_PROPERTIES, is_local);
 	EnableItem(MAP_STATISTICS, is_local);
 
@@ -472,9 +474,35 @@ bool MainMenuBar::Load(const FileName& path, wxArrayString& warnings, wxString& 
 	}
 
 #ifdef __LINUX__
-	const int count = 39;
-	wxAcceleratorEntry entries[count];
+	std::vector<wxAcceleratorEntry> entries;
+
+	entries.emplace_back(wxACCEL_NORMAL, (int)'G', MAIN_FRAME_MENU + MenuBar::GHOST_ITEMS);
+	entries.emplace_back(wxACCEL_SHIFT, (int)'G', MAIN_FRAME_MENU + MenuBar::GHOST_ITEMS);
+	entries.emplace_back(wxACCEL_CTRL, (int)'H', MAIN_FRAME_MENU + MenuBar::GHOST_ITEMS);
+
 	// Edit
+	entries.emplace_back(wxACCEL_CTRL, (int)'Z', MAIN_FRAME_MENU + MenuBar::UNDO);
+	entries.emplace_back(wxACCEL_CTRL | wxACCEL_SHIFT, (int)'Z', MAIN_FRAME_MENU + MenuBar::REDO);
+	entries.emplace_back(wxACCEL_CTRL, (int)'X', MAIN_FRAME_MENU + MenuBar::CUT);
+
+	// View
+
+	entries.emplace_back(wxACCEL_CTRL, (int)'=', MAIN_FRAME_MENU + MenuBar::ZOOM_IN);
+	entries.emplace_back(wxACCEL_CTRL, (int)'-', MAIN_FRAME_MENU + MenuBar::ZOOM_OUT);
+	entries.emplace_back(wxACCEL_CTRL, (int)'0', MAIN_FRAME_MENU + MenuBar::ZOOM_NORMAL);
+
+
+	// Window
+	entries.emplace_back(wxACCEL_NORMAL, (int)'M', MAIN_FRAME_MENU + MenuBar::WIN_MINIMAP);
+	entries.emplace_back(wxACCEL_NORMAL, (int)'T', MAIN_FRAME_MENU + MenuBar::SELECT_TERRAIN);
+	entries.emplace_back(wxACCEL_NORMAL, (int)'D', MAIN_FRAME_MENU + MenuBar::SELECT_DOODAD);
+	entries.emplace_back(wxACCEL_NORMAL, (int)'I', MAIN_FRAME_MENU + MenuBar::SELECT_ITEM);
+	entries.emplace_back(wxACCEL_NORMAL, (int)'H', MAIN_FRAME_MENU + MenuBar::SELECT_HOUSE);
+	entries.emplace_back(wxACCEL_NORMAL, (int)'C', MAIN_FRAME_MENU + MenuBar::SELECT_CREATURE);
+	entries.emplace_back(wxACCEL_NORMAL, (int)'W', MAIN_FRAME_MENU + MenuBar::SELECT_WAYPOINT);
+	entries.emplace_back(wxACCEL_NORMAL, (int)'R', MAIN_FRAME_MENU + MenuBar::SELECT_RAW);
+
+	/*// Edit
 	entries[0].Set(wxACCEL_CTRL, (int)'Z', MAIN_FRAME_MENU + MenuBar::UNDO);
 	entries[1].Set(wxACCEL_CTRL | wxACCEL_SHIFT, (int)'Z', MAIN_FRAME_MENU + MenuBar::REDO);
 	entries[2].Set(wxACCEL_CTRL, (int)'F', MAIN_FRAME_MENU + MenuBar::FIND_ITEM);
@@ -491,7 +519,7 @@ bool MainMenuBar::Load(const FileName& path, wxArrayString& warnings, wxString& 
 	entries[12].Set(wxACCEL_CTRL, (int)'=', MAIN_FRAME_MENU + MenuBar::ZOOM_IN);
 	entries[13].Set(wxACCEL_CTRL, (int)'-', MAIN_FRAME_MENU + MenuBar::ZOOM_OUT);
 	entries[14].Set(wxACCEL_CTRL, (int)'0', MAIN_FRAME_MENU + MenuBar::ZOOM_NORMAL);
-	entries[15].Set(wxACCEL_NORMAL, (int)'Q', MAIN_FRAME_MENU + MenuBar::SHOW_SHADE);
+	entries[15].Set(wxACCEL_NORMAL, (int)'Q', MAIN_FRAME_MENU + MenuBar::SHOW_SHADE, items.find(MenuBar::SHOW_SHADE)->second.front());
 	entries[16].Set(wxACCEL_CTRL, (int)'W', MAIN_FRAME_MENU + MenuBar::SHOW_ALL_FLOORS);
 	entries[17].Set(wxACCEL_NORMAL, (int)'Q', MAIN_FRAME_MENU + MenuBar::GHOST_ITEMS);
 	entries[18].Set(wxACCEL_CTRL, (int)'L', MAIN_FRAME_MENU + MenuBar::GHOST_HIGHER_FLOORS);
@@ -519,7 +547,21 @@ bool MainMenuBar::Load(const FileName& path, wxArrayString& warnings, wxString& 
 	entries[38].Set(wxACCEL_NORMAL, (int)'R', MAIN_FRAME_MENU + MenuBar::SELECT_RAW);
 
 	wxAcceleratorTable accelerator(count, entries);
+	frame->SetAcceleratorTable(accelerator);*/
+
+	for (auto &entry : items) {
+		for (wxMenuItem* &menuItem : entry.second) {
+			wxAcceleratorEntry *accel = menuItem->GetAccel();
+			if (accel) {
+				entries.push_back(*accel);
+				delete accel;
+			}
+		}
+	}
+
+	wxAcceleratorTable accelerator(entries.size(), entries.data());
 	frame->SetAcceleratorTable(accelerator);
+
 #endif
 
 	/*
@@ -611,6 +653,9 @@ wxObject* MainMenuBar::LoadItem(pugi::xml_node node, wxMenu* parent, wxArrayStri
 			wxstr(help), // Help text
 			act.kind // Kind of item
 		);
+		if (act.kind == wxITEM_CHECK) {
+			std::cout << "itemCheck '" << name << "'\n";
+		}
 		items[MenuBar::ActionID(act.id)].push_back(tmp);
 		return tmp;
 	} else if(nodeName == "separator") {
@@ -1645,6 +1690,14 @@ void MainMenuBar::OnMapCleanup(wxCommandEvent& WXUNUSED(event))
 		g_gui.GetCurrentMap().cleanInvalidTiles(true);
 }
 
+void MainMenuBar::OnMapWaterCleanup(wxCommandEvent& WXUNUSED(event))
+{
+	int ok = g_gui.PopupDialog("Clean water", "Do you want to remove all water on level 7 from the map?", wxYES | wxNO);
+
+	if(ok == wxID_YES)
+		g_gui.GetCurrentMap().cleanWater(true);
+}
+
 void MainMenuBar::OnMapProperties(wxCommandEvent& WXUNUSED(event))
 {
 	wxDialog* properties = newd MapPropertiesWindow(
@@ -1703,6 +1756,16 @@ void MainMenuBar::OnZoomNormal(wxCommandEvent& event)
 
 void MainMenuBar::OnChangeViewSettings(wxCommandEvent& event)
 {
+	wxObject* object = event.GetEventObject();
+	std::cout << "MainMenuBar::OnChangeViewSettings event: " << event.GetEventType() << " object: " << object << std::endl;
+	if (object && object->IsKindOf(wxCLASSINFO(wxMenuItem))) {
+		wxMenuItem* item = (wxMenuItem*)object;
+		if (item && item->GetKind() == wxITEM_CHECK) {
+			std::cout << "nokurwa :)\n";
+			item->Check(!item->IsChecked());
+		}
+	}
+
 	g_settings.setInteger(Config::SHOW_ALL_FLOORS, IsItemChecked(MenuBar::SHOW_ALL_FLOORS));
 	if(IsItemChecked(MenuBar::SHOW_ALL_FLOORS)) {
 		EnableItem(MenuBar::SELECT_MODE_VISIBLE, true);
@@ -1733,6 +1796,8 @@ void MainMenuBar::OnChangeViewSettings(wxCommandEvent& event)
 	g_settings.setInteger(Config::SHOW_UNDERGROUND, IsItemChecked(MenuBar::SHOW_UNDERGROUND));
 
 	g_gui.RefreshView();
+
+	event.Skip();
 }
 
 void MainMenuBar::OnChangeFloor(wxCommandEvent& event)

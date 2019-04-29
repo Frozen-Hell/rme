@@ -407,6 +407,8 @@ void PaletteWindow::OnUpdate(Map* map)
 
 void PaletteWindow::OnKey(wxKeyEvent& event)
 {
+	event.Skip();
+	return;
 	if(g_gui.GetCurrentTab() != nullptr) {
 		g_gui.GetCurrentMapTab()->GetEventHandler()->AddPendingEvent(event);
 	}

@@ -305,6 +305,35 @@ void Map::cleanInvalidTiles(bool showdialog)
 		g_gui.DestroyLoadBar();
 }
 
+void Map::cleanWater(bool showdialog)
+{
+	if(showdialog)
+		g_gui.CreateLoadBar("Removing water...");
+
+	uint64_t tiles_done = 0;
+
+	for(MapIterator miter = begin(); miter != end(); ++miter) {
+		Tile* tile = (*miter)->get();
+		ASSERT(tile);
+
+		if (tile->size() == 1 && tile->hasGround() && !tile->items.size() &&
+			tile->getZ() == 7 && tile->ground->getID() >= 4820 && tile->ground->getID() <= 4825)
+		{
+			delete tile->ground;
+			tile->ground = nullptr;
+		}
+
+
+		++tiles_done;
+		if(showdialog && tiles_done % 0x10000 == 0) {
+			g_gui.SetLoadDone(int(tiles_done / double(getTileCount()) * 100.0));
+		}
+	}
+
+	if(showdialog)
+		g_gui.DestroyLoadBar();
+}
+
 MapVersion Map::getVersion() const
 {
 	return mapVersion;

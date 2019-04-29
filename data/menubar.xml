@@ -85,6 +85,7 @@
         <item name="Edit $Monsters" action="EDIT_MONSTERS" help="Edit monsters."/>
         <separator/>
         <item name="$Cleanup..." action="MAP_CLEANUP" help="Removes all unknown items from the map."/>
+        <item name="$Erase water..." action="MAP_WATER_CLEANUP" help="Removes all water from level 7."/>
         <item name="$Properties..." hotkey="Ctrl+P" action="MAP_PROPERTIES" help="Show and change the map properties."/>
         <item name="$Statistics" hotkey="F8" action="MAP_STATISTICS" help="Show map statistics."/>
     </menu>
@@ -99,7 +100,7 @@
         <separator/>
         <item name="$Show shade" hotkey="Q" action="SHOW_SHADE" help="Shade lower floors."/>
         <item name="Show $all floors" hotkey="Ctrl+W" action="SHOW_ALL_FLOORS" help="If not checked other floors are hidden."/>
-        <item name="Ghost $loose items" hotkey="G" action="GHOST_ITEMS" help="Ghost items (except ground)."/>
+        <item name="Ghost $loose items" hotkey="Ctrl+H" action="GHOST_ITEMS" help="Ghost items (except ground)."/>
         <item name="Ghost $higher floors" hotkey="Ctrl+L" action="GHOST_HIGHER_FLOORS" help="Ghost floors."/>
         <item name="Show $Ingame Box" hotkey="Shift+I" action="SHOW_INGAME_BOX" help="Shadows out areas not visible ingame (from the center of the screen)."/>
         <item name="Show $Grid" hotkey="Shift+G" action="SHOW_GRID" help="Shows a grid over all items."/>

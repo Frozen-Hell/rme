@@ -516,6 +516,21 @@
 		<item id="390" chance="10"/>
 		<item id="391" chance="10"/>
 	</brush>
+
+	<brush name="staglamites (.com)" type="doodad" server_lookid="11225" draggable="true" on_blocking="false" thickness="13/100">
+		<item id="11225" chance="10"/>
+		<item id="11226" chance="10"/>
+		<item id="11227" chance="10"/>
+		<item id="11228" chance="10"/>
+	</brush>
+
+	<brush name="rocks (.com)" type="doodad" server_lookid="11231" draggable="true" on_blocking="false" thickness="13/100">
+		<item id="11223" chance="10"/>
+		<item id="11224" chance="10"/>
+		<item id="11229" chance="10"/>
+		<item id="11230" chance="10"/>
+		<item id="11231" chance="10"/>
+	</brush>
 	
 	<brush name="mud cave rocks" type="doodad" server_lookid="5747" draggable="true" on_blocking="false" thickness="13/100">
 		<item id="5747" chance="10"/>
@@ -3844,6 +3859,46 @@
 		</alternate>
 		<alternate>
 			<item id="8823" chance="10"/>
+		</alternate>
+	</brush>
+
+
+	<brush name="mountain ramp (.com)" type="doodad" server_lookid="11261" draggable="false" on_blocking="true" one_size="true" redo_borders="true">
+		<alternate> -- south --
+			<composite chance="10">
+				<tile x="0" y="0"> <item id="11260"/> </tile>
+				<tile x="0" y="0" z="-1"> <item id="459"/> </tile>
+				<tile x="0" y="1"> <item id="11261"/> </tile>
+			</composite>
+		</alternate>
+		<alternate> -- east --
+			<composite chance="10">
+				<tile x="0" y="0"> <item id="11262"/> </tile>
+				<tile x="0" y="0" z="-1"> <item id="459"/> </tile>
+				<tile x="1" y="0"> <item id="11263"/> </tile>
+			</composite>
+		</alternate>
+	</brush>
+
+	<brush name="badyle1 (.com)" type="doodad" server_lookid="11264" draggable="true" on_blocking="true">
+		<alternate> -- south --
+			<item id="11264" chance="1"/>
+			<item id="11265" chance="1"/>
+		</alternate>
+		<alternate> -- east --
+			<item id="11266" chance="1"/>
+			<item id="11267" chance="1"/>
+		</alternate>
+	</brush>
+
+	<brush name="badyle2 (.com)" type="doodad" server_lookid="11268" draggable="true" on_blocking="true">
+		<alternate> -- south --
+			<item id="11268" chance="1"/>
+			<item id="11269" chance="1"/>
+		</alternate>
+		<alternate> -- east --
+			<item id="11270" chance="1"/>
+			<item id="11271" chance="1"/>
 		</alternate>
 	</brush>
 </materials>

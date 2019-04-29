@@ -343,6 +343,7 @@
 		<terrain>
 			<brush name="earth"/>
 			<brush name="earth (stone border)"/>
+			<brush name="earth (.com)"/>
 			<brush name="cave"/>
 			<brush name="cave (alternate border)"/>
 			<brush name="cave hole"/>
@@ -368,6 +369,7 @@
 			<brush name="snowy ramp"/>
 			<brush name="ramp"/>
 			<brush name="snow"/>
+			<brush name="snow ropespot"/>
 			<brush name="ice"/>
 			<brush name="ice floe"/>
 			<brush name="white gravel"/>
@@ -2176,5 +2178,22 @@
 			<item fromid="8893"/>
 			<item fromid="9726"/>
 		</raw>
+	</tileset>
+
+	<tileset name="COMOWANIE">
+		<terrain>
+			<brush name="earth (.com)"/>
+			<brush name="mountain (.com)"/>
+			<brush name="mountain ground (.com)"/>
+			<brush name="cave"/>
+			<brush name="cave (alternate border)"/>
+		</terrain>
+		<doodad>
+			<brush name="staglamites (.com)"/>
+			<brush name="rocks (.com)"/>
+			<brush name="mountain ramp (.com)"/>
+			<brush name="badyle1 (.com)"/>
+			<brush name="badyle2 (.com)"/>
+		</doodad>
 	</tileset>
 </materials>

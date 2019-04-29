@@ -916,5 +916,50 @@
 		<borderitem edge="dsw" item="6878"/>
 		<borderitem edge="dse" item="6881"/>
 	</border>
+
+	<border id="301"> -- podziemia --
+		<borderitem edge="n"   item="11196"/>
+		<borderitem edge="e"   item="11201"/>
+		<borderitem edge="s"   item="11202"/>
+		<borderitem edge="w"   item="11195"/>
+		<borderitem edge="cnw" item="11199"/>
+		<borderitem edge="cne" item="11200"/>
+		<borderitem edge="csw" item="11198"/>
+		<borderitem edge="cse" item="11197"/>
+		<borderitem edge="dnw" item="11203"/>
+		<borderitem edge="dne" item="11206"/>
+		<borderitem edge="dsw" item="11205"/>
+		<borderitem edge="dse" item="11204"/>
+	</border>
+
+	<border id="302" type="optional"> -- skaly --
+		<borderitem edge="n"   item="11247"/>
+		<borderitem edge="e"   item="11250"/>
+		<borderitem edge="s"   item="11251"/>
+		<borderitem edge="w"   item="11248"/>
+		<borderitem edge="cnw" item="11254"/>
+		<borderitem edge="cne" item="11253"/>
+		<borderitem edge="csw" item="11252"/>
+		<borderitem edge="cse" item="11255"/>
+		<borderitem edge="dnw" item="11256"/>
+		<borderitem edge="dne" item="11257"/>
+		<borderitem edge="dsw" item="11258"/>
+		<borderitem edge="dse" item="11259"/>
+	</border>
+	
+	<border id="303" group="1"> -- na pietrze skaly --
+		<borderitem edge="n"   item="11246"/>
+		<borderitem edge="e"   item="11243"/>
+		<borderitem edge="s"   item="11244"/>
+		<borderitem edge="w"   item="11245"/>
+		<borderitem edge="cnw" item="11240"/>
+		<borderitem edge="cne" item="11239"/>
+		<borderitem edge="csw" item="11242"/>
+		<borderitem edge="cse" item="11241"/>
+		<borderitem edge="dnw" item="11238"/>
+		<borderitem edge="dne" item="11237"/>
+		<borderitem edge="dsw" item="11235"/>
+		<borderitem edge="dse" item="11236"/>
+	</border>
 	
 </materials>

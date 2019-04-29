@@ -647,6 +647,7 @@
 		<item id="355" chance="1"/>
 		
 		<border align="outer" id="7"/>
+		<border align="inner" to="none" id="303"/>
 	</brush>
 	
 	<brush name="cave (alternate border)" type="ground" server_lookid="9025" z-order="5090">
@@ -675,6 +676,14 @@
 		<friend name="cave"/>
 		<friend name="cave hole"/>
 		<friend name="cave (alternate border)"/>
+	</brush>
+
+
+	<brush name="snow ropespot" type="ground" server_lookid="12336" z-order="2000">
+		<item id="12336" chance="1"/>
+		
+		<border align="inner" id="6"/>
+		<friend name="snow"/>
 	</brush>
 	
 	<brush name="cave small hole" type="ground" server_lookid="385" z-order="2000">
@@ -868,7 +877,29 @@
 		<friend name="sand closed stone pile"/>
 		<friend name="sand (thick border)"/>
 	</brush>
-	
+
+	<brush name="earth (.com)" type="ground" server_lookid="11194" z-order="10500">
+		<item id="11194" chance="50"/>
+		<item id="11207" chance="1"/>
+		<item id="11208" chance="1"/>
+		<item id="11209" chance="1"/>
+		<item id="11210" chance="1"/>
+		<item id="11211" chance="1"/>
+		<item id="11212" chance="1"/>
+		<item id="11213" chance="1"/>
+		<item id="11214" chance="1"/>
+		<item id="11215" chance="1"/>
+		<item id="11216" chance="1"/>
+		<item id="11217" chance="1"/>
+		<item id="11218" chance="1"/>
+		<item id="11219" chance="1"/>
+		<item id="11220" chance="1"/>
+		<item id="11221" chance="1"/>
+		<item id="11222" chance="1"/>
+		
+		<border align="outer" id="301"/>
+		<border align="outer" to="none" id="301"/>
+	</brush>
 	
 	<brush name="earth" type="ground" lookid="101" z-order="10500">
 		<item id="101" chance="150"/>
@@ -1129,6 +1160,22 @@
 		
 		<border align="inner" to="sea" id="47"/>
 		<border align="outer" id="10"/>
+	</brush>
+
+	<brush name="mountain ground (.com)" type="ground" server_lookid="11233" z-order="2500">
+		<item id="11233" chance="1000"/>
+		
+		<border align="inner" to="sea" id="47"/>
+		<border align="inner" to="none" id="303"/>
+		<!-- <border align="outer" id="10"/> -->
+	</brush>
+
+	<brush name="mountain top ground (.com)" type="ground" server_lookid="352" z-order="2500">
+		<item id="352" chance="1000"/>
+		
+		<border align="inner" to="sea" id="47"/>
+		<border align="inner" to="none" id="303"/>
+		<!-- <border align="outer" id="10"/> -->
 	</brush>
 	
 	<brush name="mountain top ground" type="ground" server_lookid="4405" z-order="1005">
@@ -1464,7 +1511,7 @@
 		<item id="806" chance="0"/>
 		<item id="804" chance="0"/>
 		
-		<border align="outer" id="13"/>
+		<border align="outer" id="303"/>
 		<border align="inner" to="none" id="1"/>
 	</brush>
 	
@@ -1608,6 +1655,19 @@
 		<border align="outer" id="10"/>
 		<border align="inner" id="3"/>
 		<optional id="29"/>
+	</brush>
+	
+	<brush name="mountain (.com)" type="ground" server_lookid="11233" z-order="9900">
+		<item id="11234" chance="1"/>
+		
+		<border align="inner" to="icy mountain" id="53"/>
+		<border align="inner" to="snowy mountain" id="53"/>
+
+		<border align="inner" to="none" id="3"/>
+		<!-- <border align="outer" id="10"/> -->
+		<!-- <border align="inner" id="3"/> -->
+		<!-- <border align="outer" to="none" id="302"/> -->
+		<optional id="302"/>
 	</brush>
 	
 	<brush name="stone floor" type="ground" server_lookid="431" z-order="1">
