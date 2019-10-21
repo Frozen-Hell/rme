@@ -7,5 +7,50 @@
 	<creature name="spider" type="monster" looktype="5" />
 	<creature name="wolf" type="monster" looktype="6" />
 	<creature name="naked man" type="monster" looktype="30" />
-	<creature name="" type="monster" looktype="46" />
+	<creature name="Orc with club" type="monster" looktype="31" />
+	<creature name="Orc with club" type="monster" looktype="32" />
+	<creature name="Orc with hammer" type="monster" looktype="33" />
+	<creature name="Orc with hammer" type="monster" looktype="34" />
+	<creature name="Orc barehanded" type="monster" looktype="35" />
+	<creature name="Orc with axe" type="monster" looktype="36" />
+	<creature name="Orc with axe" type="monster" looktype="37" />
+	<creature name="Orc barehanded dark" type="monster" looktype="38" />
+	<creature name="Orc with hammer dark" type="monster" looktype="39" />
+	<creature name="Orc with club dark" type="monster" looktype="40" />
+	<creature name="Orc with axe dark" type="monster" looktype="41" />
+	<creature name="Orc with club dark" type="monster" looktype="42" />
+	<creature name="Orc with axe dark" type="monster" looktype="43" />
+	<creature name="Orc with hammer dark" type="monster" looktype="44" />
+	<creature name="Player barehanded" type="monster" looktype="45" />
+	<creature name="Player with sword" type="monster" looktype="46" />
+	<creature name="" type="monster" looktype="47" />
+	<creature name="Player with mace" type="monster" looktype="48" />
+	<creature name="Player with sword" type="monster" looktype="49" />
+	<creature name="Player with axe" type="monster" looktype="50" />
+	<creature name="Player with axe" type="monster" looktype="51" />
+	<creature name="Player with crossbow" type="monster" looktype="52" />
+	<creature name="Player with crossbow" type="monster" looktype="53" />
+	<creature name="Player with bow" type="monster" looktype="54" />
+	<creature name="Player with bow" type="monster" looktype="55" />
+	<creature name="Player with wand" type="monster" looktype="56" />
+	<creature name="Player with wand" type="monster" looktype="57" />
+	<creature name="" type="monster" looktype="58" />
+	<creature name="" type="monster" looktype="59" />
+	<creature name="" type="monster" looktype="60" />
+	<creature name="" type="monster" looktype="61" />
+	<creature name="" type="monster" looktype="62" />
+	<creature name="" type="monster" looktype="63" />
+	<creature name="" type="monster" looktype="64" />
+	<creature name="Orc with hammer" type="monster" looktype="65" />
+	<creature name="" type="monster" looktype="66" />
+	<creature name="Orc barehanded" type="monster" looktype="67" />
+	<creature name="Orc barehanded dark" type="monster" looktype="68" />
+	<creature name="Orc with axe" type="monster" looktype="69" />
+	<creature name="Orc with axe dark" type="monster" looktype="70" />
+	<creature name="Orc with club" type="monster" looktype="71" />
+	<creature name="Orc with club dark" type="monster" looktype="72" />
+	<creature name="Giant Spider" type="monster" looktype="76" />
+	<creature name="Dendroid" type="monster" looktype="79" />
+	<creature name="Dendroid Shaman" type="monster" looktype="82" />
+	<creature name="Orc Archer" type="monster" looktype="85" />
 </creatures>

@@ -4225,4 +4225,195 @@
 	<item id="2462" name="" article="a" />
 	<item id="2466" name="" article="a" />
 	<item id="2467" name="" article="a" />
+	<item id="2608" name="Long Axe" article="a" />
+	<item id="2609" name="Bardiche" article="a" />
+	<item id="2610" name="Steel Pipe Axe" article="a" />
+	<item id="2611" name="Hatchet" article="a" />
+	<item id="2612" name="Dwarven Axe" article="a" />
+	<item id="2613" name="War Axe" article="a" />
+	<item id="2614" name="Double Blade Axe" article="a" />
+	<item id="2615" name="Voulge" article="a" />
+	<item id="2616" name="Royal Army Halberd" article="a" />
+	<item id="2617" name="Halberd" article="a" />
+	<item id="2618" name="Longbow" article="a" />
+	<item id="2619" name="Shortbow" article="a" />
+	<item id="2620" name="Royal Army Bow" article="a" />
+	<item id="2621" name="Giant Orc Bow" article="a" />
+	<item id="2622" name="Elven Bow" article="a" />
+	<item id="2623" name="Giant Towerguard Crossbow" article="a" />
+	<item id="2624" name="Dwarven Crossbow" article="a" />
+	<item id="2625" name="Slingshot" article="a" />
+	<item id="2626" name="Throwing Axes" article="a" />
+	<item id="2627" name="Throwing Knife" article="a" />
+	<item id="2628" name="Javelin" article="a" />
+	<item id="2629" name="Rapier" article="a" />
+	<item id="2630" name="Linothorax" article="a" />
+	<item id="2631" name="Southern Blades" article="a" />
+	<item id="2632" name="Guardian's Halberdine" article="a" />
+	<item id="2633" name="Mana Amulet" article="a" />
+	<item id="2634" name="Blood Amulet" article="a" />
+	<item id="2635" name="Mana Potion" article="a" />
+	<item id="2636" name="Health Potion" article="a" />
+	<item id="2637" name="Ring of Strength" article="a" />
+	<item id="2638" name="Ring of Vitality" article="a" />
+	<item id="2639" name="Ring of Rapidity" article="a" />
+	<item id="2640" name="Ring of Protection" article="a" />
+	<item id="2641" name="Ring of Resistance" article="a" />
+	<item id="2642" name="Ring of Decay" article="a" />
+	<item id="2643" name="Ring of Mind Control" article="a" />
+	<item id="2644" name="Wolftooth Amulet" article="a" />
+	<item id="2645" name="Orctooth Amulet" article="an" />
+	<item id="2646" name="Boartooth Amulet" article="a" />
+	<item id="2647" name="Snakeskin Amulet" article="a" />
+	<item id="2648" name="Bear Claw Amulet" article="a" />
+	<item id="2649" name="Human Finger Amulet" article="a" />
+	<item id="2650" name="Blood Orb Amulet" article="a" />
+	<item id="2651" name="Amulet of Power" article="a" />
+	<item id="2652" name="Dragon Eye Amulet" article="a" />
+	<item id="2653" name="Bag of Javelins" article="a" />
+	<item id="2654" name="Treeman Eye Ring" article="a" />
+	<item id="2655" name="Traitor's Head" article="a" />
+	<item id="2656" name="Orc Belt" article="an" />
+	<item id="2657" name="Dragon Skin" article="a" />
+	<item id="2658" name="Hawk" article="a" />
+	<item id="2659" name="Dark Powder" article="a" />
+	<item id="2660" name="Escape Powder" article="a" />
+	<item id="2661" name="Scroll of Advancement" article="a" />
+	<item id="2662" name="Empty Scroll" article="an" />
+	<item id="2663" name="Gambeson" article="a" />
+	<item id="2664" name="Holy Church Amulet" article="a" />
+	<item id="2665" name="Family Brooch" article="a" />
+	<item id="2666" name="Amulet of the Black Circle" article="an" />
+	<item id="2667" name="Necromancer Ring" article="a" />
+	<item id="2668" name="Flanked Mace" article="a" />
+	<item id="2669" name="Battle Mace" article="a" />
+	<item id="2670" name="Spiked Mace" article="a" />
+	<item id="2671" name="Morning Star" article="a" />
+	<item id="2672" name="Simple Flail" article="a" />
+	<item id="2673" name="Large Tri-Flail" article="a" />
+	<item id="2674" name="Skull Flail" article="a" />
+	<item id="2675" name="Battle Flail" article="a" />
+	<item id="2676" name="Orcish Warhammer" article="an" />
+	<item id="2677" name="Dwarven Warmace" article="a" />
+	<item id="2678" name="Studded Warhammer" article="a" />
+	<item id="2679" name="Villager's Fork" article="a" />
+	<item id="2680" name="Militia Scythe" article="a" />
+	<item id="2681" name="Maul" article="a" />
+	<item id="2682" name="Great Warhammer" article="a" />
+	<item id="2683" name="Gisarme" article="a" />
+	<item id="2684" name="Saber" article="a" />
+	<item id="2685" name="Royal Army Officer Sword" article="a" />
+	<item id="2686" name="Bastard Sword" article="a" />
+	<item id="2687" name="Katana" article="a" />
+	<item id="2688" name="Dwarven Sword" article="a" />
+	<item id="2689" name="Elven Blade" article="a" />
+	<item id="2690" name="Orc Slayer" article="a" />
+	<item id="2691" name="Assassin Dagger" article="a" />
+	<item id="2692" name="Leather Armor" article="a" />
+	<item id="2693" name="Leather Armlet" article="a" />
+	<item id="2694" name="Leather Hood" article="a" />
+	<item id="2695" name="Fur Coated Plate Armor" article="a" />
+	<item id="2696" name="Leather Mittens" article="a" />
+	<item id="2697" name="Leather Pants" article="a" />
+	<item id="2698" name="Leather Boots" article="a" />
+	<item id="2699" name="Habergon" article="a" />
+	<item id="2700" name="Priest Robe" article="a" />
+	<item id="2701" name="Lamellar Armor" article="a" />
+	<item id="2702" name="Scale Mail" article="a" />
+	<item id="2703" name="Habergon" article="a" />
+	<item id="2704" name="Woodlands Armor" article="a" />
+	<item id="2705" name="Woodland Legs" article="a" />
+	<item id="2706" name="Brigandine" article="a" />
+	<item id="2707" name="Plate Rock" article="a" />
+	<item id="2708" name="Plate Armor" article="a" />
+	<item id="2709" name="Plate Legs" article="a" />
+	<item id="2710" name="Plate Boots" article="a" />
+	<item id="2711" name="Padded Vest" article="a" />
+	<item id="2712" name="Tunic" article="a" />
+	<item id="2713" name="Inquisitioner's Gauntlets" article="a" />
+	<item id="2714" name="Leather Helmet" article="a" />
+	<item id="2715" name="Lamellar Legs" article="a" />
+	<item id="2716" name="Pelt Coat" article="a" />
+	<item id="2717" name="Pelt Skirt" article="a" />
+	<item id="2718" name="Royal Army Tabard" article="a" />
+	<item id="2719" name="Army Loyalist Tabard" article="a" />
+	<item id="2720" name="Guardian Helmet" article="a" />
+	<item id="2721" name="Guardian Armor" article="a" />
+	<item id="2722" name="Inquisitioner's Helmet" article="a" />
+	<item id="2723" name="Inquisitioner's Armor" article="a" />
+	<item id="2724" name="Inquisitioner's Legs" article="a" />
+	<item id="2725" name="Inquisitioner's Boots" article="a" />
+	<item id="2726" name="Bronze Cuirass" article="a" />
+	<item id="2727" name="Sorcerer's Robes" article="a" />
+	<item id="2728" name="Dwarven Helmet" article="a" />
+	<item id="2729" name="Dwarven Mail" article="a" />
+	<item id="2730" name="Dwarven Legs" article="a" />
+	<item id="2731" name="Dwarven Boots" article="a" />
+	<item id="2732" name="Dwarven Gauntlet" article="a" />
+	<item id="2733" name="Elven Tiara" article="a" />
+	<item id="2734" name="Elven Armor" article="a" />
+	<item id="2735" name="Elven Legs" article="a" />
+	<item id="2736" name="Elven Boots" article="a" />
+	<item id="2737" name="Druid Coat" article="a" />
+	<item id="2738" name="Mail Gauntlets" article="a" />
+	<item id="2739" name="Brass Gauntlets" article="a" />
+	<item id="2740" name="Lamellar Gauntlets" article="a" />
+	<item id="2741" name="Padded Mittens" article="a" />
+	<item id="2742" name="Elven Gauntlets" article="a" />
+	<item id="2743" name="Orc Gambeson" article="a" />
+	<item id="2744" name="Pelt Boots" article="a" />
+	<item id="2745" name="Scale Boots" article="a" />
+	<item id="2746" name="Yoroi" article="a" />
+	<item id="2747" name="Orc Skirt" article="a" />
+	<item id="2748" name="Orc Legs" article="a" />
+	<item id="2749" name="Orc Horn Pauldron" article="a" />
+	<item id="2750" name="Skull Shoulderpads" article="a" />
+	<item id="2751" name="Orcish Shoulderpads" article="a" />
+	<item id="2752" name="Steel Shoulderpads" article="a" />
+	<item id="2753" name="Leather Shoulderpads" article="a" />
+	<item id="2754" name="Scale Shoulderpads" article="a" />
+	<item id="2755" name="Lamellar Shoulderpads" article="a" />
+	<item id="2756" name="Greaves" article="a" />
+	<item id="2757" name="Chain Legs" article="a" />
+	<item id="2758" name="Bone Helmet" article="a" />
+	<item id="2759" name="Bone Armor" article="a" />
+	<item id="2760" name="Bone Legs" article="a" />
+	<item id="2761" name="Bone Gauntlets" article="a" />
+	<item id="2762" name="Bone Boots" article="a" />
+	<item id="2763" name="Giant Guardian Helmet" article="a" />
+	<item id="2764" name="Aventailed Bascinet" article="a" />
+	<item id="2765" name="Felt Mittens" article="a" />
+	<item id="2766" name="Flat Topped Helmet" article="a" />
+	<item id="2767" name="Sallet" article="a" />
+	<item id="2768" name="Steel Helmet" article="a" />
+	<item id="2769" name="Closed Helmet" article="a" />
+	<item id="2770" name="Horned Helmet" article="a" />
+	<item id="2771" name="Great Helmet" article="a" />
+	<item id="2772" name="Skull Cap" article="a" />
+	<item id="2773" name="Pigface Helmet" article="a" />
+	<item id="2774" name="Turban" article="a" />
+	<item id="2775" name="Leather Hood" article="a" />
+	<item id="2776" name="Black Steel Shield" article="a" />
+	<item id="2777" name="Frog Mouth Helmet" article="a" />
+	<item id="2778" name="Padded Coif" article="a" />
+	<item id="2779" name="Faceguard Spangenhelm" article="a" />
+	<item id="2780" name="Brass Riveted Buckler" article="a" />
+	<item id="2781" name="Royal Army Shield" article="a" />
+	<item id="2782" name="Orcish Kiteshield" article="a" />
+	<item id="2783" name="Wooden Kite Shield" article="a" />
+	<item id="2784" name="Square Brass Shield" article="a" />
+	<item id="2785" name="Steel Heater Shield" article="a" />
+	<item id="2786" name="Wooden Tower Shield" article="a" />
+	<item id="2787" name="Skirmisher Shield" article="a" />
+	<item id="2788" name="Elven Shield" article="a" />
+	<item id="2789" name="Leather Skirt" article="a" />
+	<item id="2790" name="Steel Cuirass" article="a" />
+	<item id="2791" name="Steel Breastplate" article="a" />
+	<item id="2792" name="Chestnut Wand" article="a" />
+	<item id="2793" name="Pine Wand" article="a" />
+	<item id="2794" name="Willow Wand" article="a" />
+	<item id="2795" name="Bone Wand" article="a" />
+	<item id="2796" name="Priest's Wand" article="a" />
+	<item id="2802" name="" article="a" />
+	<item id="2803" name="" article="a" />
 </items>
