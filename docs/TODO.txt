@@ -1,5 +1,3 @@
 - Fix sprites drawn on spawn and waypoint (probably replace them with appropriate sprites from fof.dat).
 - Need to be able to modify parameters of existing audio points and areas.
-- Try to get rid off "Unknown item group declaration message".
-- Probably get rid of versioned directories in RME and leave only plain "data" directory with files from "960" version.
-- Export map as whole PNG image.
+- Try to get rid off "Unknown item group declaration" message.

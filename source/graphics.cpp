@@ -1220,23 +1220,23 @@ bool GraphicManager::loadSpriteAlphaTransparency(const FileName & datafile, wxSt
 		} \
 	} while(false)
 
-	uint32_t alpSignature;
+	uint32_t alpSignature = 0;
 	safe_get(U32, alpSignature);
 
-	uint32_t spritesCount;
+	uint32_t spritesCount = 0;
 	safe_get(U32, spritesCount);
-	uint32_t id, offset, currentOffset;
+	uint32_t id = 0, offset = 0, currentOffset = 0;
 
 	for (uint32_t i = 0; i < spritesCount; ++i)
 	{
 		safe_get(U32, id);
+		safe_get(U32, offset);
 		ImageMap::iterator it = image_space.find(id);
 		if (it != image_space.end())
 		{
 			GameSprite::NormalImage * spr = dynamic_cast <GameSprite::NormalImage *> (it->second);
 			if (spr)
 			{
-				safe_get(U32, offset);
 				currentOffset = fh.tell();
 				fh.seek(offset);
 				spr->alpha = new uint8_t[1024];

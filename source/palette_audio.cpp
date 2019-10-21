@@ -520,5 +520,5 @@ void AudioPalettePanel::onEvent(unsigned int eventID, void * eventData)
 
 AudioPalettePanel::~AudioPalettePanel()
 {
+	Mediator::unsubscribeAllEvents(this);
 }
-
