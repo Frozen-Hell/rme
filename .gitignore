@@ -20,9 +20,14 @@ data/user
 *.suo
 *.obj
 
-bin/
-obj/
-builds/
+/bin/debug/*
+!/bin/debug/.gitkeep
+/bin/release/*
+!/bin/release/.gitkeep
+/obj/debug/*
+!/obj/debug/.gitkeep
+/obj/release/*
+!/obj/release/.gitkeep
 vcproj/ipch/
 vcproj/Beta Release/
 vcproj/Debug/
