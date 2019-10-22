@@ -625,8 +625,9 @@ void PreferencesWindow::Apply()
 	settings.setFloat(Config::SCROLL_SPEED, scroll_mul * scroll_speed_slider->GetValue()/10.f);
 	settings.setFloat(Config::ZOOM_SPEED, zoom_speed_slider->GetValue()/10.f);
 
+	// commented by @dtroitskiy - as 'Client' page is disabled, this code needs to be disabled too
 	// Client
-	ClientVersionList versions = ClientVersion::getAllVisible();
+	/*ClientVersionList versions = ClientVersion::getAllVisible();
 	int version_counter = 0;
     for (ClientVersionList::iterator version_iter = versions.begin();
          version_iter != versions.end();
@@ -644,7 +645,7 @@ void PreferencesWindow::Apply()
 
 		version_counter++;
     }
-	settings.setInteger(Config::CHECK_SIGNATURES, check_sigs_chkbox->GetValue());
+	settings.setInteger(Config::CHECK_SIGNATURES, check_sigs_chkbox->GetValue());*/
 
 	settings.save();
 
