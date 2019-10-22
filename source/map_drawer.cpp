@@ -658,10 +658,6 @@ void MapDrawer::DrawDraggingShadow()
 				{
 					BlitCreature(draw_x, draw_y, tile->creature);
 				}
-				if (tile->spawn && tile->spawn->isSelected())
-				{
-					BlitSpriteType(draw_x, draw_y, SPRITE_SPAWN, 160, 160, 160, 160);
-				}
 			}
 		}
 	}
@@ -1626,7 +1622,7 @@ void MapDrawer::DrawTile(TileLocation* location) {
 		}
 		if(location->getWaypointCount() > 0 && options.show_houses)
 		{
-			BlitSpriteType(draw_x, draw_y, SPRITE_FLAME_BLUE, 64, 64, 255);
+			BlitSpriteType(draw_x, draw_y, SPRITE_WAYPOINT, 64, 64, 255);
 		}
 
 		if(tile->isHouseExit() && options.show_houses)
@@ -1638,20 +1634,6 @@ void MapDrawer::DrawTile(TileLocation* location) {
 			else
 			{
 				BlitSpriteType(draw_x, draw_y, SPRITE_FLAG_GREY, 64, 64, 255);
-			}
-		}
-		//if(tile->isTownExit()) {
-		//	BlitSpriteType(draw_x, draw_y, SPRITE_FLAG_GREY, 255, 255, 64);
-		//}
-		if(tile->spawn && options.show_spawns)
-		{
-			if(tile->spawn->isSelected())
-			{
-				BlitSpriteType(draw_x, draw_y, SPRITE_SPAWN, 128, 128, 128);
-			}
-			else
-			{
-				BlitSpriteType(draw_x, draw_y, SPRITE_SPAWN, 255, 255, 255);
 			}
 		}
 	}

@@ -1551,11 +1551,6 @@ wxMemoryDC * GameSprite::getDC(SpriteSize sz)
 					resultRGB[drp + 1] = srcRGB[srp + 1] * srca + resultRGB[drp + 1]  * dsta * msrca;
 					resultRGB[drp + 2] = srcRGB[srp + 2] * srca + resultRGB[drp + 2]  * dsta * msrca;
 					resultAlpha[dap] = (srca + dsta * msrca) * 255.0f;
-					// not sure where it comes from, but I have to manually catch magenta color and remove it by setting alpha to zero
-					if (resultRGB[drp] == 255 && resultRGB[drp + 1] == 0 && resultRGB[drp + 2] == 255)
-					{
-						resultAlpha[dap] = 0;
-					}
 					drp += 3;
 					srp += 3;
 					dap++;
@@ -1731,9 +1726,9 @@ uint8_t* GameSprite::NormalImage::getRGBData() {
 
 		for(int i = 0; i < chunk_size; ++i) {
 			// Transparent pixel
-			rgb32x32[96*y+x*3+0] = 0xFF;
-			rgb32x32[96*y+x*3+1] = 0x00;
-			rgb32x32[96*y+x*3+2] = 0xFF;
+			rgb32x32[96*y+x*3+0] = 0;
+			rgb32x32[96*y+x*3+1] = 0;
+			rgb32x32[96*y+x*3+2] = 0;
 			x++;
 			if(x >= 32) {
 				x = 0;
@@ -1771,9 +1766,9 @@ uint8_t* GameSprite::NormalImage::getRGBData() {
 
 	// Fill up any trailing pixels
 	while(y<32 && x<32) {
-		rgb32x32[96*y+x*3+0] = 0xFF; // Transparent
-		rgb32x32[96*y+x*3+1] = 0x00; // Transparent
-		rgb32x32[96*y+x*3+2] = 0xFF; // Transparent
+		rgb32x32[96*y+x*3+0] = 0;
+		rgb32x32[96*y+x*3+1] = 0;
+		rgb32x32[96*y+x*3+2] = 0;
 		x++;
 		if(x >= 32) {
 			x = 0;
