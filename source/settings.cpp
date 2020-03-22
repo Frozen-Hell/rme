@@ -323,6 +323,13 @@ void Settings::IO(IOMode mode)
 	Int(FIND_ITEM_MODE, 0);
 	Int(JUMP_TO_ITEM_MODE, 0);
 
+	Int(ACTIVE_CHECK, 0);
+	Int(REPLACE_CHECK, 0);
+	Int(ABOVE_CHECK, 0);
+	Int(FIRST_GROUND, 0);
+	Int(SECOND_GROUND, 0);
+	Int(EXTRA_BORDER_OPTIONS, 0);
+
 #undef section
 #undef Int
 #undef IntToSave

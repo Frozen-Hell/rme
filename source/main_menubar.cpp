@@ -18,6 +18,7 @@
 // $Id: main_menubar.hpp 323 2010-04-12 20:59:41Z admin $
 
 #include "main.h"
+#include "raw_brush.h"
 
 #include "main_menubar.h"
 #include "application.h"
@@ -86,6 +87,7 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(SEARCH_ON_SELECTION_EVERYTHING, wxITEM_NORMAL, OnSearchForStuffOnSelection);
 	MAKE_ACTION(SEARCH_ON_SELECTION_UNIQUE, wxITEM_NORMAL, OnSearchForUniqueOnSelection);
 	MAKE_ACTION(SEARCH_ON_SELECTION_ACTION, wxITEM_NORMAL, OnSearchForActionOnSelection);
+	MAKE_ACTION(SEARCH_ON_SELECTION_ALL, wxITEM_NORMAL, OnSearchForAllOnSelection);
 	MAKE_ACTION(SEARCH_ON_SELECTION_CONTAINER, wxITEM_NORMAL, OnSearchForContainerOnSelection);
 	MAKE_ACTION(SEARCH_ON_SELECTION_WRITEABLE, wxITEM_NORMAL, OnSearchForWriteableOnSelection);
 	MAKE_ACTION(SELECT_MODE_COMPENSATE, wxITEM_RADIO, OnSelectionTypeChange);
@@ -102,10 +104,13 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(GOTO_POSITION, wxITEM_NORMAL, OnGotoPosition);
 	MAKE_ACTION(JUMP_TO_BRUSH, wxITEM_NORMAL, OnJumpToBrush);
 	MAKE_ACTION(JUMP_TO_ITEM_BRUSH, wxITEM_NORMAL, OnJumpToItemBrush);
+	MAKE_ACTION(UPGRADE_MAP, wxITEM_NORMAL, OnUpgradeMap);
 
 	MAKE_ACTION(CUT, wxITEM_NORMAL, OnCut);
 	MAKE_ACTION(COPY, wxITEM_NORMAL, OnCopy);
 	MAKE_ACTION(PASTE, wxITEM_NORMAL, OnPaste);
+	MAKE_ACTION(COPYID, wxITEM_NORMAL, OnCopyId);
+	MAKE_ACTION(SETPOS, wxITEM_NORMAL, OnSetPos);
 
 	MAKE_ACTION(EDIT_TOWNS, wxITEM_NORMAL, OnMapEditTowns);
 	MAKE_ACTION(EDIT_ITEMS, wxITEM_NORMAL, OnMapEditItems);
@@ -308,11 +313,13 @@ void MainMenuBar::Update()
 	EnableItem(SEARCH_ON_SELECTION_EVERYTHING, has_selection && is_host);
 	EnableItem(SEARCH_ON_SELECTION_UNIQUE, has_selection && is_host);
 	EnableItem(SEARCH_ON_SELECTION_ACTION, has_selection && is_host);
+	EnableItem(SEARCH_ON_SELECTION_ALL, has_selection && is_host);
 	EnableItem(SEARCH_ON_SELECTION_CONTAINER, has_selection && is_host);
 	EnableItem(SEARCH_ON_SELECTION_WRITEABLE, has_selection && is_host);
 
 	EnableItem(CUT, has_map);
 	EnableItem(COPY, has_map);
+	EnableItem(SETPOS, has_map);
 
 	EnableItem(BORDERIZE_SELECTION, has_map);
 	EnableItem(BORDERIZE_MAP, is_local);
@@ -323,6 +330,7 @@ void MainMenuBar::Update()
 	EnableItem(GOTO_POSITION, has_map);
 	EnableItem(JUMP_TO_BRUSH, loaded);
 	EnableItem(JUMP_TO_ITEM_BRUSH, loaded);
+	EnableItem(UPGRADE_MAP, has_map);
 
 	EnableItem(MAP_REMOVE_ITEMS, is_host);
 	EnableItem(MAP_REMOVE_CORPSES, is_local);
@@ -846,6 +854,7 @@ void MainMenuBar::OnSearchForItem(wxCommandEvent& WXUNUSED(event))
 	dialog.setSearchMode((FindItemDialog::SearchMode)g_settings.getInteger(Config::FIND_ITEM_MODE));
 	if(dialog.ShowModal() == wxID_OK) {
 		OnSearchForItem::Finder finder(dialog.getResultID());
+		int floor = dialog.getFloorID();
 		g_gui.CreateLoadBar("Searching map...");
 
 		foreach_ItemOnMap(g_gui.GetCurrentMap(), finder, false);
@@ -864,7 +873,9 @@ void MainMenuBar::OnSearchForItem(wxCommandEvent& WXUNUSED(event))
 		for(std::vector<std::pair<Tile*, Item*> >::const_iterator iter = found.begin(); iter != found.end(); ++iter) {
 			Tile* tile = iter->first;
 			Item* item = iter->second;
-			result->AddPosition(wxstr(item->getName()), tile->getPosition());
+			if(floor == 0 || (floor == 1 && tile->getPosition().z <= 7) || (floor == 2 && tile->getPosition().z > 7))
+				result->AddPosition(wxstr(item->getName()), tile->getPosition());
+
 		}
 
 		g_settings.setInteger(Config::FIND_ITEM_MODE, (int)dialog.getSearchMode());
@@ -914,15 +925,17 @@ namespace OnSearchForStuff
 		Searcher() :
 			search_unique(false),
 			search_action(false),
+			search_all(false),
 			search_container(false),
 			search_writeable(false) {}
 
 		bool search_unique;
 		bool search_action;
+		bool search_all;
 		bool search_container;
 		bool search_writeable;
-		std::vector<std::pair<Tile*, Item*> > found;
 
+		std::vector<std::pair<Tile*, Item*> > found;
 		void operator()(Map& map, Tile* tile, Item* item, long long done)
 		{
 			if(done % 0x8000 == 0) {
@@ -932,7 +945,8 @@ namespace OnSearchForStuff
 			if((search_unique && item->getUniqueID() > 0) ||
 				(search_action && item->getActionID() > 0) ||
 				(search_container && ((container = dynamic_cast<Container*>(item)) && container->getItemCount())) ||
-				(search_writeable && item->getText().length() > 0)) {
+				(search_writeable && item->getText().length() > 0) ||
+				(search_all)) {
 				found.push_back(std::make_pair(tile, item));
 			}
 		}
@@ -1018,6 +1032,11 @@ void MainMenuBar::OnSearchForActionOnSelection(wxCommandEvent& WXUNUSED(event))
 	SearchItems(false, true, false, false, true);
 }
 
+void MainMenuBar::OnSearchForAllOnSelection(wxCommandEvent& WXUNUSED(event))
+{
+	SearchItems(false, false, false, false, true, true);
+}
+
 void MainMenuBar::OnSearchForContainerOnSelection(wxCommandEvent& WXUNUSED(event))
 {
 	SearchItems(false, false, true, false, true);
@@ -1063,6 +1082,31 @@ void MainMenuBar::OnCut(wxCommandEvent& WXUNUSED(event))
 	}
 }
 
+void MainMenuBar::OnCopyId(wxCommandEvent& WXUNUSED(event))
+{
+	Tile* tile = g_gui.GetCurrentEditor()->selection.getSelectedTile();
+
+	Item* item = tile->getTopSelectedItem();
+	std::ostringstream clip;
+	clip << item->getID() ;
+	wxTextDataObject* obj = new wxTextDataObject();
+	obj->SetText(wxstr(clip.str()));
+	wxTheClipboard->SetData(obj);
+}
+
+void MainMenuBar::OnSetPos(wxCommandEvent& WXUNUSED(event))
+{
+	Tile* tile = g_gui.GetCurrentEditor()->selection.getSelectedTile();
+	ItemVector selected_items = tile->getSelectedItems();
+	ASSERT(selected_items.size() > 0);
+	Teleport* teleport = dynamic_cast<Teleport*>(selected_items.front());
+	if(teleport)
+	{
+		Position minPos = g_gui.GetCurrentEditor()->selection.minPosition();
+		minPos = Position(minPos.x, minPos.y, minPos.z);
+		teleport->setDestination(minPos);
+	}
+}
 void MainMenuBar::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
 	g_gui.SetSelectionMode();
@@ -1227,7 +1271,181 @@ void MainMenuBar::OnMapRemoveItems(wxCommandEvent& WXUNUSED(event))
 	}
 	dialog.Destroy();
 }
+void MainMenuBar::OnUpgradeMap(wxCommandEvent& WXUNUSED(event))
+{
+	if(!g_gui.IsEditorOpen())
+		return;
 
+	g_gui.CreateLoadBar("Collecting data...");
+	Map* map = &g_gui.GetCurrentMap();
+	int load_counter = 0;
+	int delete_ids[] = {22703,22704,22705,22706,22707,22708,22709,22710,22711,22712,
+		22713,22714,22715,22716,22717,22718,22719,22720,22721,22722,23679,23680,23681,23694,23695,23696,23697,23698,23699,23700,23701,
+		23702,23703,23704,23705,23706,23707,23708,23709,23710,23711,23712,23713,23714,23715,23716,23717,23718,23719,23720,23721,23722,
+		23723,23724,23725,23726,23727,23728,23729,23730,23731,23732,23733,23734,23735,23736,23737,23738,23739,23740,23741,23742,23743,
+		23744,23745,23746,23747,23748,23749,23750,23751,23752,23753,23754,23755,23756,23757,23758,23759,23760,23761,23762,23763,23764,
+		23765,23766,23767,23768,23769,23770,23771,23772,23773,23774,23775,23776,23777,23778,23779,23780,23781,23782,23783,23784,23785,
+		23786,23787,23788,23789,23790,23791,23792,23793,23794,23795,23796,23797,23798,23799,23800,23801,23802,23803,23804,23805,23806,
+		23807,23808,23809,23810,23811,23812,23813,23814,23815,23816,23817,23818,23819,23820,23821,23822,23823,23824,23825,23826,23827,
+		23828,23829,23830,23831,23832,23833,23834,23835,23836,23837,23838,23839,23840,23841,23842,23843,23844,23845,23846,23847,23848,
+		23849,23850,23851,23852,23853,23854,23855,23856,23857,23858,23859,23860,23861,23862,23863,23864,23865,23866,23867,23868,23869,
+		23870,23871,23872,23873,23874,23875,23876,24333,24334,24335,24336,24337,24338,24339,24340,24341,24342,24343,24344,24345,24346,
+		24347,24348,24349,24350,24351,24352,24353,24354,24355,24356,24357,24358,24359,24360,24361,24362,24363,24364,24365,24366,24367,
+		24368,24369,24370,24371,24372,24373,24374,24375,24376,24377,24378,24379,24380,24381,24382,24383,24384,24385,24386,24387,24388,
+		24389,24390,24391,24392,24393,24394,24395,24396,24397,24398,24399,24400,24401,24402,24403,24404,24405,24406,24407,24408,24409,
+		24410,24411,24412,24413,24414,24415,24416,24417,24418,24419,24420,24421,24422,24423,24424,24425,24426,24427,24428,24429,24430,
+		24431,24432,24433,24434,24435,24436,24437,24438,24439,24440,24441,24442,24443,24444,24445,24446,24447,24448,24449,24450,24451,
+		24452,24453,24454,24455,24456,24457,24458,24459,24460,24461,24462,24463,24464,24465,24466,24467,24468,24469,24470,24471,24472,
+		24473,24474,24475,24476,24477,24478,24479,24480,24481,24482,24483,24484,24485,24486,24487,24488,24489,24490,24491,24492,24493,
+		24494,24495,24496,24497,24498,24499,24500,24501,24502,24503,24504,24505,24506,24507,24508,24509,24510,24511,24512,24513,24514,
+		24515,24516,24517,24518,24519,24520,24521,24522,24523,24524,24525,24526,24527,24528,24529,24530,24531,24532,24533,24534,24535,
+		24536,24537,24538,24539,24540,24541,24542,24543,24544,24545,24546,24547,24548,24549,24550,24551,24552,24553,24554,24555,24556,
+		24557,24558,24559,24560,24561,24562,24563,24564,24565,24566,24567,24568,24569,24570,24571,24572,24573,24574,24575,24576,24577,
+		24578,24579,24580,24581,24582,24583,24584,24585,24586,24587,24588,24589,24590,24591,24592,24593,24594,24595,24596,24597,24598,
+		24599,24600,24601,24602,24603,24604,24605,24606,24607,24608,24609,24610,24611,24612,24613,24614,24615,24616,24617,24618,24619,};
+	for (int i=0; i < 493; ++i)
+	{
+		uint16_t itemid = delete_ids[i];
+		OnMapRemoveItems::condition finder(itemid);
+		long long removed = remove_if_ItemOnMap(g_gui.GetCurrentMap(), finder);
+	}
+
+	std::vector<std::pair<int, int> > convert_ids;
+	std::vector<std::pair<Tile*, Item*> >  convert_toitem;
+	std::vector<std::pair<Tile*, int> >  item_ontile;
+	std::vector<std::pair<Tile*, int> >  convert_toground;
+	for(int cid = 100; cid <= g_items.getMaxID(); ++cid) {
+		uint16_t nid = 0;
+		if(cid >= 4664 && cid <=4666)
+			nid = cid - 56;
+		else if(cid >= 22723 && cid <=23672)
+			nid = cid - 19;
+		else if(cid >= 23673 && cid <=23675)
+			nid = cid + 31;
+		else if(cid >= 23676 && cid <=23678)
+			nid = cid + 28;
+		else if(cid >= 23682 && cid <=23693)
+			nid = cid + 25;
+		else if(cid >= 23877 && cid <=24332)
+			nid = cid + 210;
+		else if(cid >= 24620 && cid <=24794)
+			nid = cid - 77;
+		else if(cid >= 24795 && cid <=26230)
+			nid = cid - 73;
+		else if(cid >= 26231 && cid <=26381)
+			nid = cid - 43;
+		if (nid > 0)
+			convert_ids.push_back(std::make_pair(cid, nid));
+	}
+
+	for(MapIterator mit = map->begin(); mit != map->end(); ++mit) {
+		ASSERT(tile);
+		Tile* tile = (*mit)->get();
+		bool tile_fixed = false;
+		bool tile_created = false;
+		if(load_counter % 8192 == 0) {
+			g_gui.SetLoadDone((unsigned int)(int64_t(load_counter) * 95ll / int64_t(map->getTileCount())));
+		}
+		if(tile->empty())
+			continue;
+
+		if (tile->hasGround()){
+			int current_id = tile->ground->getID();
+			for(std::vector<std::pair<int, int> >::const_iterator iter = convert_ids.begin(); iter != convert_ids.end(); ++iter) {
+				int cid = iter->first;
+				int nid = iter->second;
+				if (current_id == cid)
+				{
+					ItemType& item_type = g_items.getItemType(nid);
+					if(item_type.isGroundTile()){
+						Item* item = Item::Create(nid);
+						tile->ground = item;
+					} else {
+						convert_toitem.push_back(std::make_pair(tile, tile->ground));
+					}
+				}
+			}
+		}
+
+		for(ItemVector::iterator item_iter = tile->items.begin(); item_iter != tile->items.end();) {
+			Item* item = *item_iter;
+			uint16_t current_id = item->getID();
+			uint16_t new_id = 0;
+			for(std::vector<std::pair<int, int> >::const_iterator itr = convert_ids.begin(); itr != convert_ids.end(); ++itr) {
+				int cid = itr->first;
+				int nid = itr->second;
+				if(current_id == cid){
+					new_id = nid;
+					continue;
+				}
+			}
+			if(new_id > 0){
+				ItemType& item_type = g_items.getItemType(new_id);
+				if(item_type.isGroundTile())
+				{
+					//delete *item_iter;
+					//item_iter = tile->items.erase(item_iter);
+					//Item* new_id = Item::Create(new_id);
+					//tile->ground = item;
+					transformItem(item, new_id, tile);
+					++item_iter;
+					//convert_toground.push_back(std::make_pair(tile, new_id));
+				} else
+				{
+					transformItem(item, new_id, tile);
+					//convert_toground.push_back(std::make_pair(tile, item));
+					++item_iter;
+				}
+			} else
+				++item_iter;
+		}
+
+		load_counter += 1;
+	}
+	for(std::vector<std::pair<Tile*, Item*> >::const_iterator iter = convert_toitem.begin(); iter != convert_toitem.end(); ++iter) {
+		Tile* tile = iter->first;
+		Item* item = iter->second;
+		for(std::vector<std::pair<int, int> >::const_iterator itr = convert_ids.begin(); itr != convert_ids.end(); ++itr) {
+			int cid = itr->first;
+			int nid = itr->second;
+			if (item->getID() == cid)
+			{
+				transformItem(item, nid, tile);
+			}
+		}
+	}
+
+	/*for(std::vector<std::pair<Tile*, int> >::const_iterator iter = convert_toground.begin(); iter != convert_toground.end(); ++iter) {
+		Tile* tile = iter->first;
+		tile->update();
+
+		int itemID = iter->second;
+		item_ontile.clear();
+		Item* item = Item::Create(itemID);
+		for(ItemVector::iterator item_iter = tile->items.begin(); item_iter != tile->items.end(); ++item_iter) {
+			Item* item = *item_iter;
+			item_ontile.push_back(std::make_pair(tile, item->getID()));
+		}
+		for(ItemVector::iterator item_iter = tile->items.begin(); item_iter != tile->items.end();) {
+			delete *item_iter;
+			item_iter = tile->items.erase(item_iter);
+		}
+		//tile->ground = item;
+
+		for(std::vector<std::pair<Tile*, int> >::const_iterator iter = item_ontile.begin(); iter != item_ontile.end(); ++iter) {
+			Tile* tile = iter->first;
+			Item* item = Item::Create(iter->second);
+			//tile->addItem(item);
+
+			RAWBrush* rawBrush = item->getRAWBrush();
+			rawBrush->draw(map, tile, nullptr);
+
+
+		}
+			tile->update();
+	}*/
+	g_gui.DestroyLoadBar();
+}
 namespace OnMapRemoveCorpses
 {
 	struct condition
@@ -1956,9 +2174,9 @@ void MainMenuBar::OnCloseLive(wxCommandEvent& event)
 	Update();
 }
 
-void MainMenuBar::SearchItems(bool unique, bool action, bool container, bool writable, bool onSelection/* = false*/)
+void MainMenuBar::SearchItems(bool unique, bool action, bool container, bool writable, bool onSelection, bool all/* = false*/)
 {
-	if (!unique && !action && !container && !writable)
+	if (!unique && !action && !container && !writable && !all)
 		return;
 
 	if(!g_gui.IsEditorOpen())
@@ -1972,6 +2190,7 @@ void MainMenuBar::SearchItems(bool unique, bool action, bool container, bool wri
 	OnSearchForStuff::Searcher searcher;
 	searcher.search_unique = unique;
 	searcher.search_action = action;
+	searcher.search_all = all;
 	searcher.search_container = container;
 	searcher.search_writeable = writable;
 
@@ -1980,10 +2199,42 @@ void MainMenuBar::SearchItems(bool unique, bool action, bool container, bool wri
 	std::vector<std::pair<Tile*, Item*> >& found = searcher.found;
 
 	g_gui.DestroyLoadBar();
+	if (!searcher.search_all){
+		SearchResultWindow* result = g_gui.ShowSearchWindow();
+		result->Clear();
+		for(std::vector<std::pair<Tile*, Item*> >::iterator iter = found.begin(); iter != found.end(); ++iter) {
+			result->AddPosition(searcher.desc(iter->second), iter->first->getPosition());
+		}
+	}
 
-	SearchResultWindow* result = g_gui.ShowSearchWindow();
-	result->Clear();
-	for(std::vector<std::pair<Tile*, Item*> >::iterator iter = found.begin(); iter != found.end(); ++iter) {
-		result->AddPosition(searcher.desc(iter->second), iter->first->getPosition());
+	if (searcher.search_all)
+	{
+		wxString ss ;
+		wxFileDialog dialog(nullptr, "Save file...", "", "DrawMap", "Text Documents (*.txt) | *.txt", wxFD_SAVE);
+		if(dialog.ShowModal() == wxID_OK) {
+			wxFile file(dialog.GetPath(), wxFile::write);
+			if(file.IsOpened()) {
+				g_gui.CreateLoadBar("Exporting selected area...");
+
+				for(std::vector<std::pair<Tile*, Item*> >::iterator iter = found.begin(); iter != found.end(); ++iter) {
+					if (iter->second->isGroundTile()){
+						file.Write(wxString::Format(wxT("%i"), iter->second->getID()) << "," << iter->first->getPosition().x << "," << iter->first->getPosition().y << "," << iter->first->getPosition().z << "\n");
+						if (iter->first->creature)
+							file.Write(iter->first->creature->getName() + "," + wxString::Format(wxT("%i"), iter->first->getPosition().x) << "," << iter->first->getPosition().y << "," << iter->first->getPosition().z << "\n");
+						for (ItemVector::const_iterator item_iter = iter->first->items.begin(); item_iter != iter->first->items.end(); ++item_iter) {
+							Item* item = *item_iter;
+							if (item->isNotMoveable())
+								file.Write(wxString::Format(wxT("%i"), item->getID()) << "," << iter->first->getPosition().x << "," << iter->first->getPosition().y << "," << iter->first->getPosition().z << "\n");
+
+						}
+					}
+				}
+				file.Close();
+				g_gui.DestroyLoadBar();
+
+			}
+
+		}
+		dialog.Destroy();
 	}
 }

@@ -419,6 +419,10 @@ wxNotebookPage* PreferencesWindow::CreateUIPage()
 
 	sizer->AddSpacer(10);
 
+	extra_border_options_chkbox = newd wxCheckBox(ui_page, wxID_ANY, "Use extra border options");
+	extra_border_options_chkbox->SetValue(g_settings.getBoolean(Config::EXTRA_BORDER_OPTIONS));
+	sizer->Add(extra_border_options_chkbox, 0, wxLEFT | wxTOP, 5);
+
 	large_terrain_tools_chkbox = newd wxCheckBox(ui_page, wxID_ANY, "Use large terrain palette tool & size icons");
 	large_terrain_tools_chkbox->SetValue(g_settings.getBoolean(Config::USE_LARGE_TERRAIN_TOOLBAR));
 	sizer->Add(large_terrain_tools_chkbox, 0, wxLEFT | wxTOP, 5);
@@ -674,6 +678,7 @@ void PreferencesWindow::Apply()
 	SetPaletteStyleChoice(doodad_palette_style_choice, Config::PALETTE_DOODAD_STYLE);
 	SetPaletteStyleChoice(item_palette_style_choice, Config::PALETTE_ITEM_STYLE);
 	SetPaletteStyleChoice(raw_palette_style_choice, Config::PALETTE_RAW_STYLE);
+	g_settings.setInteger(Config::EXTRA_BORDER_OPTIONS, extra_border_options_chkbox->GetValue());
 	g_settings.setInteger(Config::USE_LARGE_TERRAIN_TOOLBAR, large_terrain_tools_chkbox->GetValue());
 	g_settings.setInteger(Config::USE_LARGE_DOODAD_SIZEBAR, large_doodad_sizebar_chkbox->GetValue());
 	g_settings.setInteger(Config::USE_LARGE_ITEM_SIZEBAR, large_item_sizebar_chkbox->GetValue());

@@ -60,6 +60,8 @@ BEGIN_EVENT_TABLE(MapCanvas, wxGLCanvas)
 	EVT_MENU(MAP_POPUP_MENU_CUT, MapCanvas::OnCut)
 	EVT_MENU(MAP_POPUP_MENU_COPY, MapCanvas::OnCopy)
 	EVT_MENU(MAP_POPUP_MENU_COPY_POSITION, MapCanvas::OnCopyPosition)
+	EVT_MENU(MAP_POPUP_MENU_SET_POSITION, MapCanvas::OnSetPos)
+	EVT_MENU(MAP_POPUP_MENU_COPY_ID, MapCanvas::OnCopyId)
 	EVT_MENU(MAP_POPUP_MENU_PASTE, MapCanvas::OnPaste)
 	EVT_MENU(MAP_POPUP_MENU_DELETE, MapCanvas::OnDelete)
 	//----
@@ -1827,6 +1829,32 @@ void MapCanvas::OnBrowseTile(wxCommandEvent& WXUNUSED(event))
 	w->Destroy();
 }
 
+void MapCanvas::OnCopyId(wxCommandEvent& WXUNUSED(event))
+{
+	Tile* tile = editor.selection.getSelectedTile();
+
+	Item* item = tile->getTopSelectedItem();
+	std::ostringstream clip;
+	clip << item->getID() ;
+	wxTextDataObject* obj = new wxTextDataObject();
+	obj->SetText(wxstr(clip.str()));
+	wxTheClipboard->SetData(obj);
+}
+
+void MapCanvas::OnSetPos(wxCommandEvent& WXUNUSED(event))
+{
+	Tile* tile = editor.selection.getSelectedTile();
+	ItemVector selected_items = tile->getSelectedItems();
+	ASSERT(selected_items.size() > 0);
+	Teleport* teleport = dynamic_cast<Teleport*>(selected_items.front());
+	if(teleport)
+	{
+		Position minPos = editor.selection.minPosition();
+		minPos = Position(minPos.x, minPos.y, minPos.z);
+		teleport->setDestination(minPos);
+	}
+}
+
 void MapCanvas::OnRotateItem(wxCommandEvent& WXUNUSED(event))
 {
 	Tile* tile = editor.selection.getSelectedTile();
@@ -2143,6 +2171,12 @@ void MapPopupMenu::Update()
 
 	wxMenuItem* copyPositionItem = Append( MAP_POPUP_MENU_COPY_POSITION, "&Copy Position", "Copy the position as a lua table");
 	copyPositionItem->Enable(anything_selected);
+
+	wxMenuItem* setPosition = Append( MAP_POPUP_MENU_SET_POSITION, wxT("&Set Position"), wxT("Set the position to this tile"));
+	setPosition->Enable(anything_selected);
+
+	wxMenuItem* copyItemId = Append( MAP_POPUP_MENU_COPY_ID, wxT("&Copy Id"), wxT("Copy the Item Id"));
+	copyItemId->Enable(anything_selected);
 
 	wxMenuItem* pasteItem = Append( MAP_POPUP_MENU_PASTE, "&Paste\tCTRL+V", "Paste items in the copybuffer here");
 	pasteItem->Enable(editor.copybuffer.canPaste());

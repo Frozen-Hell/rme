@@ -13,7 +13,7 @@
 #include "item.h"
 #include "complexitem.h"
 #include "raw_brush.h"
-
+#include "result_window.h"
 #include "palette_window.h"
 #include "gui.h"
 #include "application.h"

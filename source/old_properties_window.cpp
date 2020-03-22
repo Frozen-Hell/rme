@@ -5,7 +5,7 @@
 #include "main.h"
 
 #include <wx/grid.h>
-
+#include "ground_brush.h"
 #include "tile.h"
 #include "item.h"
 #include "complexitem.h"
@@ -39,72 +39,122 @@ OldPropertiesWindow::OldPropertiesWindow(wxWindow* win_parent, const Map* map, c
 	depot_id_field(nullptr),
 	splash_type_field(nullptr),
 	text_field(nullptr),
-	description_field(nullptr)
+	description_field(nullptr),
+	Swap_check(nullptr),
+	Replace_check(nullptr),
+	Border_check(nullptr),
+	Ground_check(nullptr)
 {
 	ASSERT(edit_item);
 
 	wxSizer* topsizer = newd wxBoxSizer(wxVERTICAL);
+
 	if(Container* container = dynamic_cast<Container*>(edit_item)) {
-		// Container
-		wxSizer* boxsizer = newd wxStaticBoxSizer(wxVERTICAL, this, "Container Properties");
+		if (item->getID() == 2365) {
+			wxSizer* boxsizer = newd wxStaticBoxSizer(wxVERTICAL, this, "Replace Items");
+			wxFlexGridSizer* subsizer = newd wxFlexGridSizer(2, 10, 10);
+			subsizer->AddGrowableCol(1);
+			Replace_check = newd wxCheckBox(this, wxID_ANY, "Replace");
+			boxsizer->Add(Replace_check, wxSizerFlags(0).Expand());
+			Swap_check = newd wxCheckBox(this, wxID_ANY, "Swap");
+			boxsizer->Add(Swap_check, wxSizerFlags(0).Expand());
+			Border_check = newd wxCheckBox(this, wxID_ANY, "Replace Border");
+			boxsizer->Add(Border_check, wxSizerFlags(0).Expand());
+			Ground_check = newd wxCheckBox(this, wxID_ANY, "Replace Ground");
+			boxsizer->Add(Ground_check, wxSizerFlags(0).Expand());
 
-		wxFlexGridSizer* subsizer = newd wxFlexGridSizer(2, 10, 10);
-		subsizer->AddGrowableCol(1);
+			boxsizer->Add(subsizer, wxSizerFlags(0).Expand());
+			// Now we add the subitems!
+			wxSizer* contents_sizer = newd wxStaticBoxSizer(wxVERTICAL, this, "Contents");
 
-		subsizer->Add(newd wxStaticText(this, wxID_ANY, "ID " + i2ws(item->getID())));
-		subsizer->Add(newd wxStaticText(this, wxID_ANY, "\"" + wxstr(item->getName()) + "\""));
+			wxSizer* horizontal_sizer = nullptr;
+			int32_t maxColumns = 2;
 
-		subsizer->Add(newd wxStaticText(this, wxID_ANY, "Action ID"));
-		action_id_field = newd wxSpinCtrl(this, wxID_ANY, i2ws(edit_item->getActionID()), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 0xFFFF, edit_item->getActionID());
-		subsizer->Add(action_id_field, wxSizerFlags(1).Expand());
+			for(uint32_t index = 0; index < container->getVolume(); ++index) {
+				if(!horizontal_sizer) {
+					horizontal_sizer = newd wxBoxSizer(wxHORIZONTAL);
+				}
 
-		subsizer->Add(newd wxStaticText(this, wxID_ANY, "Unique ID"));
-		unique_id_field = newd wxSpinCtrl(this, wxID_ANY, i2ws(edit_item->getUniqueID()), wxDefaultPosition, wxSize(-1, 20), wxSP_ARROW_KEYS, 0, 0xFFFF, edit_item->getUniqueID());
-		subsizer->Add(unique_id_field, wxSizerFlags(1).Expand());
+				Item* item = container->getItem(index);
+				ContainerItemButton* containerItemButton = newd ContainerItemButton(this, true, index, map, item);
 
-		boxsizer->Add(subsizer, wxSizerFlags(0).Expand());
+				container_items.push_back(containerItemButton);
+				horizontal_sizer->Add(containerItemButton);
 
-		// Now we add the subitems!
-		wxSizer* contents_sizer = newd wxStaticBoxSizer(wxVERTICAL, this, "Contents");
+				if(((index + 1) % maxColumns) == 0) {
+					contents_sizer->Add(horizontal_sizer);
+					horizontal_sizer = nullptr;
+				}
+			}
+			if(horizontal_sizer != nullptr) {
+				contents_sizer->Add(horizontal_sizer);
+			}
+			boxsizer->Add(contents_sizer, wxSizerFlags(2).Center());
+			topsizer->Add(boxsizer, wxSizerFlags(0).Expand().Border(wxALL, 20));
 
-		bool use_large_sprites = g_settings.getBoolean(Config::USE_LARGE_CONTAINER_ICONS);
-		wxSizer* horizontal_sizer = nullptr;
-		const int additional_height_increment = (use_large_sprites? 40 : 24);
-		int additional_height = 0;
-
-		int32_t maxColumns;
-		if(use_large_sprites) {
-			maxColumns = 6;
-		} else {
-			maxColumns = 12;
 		}
+		else {
+			// Container
+			wxSizer* boxsizer = newd wxStaticBoxSizer(wxVERTICAL, this, "Container Properties");
 
-		for(uint32_t index = 0; index < container->getVolume(); ++index) {
-			if(!horizontal_sizer) {
-				horizontal_sizer = newd wxBoxSizer(wxHORIZONTAL);
+			wxFlexGridSizer* subsizer = newd wxFlexGridSizer(2, 10, 10);
+			subsizer->AddGrowableCol(1);
+
+			subsizer->Add(newd wxStaticText(this, wxID_ANY, "ID " + i2ws(item->getID())));
+			subsizer->Add(newd wxStaticText(this, wxID_ANY, "\"" + wxstr(item->getName()) + "\""));
+
+			subsizer->Add(newd wxStaticText(this, wxID_ANY, "Action ID"));
+			action_id_field = newd wxSpinCtrl(this, wxID_ANY, i2ws(edit_item->getActionID()), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 0xFFFF, edit_item->getActionID());
+			subsizer->Add(action_id_field, wxSizerFlags(1).Expand());
+
+			subsizer->Add(newd wxStaticText(this, wxID_ANY, "Unique ID"));
+			unique_id_field = newd wxSpinCtrl(this, wxID_ANY, i2ws(edit_item->getUniqueID()), wxDefaultPosition, wxSize(-1, 20), wxSP_ARROW_KEYS, 0, 0xFFFF, edit_item->getUniqueID());
+			subsizer->Add(unique_id_field, wxSizerFlags(1).Expand());
+
+			boxsizer->Add(subsizer, wxSizerFlags(0).Expand());
+
+			// Now we add the subitems!
+			wxSizer* contents_sizer = newd wxStaticBoxSizer(wxVERTICAL, this, "Contents");
+
+			bool use_large_sprites = g_settings.getBoolean(Config::USE_LARGE_CONTAINER_ICONS);
+			wxSizer* horizontal_sizer = nullptr;
+			const int additional_height_increment = (use_large_sprites? 40 : 24);
+			int additional_height = 0;
+
+			int32_t maxColumns;
+			if(use_large_sprites) {
+				maxColumns = 6;
+			} else {
+				maxColumns = 12;
 			}
 
-			Item* item = container->getItem(index);
-			ContainerItemButton* containerItemButton = newd ContainerItemButton(this, use_large_sprites, index, map, item);
+			for(uint32_t index = 0; index < container->getVolume(); ++index) {
+				if(!horizontal_sizer) {
+					horizontal_sizer = newd wxBoxSizer(wxHORIZONTAL);
+				}
 
-			container_items.push_back(containerItemButton);
-			horizontal_sizer->Add(containerItemButton);
+				Item* item = container->getItem(index);
+				ContainerItemButton* containerItemButton = newd ContainerItemButton(this, use_large_sprites, index, map, item);
 
-			if(((index + 1) % maxColumns) == 0) {
+				container_items.push_back(containerItemButton);
+				horizontal_sizer->Add(containerItemButton);
+
+				if(((index + 1) % maxColumns) == 0) {
+					contents_sizer->Add(horizontal_sizer);
+					horizontal_sizer = nullptr;
+					additional_height += additional_height_increment;
+				}
+			}
+
+			if(horizontal_sizer != nullptr) {
 				contents_sizer->Add(horizontal_sizer);
-				horizontal_sizer = nullptr;
 				additional_height += additional_height_increment;
 			}
+
+			boxsizer->Add(contents_sizer, wxSizerFlags(2).Expand());
+
+			topsizer->Add(boxsizer, wxSizerFlags(0).Expand().Border(wxALL, 20));
 		}
-
-		if(horizontal_sizer != nullptr) {
-			contents_sizer->Add(horizontal_sizer);
-			additional_height += additional_height_increment;
-		}
-
-		boxsizer->Add(contents_sizer, wxSizerFlags(2).Expand());
-
-		topsizer->Add(boxsizer, wxSizerFlags(0).Expand().Border(wxALL, 20));
 
 		//SetSize(260, 150 + additional_height);
 	} else if(edit_item->canHoldText() || edit_item->canHoldDescription()) {
@@ -331,7 +381,11 @@ OldPropertiesWindow::OldPropertiesWindow(wxWindow* win_parent, const Map* map, c
 	depot_id_field(nullptr),
 	splash_type_field(nullptr),
 	text_field(nullptr),
-	description_field(nullptr)
+	description_field(nullptr),
+	Swap_check(nullptr),
+	Replace_check(nullptr),
+	Border_check(nullptr),
+	Ground_check(nullptr)
 {
 	ASSERT(edit_creature);
 
@@ -382,7 +436,11 @@ OldPropertiesWindow::OldPropertiesWindow(wxWindow* win_parent, const Map* map, c
 	depot_id_field(nullptr),
 	splash_type_field(nullptr),
 	text_field(nullptr),
-	description_field(nullptr)
+	description_field(nullptr),
+	Swap_check(nullptr),
+	Replace_check(nullptr),
+	Border_check(nullptr),
+	Ground_check(nullptr)
 {
 	ASSERT(edit_spawn);
 
@@ -445,25 +503,104 @@ void OldPropertiesWindow::OnClickOK(wxCommandEvent& WXUNUSED(event))
 {
 	if(edit_item) {
 		if(dynamic_cast<Container*>(edit_item)) {
-			// Container
-			int new_uid = unique_id_field->GetValue();
-			int new_aid = action_id_field->GetValue();
+			if (edit_item->getID() != 2365){
+				// Replace items
+				int new_uid = unique_id_field->GetValue();
+				int new_aid = action_id_field->GetValue();
 
-			if((new_uid < 1000 || new_uid > 0xFFFF) && new_uid != 0) {
-				g_gui.PopupDialog(this, "Error", "Unique ID must be between 1000 and 65535.", wxOK);
-				return;
-			}
-			if(/* there is no item with the same UID */false) {
-				g_gui.PopupDialog(this, "Error", "Unique ID must be unique, this UID is already taken.", wxOK);
-				return;
-			}
-			if((new_aid < 100 || new_aid > 0xFFFF) && new_aid != 0) {
-				g_gui.PopupDialog(this, "Error", "Action ID must be between 100 and 65535.", wxOK);
-				return;
-			}
+				if((new_uid < 1000 || new_uid > 0xFFFF) && new_uid != 0) {
+					g_gui.PopupDialog(this, "Error", "Unique ID must be between 1000 and 65535.", wxOK);
+					return;
+				}
+				if(/* there is no item with the same UID */false) {
+					g_gui.PopupDialog(this, "Error", "Unique ID must be unique, this UID is already taken.", wxOK);
+					return;
+				}
+				if((new_aid < 100 || new_aid > 0xFFFF) && new_aid != 0) {
+					g_gui.PopupDialog(this, "Error", "Action ID must be between 100 and 65535.", wxOK);
+					return;
+				}
 
-			edit_item->setUniqueID(new_uid);
-			edit_item->setActionID(new_aid);
+				edit_item->setUniqueID(new_uid);
+				edit_item->setActionID(new_aid);
+			}else {
+				int Swap_checked = Swap_check->GetValue();
+				int Replace_checked = Replace_check->GetValue();
+				int Border_checked = Border_check->GetValue();
+				int Ground_checked = Ground_check->GetValue();
+				if(Replace_checked == 1){
+					Container* container = dynamic_cast<Container*>(edit_item);
+					uint16_t items_count = container->getItemCount() / 2;
+					if ( container->getItemCount() % 2 == 0 && container->getItemCount() > 1){
+						Map* map = &g_gui.GetCurrentMap();
+
+						GroundBrush* groundBrush1 = container->getItem(0)->getGroundBrush();
+						GroundBrush* groundBrush2 = container->getItem(1)->getGroundBrush();
+						ItemType& item_type = g_items.getItemType(406);
+						GroundBrush* groundBrush3 = item_type.brush->asGround();
+						const GroundBrush::BorderBlock* borderBlock1 = GroundBrush::getBrushTo(groundBrush3, groundBrush1);
+						const GroundBrush::BorderBlock* borderBlock2 = GroundBrush::getBrushTo(groundBrush3, groundBrush2);
+
+
+
+						//wxLogMessage("hasOuterBorder: %i", borderBlock);
+						//wxLogMessage("getGroundBrush: %i", borderBlock->autoborder->tiles[1]);
+
+						for(MapIterator mit = map->begin(); mit != map->end(); ++mit) {
+							Tile* tile = (*mit)->get();
+							if(tile->empty())
+								continue;
+
+							for(ItemVector::const_iterator item_iter = tile->items.begin(); item_iter != tile->items.end(); ++item_iter) {
+								Item* item = *item_iter;
+								for(uint16_t i = 0; i <= items_count; i = i + 2) {
+									uint16_t find_id = container->getItem(i)->getID();
+									uint16_t with_id = container->getItem(i+1)->getID();
+									if (Swap_checked == 1){
+										find_id = container->getItem(i+1)->getID();
+										with_id = container->getItem(i)->getID();
+									}
+									if (item->getID() == find_id)
+										transformItem(item, with_id, tile);
+
+								}
+								if (groundBrush1 != 0 && groundBrush2 != 0 && Border_checked == 1){
+									if(borderBlock1 == 0 || borderBlock2 == 0){
+										g_gui.PopupDialog(this, "Error", "No outer border found.", wxOK);
+										return;
+									}else {
+										for(uint16_t i = 0; i <= 12; ++i) {
+											uint16_t find_id = borderBlock1->autoborder->tiles[i];
+											uint16_t with_id = borderBlock2->autoborder->tiles[i];
+											if (Swap_checked == 1){
+												find_id = borderBlock2->autoborder->tiles[i];
+												with_id = borderBlock1->autoborder->tiles[i];
+											}
+											if (find_id && with_id && item->getID() == find_id)
+												transformItem(item, with_id, tile);
+										}
+									}
+								}
+							}
+							if (Ground_checked == 1 && container->getItem(0)->isGroundTile() && container->getItem(1)->isGroundTile()){
+								if (tile->hasGround() && tile->getGroundBrush() && (tile->getGroundBrush()->getID() == container->getItem(0)->getGroundBrush()->getID() || tile->getGroundBrush()->getID() == container->getItem(1)->getGroundBrush()->getID())){
+									if (Swap_checked == 0){
+										groundBrush1->undraw(map, tile);
+										groundBrush2->draw(map, tile, nullptr);
+									}
+									else {
+										groundBrush2->undraw(map, tile);
+										groundBrush1->draw(map, tile, nullptr);
+									}
+								}
+							}
+						}
+					}else {
+						g_gui.PopupDialog(this, "Error", "Items must be equals.", wxOK);
+						return;
+					}
+				}
+			}
 		} else if(edit_item->canHoldText() || edit_item->canHoldDescription()) {
 			// Book
 			int new_uid = unique_id_field->GetValue();
@@ -594,7 +731,16 @@ void OldPropertiesWindow::OnClickOK(wxCommandEvent& WXUNUSED(event))
 					}
 				}
 			}
+			//wxLogMessage("getBrush: %i",edit_item->getBrush()->getID());
+			GroundBrush* groundBrush = edit_item->getGroundBrush();
+			static std::vector<const GroundBrush::BorderBlock*> specificList;
+			const GroundBrush::BorderBlock* borderBlock = GroundBrush::getBrushTo(nullptr, groundBrush);
+			//GroundBrush::BorderBlock borderblock;
+			//borderblock.autoborder = borderBlock->autoborder;
 
+
+			//wxLogMessage("hasOuterBorder: %i", borderBlock);
+			//wxLogMessage("getGroundBrush: %i", borderBlock->autoborder->tiles[1]);
 			// Done validating, set the values.
 			if(edit_item->canHoldDescription()) {
 				edit_item->setText(new_desc);

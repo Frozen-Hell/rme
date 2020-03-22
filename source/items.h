@@ -293,6 +293,7 @@ public:
 	std::string name;
 	std::string editorsuffix;
 	std::string description;
+	std::string floorChange;
 
 	float weight;
 	// It might be useful to be able to extrapolate this information in the future

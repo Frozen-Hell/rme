@@ -22,14 +22,15 @@
 #include "items.h"
 #include "brush.h"
 #include "raw_brush.h"
-
+#include "map.h"
+#include "result_window.h"
 BEGIN_EVENT_TABLE(FindItemDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, FindItemDialog::OnClickOK)
 	EVT_BUTTON(wxID_CANCEL, FindItemDialog::OnClickCancel)
 END_EVENT_TABLE()
 
 FindItemDialog::FindItemDialog(wxWindow* parent, const wxString& title, bool onlyPickupables/* = false*/) :
-	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxSize(800, 600), wxDEFAULT_DIALOG_STYLE),
+	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxSize(800, 650), wxDEFAULT_DIALOG_STYLE),
 	result_brush(nullptr),
 	result_id(0)
 {
@@ -43,7 +44,9 @@ FindItemDialog::FindItemDialog(wxWindow* parent, const wxString& title, bool onl
 									"Find by Client ID",
 									"Find by Name",
 									"Find by Types",
-									"Find by Properties" };
+									"Find by Properties",
+									"Find by Stack",
+									"Find Stairs" };
 
 	int radio_boxNChoices = sizeof(radio_boxChoices) / sizeof(wxString);
 	options_radio_box = newd wxRadioBox(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, radio_boxNChoices, radio_boxChoices, 1, wxRA_SPECIFY_COLS);
@@ -68,6 +71,35 @@ FindItemDialog::FindItemDialog(wxWindow* parent, const wxString& title, bool onl
 	name_text_input->Enable(false);
 	name_box_sizer->Add(name_text_input, 0, wxALL | wxEXPAND, 5);
 	options_box_sizer->Add(name_box_sizer, 1, wxALL | wxEXPAND, 5);
+
+	wxStaticBoxSizer* floor_box_sizer = newd wxStaticBoxSizer(newd wxStaticBox(this, wxID_ANY, "Floor"), wxVERTICAL);
+	floor_choice = newd wxChoice(this, wxID_ANY);
+	floor_choice->Append("All");
+	floor_choice->Append("Ground");
+	floor_choice->Append("Underground");
+	floor_choice->SetSelection(0);
+	floor_box_sizer->Add(floor_choice, 0, wxALL | wxEXPAND, 5);
+	options_box_sizer->Add(floor_box_sizer, 1, wxALL | wxEXPAND, 5);
+
+	wxStaticBoxSizer* stack_box_sizer = newd wxStaticBoxSizer(newd wxStaticBox(this, wxID_ANY, "Stack"), wxVERTICAL);
+
+	wxFlexGridSizer* grid = newd wxFlexGridSizer(2, 10, 10);
+	grid->AddGrowableCol(1);
+
+	grid->Add(newd wxStaticText(this, wxID_ANY, "Min:"));
+	stack_min_spin = newd wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, 20), wxSP_ARROW_KEYS, 0, 50);
+	stack_min_spin->Enable(false);
+	grid->Add(stack_min_spin, 0, wxEXPAND);
+
+	grid->Add(newd wxStaticText(this, wxID_ANY, "Max:"));
+	stack_max_spin = newd wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(60, 20), wxSP_ARROW_KEYS, 0, 50);
+	stack_max_spin->Enable(false);
+	grid->Add(stack_max_spin, 0, wxEXPAND);
+
+	stack_box_sizer->Add(grid, 0, wxEXPAND);
+
+	options_box_sizer->Add(stack_box_sizer, 1, wxALL | wxEXPAND, 5);
+
 
 	// spacer
 	options_box_sizer->Add(0, 0, 4, wxALL | wxEXPAND, 5);
@@ -102,17 +134,33 @@ FindItemDialog::FindItemDialog(wxWindow* parent, const wxString& title, bool onl
 	types_radio_box->Enable(false);
 	type_box_sizer->Add(types_radio_box, 0, wxALL | wxEXPAND, 5);
 
+	wxStaticBoxSizer* stairs_box_sizer = newd wxStaticBoxSizer(newd wxStaticBox(this, wxID_ANY, "Stairs Option", wxDefaultPosition, wxDefaultSize), wxVERTICAL);
+	stairs_choice = newd wxChoice(this, wxID_ANY);
+	stairs_choice->Append("All Stairs");
+	stairs_choice->Append("Blocked Stairs");
+	stairs_choice->Append("Holes");
+	stairs_choice->SetSelection(0);
+	stairs_choice->Enable(false);
+	stairs_box_sizer->Add(stairs_choice, 0, wxALL | wxEXPAND, 5);
+	type_box_sizer->Add(stairs_box_sizer, 0, wxALL | wxEXPAND, 5);
+
 	box_sizer->Add(type_box_sizer, 1, wxALL | wxEXPAND, 5);
 
 	// --------------- Properties ---------------
 
 	wxStaticBoxSizer* properties_box_sizer = newd wxStaticBoxSizer(newd wxStaticBox(this, wxID_ANY, "Properties"), wxVERTICAL);
 
+	allinmap = newd wxCheckBox(properties_box_sizer->GetStaticBox(), wxID_ANY, "Search map", wxDefaultPosition, wxDefaultSize, 0);
+	properties_box_sizer->Add(allinmap, 0, wxALL, 5);
+
 	unpassable = newd wxCheckBox(properties_box_sizer->GetStaticBox(), wxID_ANY, "Unpassable", wxDefaultPosition, wxDefaultSize, 0);
 	properties_box_sizer->Add(unpassable, 0, wxALL, 5);
 
 	unmovable = newd wxCheckBox(properties_box_sizer->GetStaticBox(), wxID_ANY, "Unmovable", wxDefaultPosition, wxDefaultSize, 0);
 	properties_box_sizer->Add(unmovable, 0, wxALL, 5);
+
+	movable = newd wxCheckBox(properties_box_sizer->GetStaticBox(), wxID_ANY, "Movable", wxDefaultPosition, wxDefaultSize, 0);
+	properties_box_sizer->Add(movable, 0, wxALL, 5);
 
 	block_missiles = newd wxCheckBox(properties_box_sizer->GetStaticBox(), wxID_ANY, "Block Missiles", wxDefaultPosition, wxDefaultSize, 0);
 	properties_box_sizer->Add(block_missiles, 0, wxALL, 5);
@@ -179,6 +227,7 @@ FindItemDialog::FindItemDialog(wxWindow* parent, const wxString& title, bool onl
 
 	unpassable->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	unmovable->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
+	movable->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	block_missiles->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	block_pathfinder->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	readable->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
@@ -207,6 +256,7 @@ FindItemDialog::~FindItemDialog()
 
 	unpassable->Disconnect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	unmovable->Disconnect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
+	movable->Disconnect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	block_missiles->Disconnect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	block_pathfinder->Disconnect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
 	readable->Disconnect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(FindItemDialog::OnPropertyChange), NULL, this);
@@ -236,13 +286,17 @@ void FindItemDialog::setSearchMode(FindItemDialog::SearchMode mode)
 	name_text_input->Enable(mode == SearchMode::Names);
 	types_radio_box->Enable(mode == SearchMode::Types);
 	EnableProperties(mode == SearchMode::Properties);
+	EnableStack(mode == SearchMode::Stack);
+	stairs_choice->Enable(mode == SearchMode::Stairs);
 	RefreshContentsInternal();
 }
 
 void FindItemDialog::EnableProperties(bool enable)
 {
+	allinmap->Enable(enable);
 	unpassable->Enable(enable);
 	unmovable->Enable(enable);
+	movable->Enable(enable);
 	block_missiles->Enable(enable);
 	block_pathfinder->Enable(enable);
 	readable->Enable(enable);
@@ -255,6 +309,11 @@ void FindItemDialog::EnableProperties(bool enable)
 	hook_south->Enable(enable);
 	has_elevation->Enable(enable);
 	ignore_look->Enable(enable);
+}
+void FindItemDialog::EnableStack(bool enable)
+{
+	stack_min_spin->Enable(enable);
+	stack_max_spin->Enable(enable);
 }
 
 void FindItemDialog::RefreshContentsInternal()
@@ -344,6 +403,7 @@ void FindItemDialog::RefreshContentsInternal()
 	else if(selection == SearchMode::Properties) {
 		bool has_selected = (unpassable->GetValue() ||
 							unmovable->GetValue() ||
+							movable->GetValue() ||
 							block_missiles->GetValue() ||
 							block_pathfinder->GetValue() ||
 							readable->GetValue() ||
@@ -369,6 +429,7 @@ void FindItemDialog::RefreshContentsInternal()
 
 				if((unpassable->GetValue() && !item.unpassable) ||
 					(unmovable->GetValue() && item.moveable) ||
+					(movable->GetValue() && !item.moveable) ||
 					(block_missiles->GetValue() && !item.blockMissiles) ||
 					(block_pathfinder->GetValue() && !item.blockPathfinder) ||
 					(readable->GetValue() && !item.canReadText) ||
@@ -430,16 +491,144 @@ void FindItemDialog::OnPropertyChange(wxCommandEvent& event)
 
 void FindItemDialog::OnClickOK(wxCommandEvent& event)
 {
-	if(items_list->GetItemCount() != 0) {
+	SearchMode selection = (SearchMode)options_radio_box->GetSelection();
+	if(selection == SearchMode::Stack) {
+		SearchResultWindow* result = g_gui.ShowSearchWindow();
+		result->Clear();
+		g_gui.CreateLoadBar("Collecting data...");
+
+		Map* map = &g_gui.GetCurrentMap();
+		int tiles_done = 0;
+		int MinStack = stack_min_spin->GetValue();
+		int MaxStack = stack_max_spin->GetValue();
+		for(MapIterator mit = map->begin(); mit != map->end(); ++mit) {
+			Tile* tile = (*mit)->get();
+			++tiles_done;
+			if(tiles_done % 0x10000 == 0) {
+				g_gui.SetLoadDone(int(tiles_done / double(map->getTileCount()) * 100.0));
+			}
+			if(tile->empty())
+				continue;
+
+			if (tile->size() >= MinStack && tile->size() <= MaxStack)
+			{
+				result->AddPosition(wxString::Format(wxT("%i"), tile->size()), tile->getPosition());
+			}
+		}
+		g_gui.DestroyLoadBar();
+		EndModal(1);
+	}
+	else if(selection == SearchMode::Stairs) {
+		SearchResultWindow* result = g_gui.ShowSearchWindow();
+		result->Clear();
+		g_gui.CreateLoadBar("Collecting data...");
+
+		Map* map = &g_gui.GetCurrentMap();
+		int tiles_done = 0;
+		for(MapIterator mit = map->begin(); mit != map->end(); ++mit) {
+			Tile* tile = (*mit)->get();
+			++tiles_done;
+			if(tiles_done % 0x10000 == 0) {
+				g_gui.SetLoadDone(int(tiles_done / double(map->getTileCount()) * 100.0));
+			}
+			if(tile->empty())
+				continue;
+			if(stairs_choice->GetSelection() == 0)
+			{
+				for(ItemVector::iterator item_iter = tile->items.begin(); item_iter != tile->items.end(); ++item_iter) {
+					Item* item = *item_iter;
+					ItemType& it = g_items[item->getID()];
+					if (it.floorChange != "" && (floor_choice->GetSelection() == 0 || (floor_choice->GetSelection() == 1 && tile->getPosition().z <= 7) || (floor_choice->GetSelection() == 2 && tile->getPosition().z > 7)))
+						result->AddPosition(wxstr(it.floorChange), tile->getPosition());
+				}
+			} else if(stairs_choice->GetSelection() == 1){
+				if (tile->isBlocking() || !tile->hasGround())
+				{
+					for(ItemVector::iterator item_iter = tile->items.begin(); item_iter != tile->items.end(); ++item_iter) {
+						Item* item = *item_iter;
+						ItemType& it = g_items[item->getID()];
+						if (it.floorChange != "" && it.floorChange != "down" && (floor_choice->GetSelection() == 0 || (floor_choice->GetSelection() == 1 && tile->getPosition().z <= 7) || (floor_choice->GetSelection() == 2 && tile->getPosition().z > 7)))
+						{
+							result->AddPosition(wxstr(it.floorChange), tile->getPosition());
+							continue;
+						}
+					}
+				}
+			} else if(stairs_choice->GetSelection() == 2 && tile->hasGround()){
+				ItemType& it = g_items[tile->ground->getID()];
+				if (it.floorChange == "down" && (floor_choice->GetSelection() == 0 || (floor_choice->GetSelection() == 1 && tile->getPosition().z <= 7) || (floor_choice->GetSelection() == 2 && tile->getPosition().z > 7)))
+					result->AddPosition(wxstr(it.floorChange), tile->getPosition());
+			}
+		}
+		g_gui.DestroyLoadBar();
+		EndModal(1);
+	}
+	else if(selection == SearchMode::Properties && allinmap->GetValue()) {
+		SearchResultWindow* result = g_gui.ShowSearchWindow();
+		result->Clear();
+		g_gui.CreateLoadBar("Collecting data...");
+
+		Map* map = &g_gui.GetCurrentMap();
+		int tiles_done = 0;
+		for(MapIterator mit = map->begin(); mit != map->end(); ++mit) {
+			Tile* tile = (*mit)->get();
+			++tiles_done;
+			if(tiles_done % 0x10000 == 0) {
+				g_gui.SetLoadDone(int(tiles_done / double(map->getTileCount()) * 100.0));
+			}
+			if(tile->empty())
+				continue;
+
+			for(ItemVector::iterator item_iter = tile->items.begin(); item_iter != tile->items.end(); ++item_iter) {
+					Item* id = *item_iter;
+					ItemType& item = g_items[id->getID()];
+				if(unpassable->GetValue() && !item.unpassable)
+					continue;
+				if(unmovable->GetValue() && item.moveable)
+					continue;
+				if(movable->GetValue() && !item.moveable)
+					continue;
+				if(block_missiles->GetValue() && !item.blockMissiles)
+					continue;
+				if(block_pathfinder->GetValue() && !item.blockPathfinder)
+					continue;
+				if(readable->GetValue() && !item.canReadText)
+					continue;
+				if(writeable->GetValue() && !item.canWriteText)
+					continue;
+				if(pickupable->GetValue() && !item.pickupable)
+					continue;
+				if(stackable->GetValue() && !item.stackable)
+					continue;
+				if(rotatable->GetValue() && !item.rotable)
+					continue;
+				if(hangable->GetValue() && !item.isHangable)
+					continue;
+				if(hook_east->GetValue() && !item.hookEast)
+					continue;
+				if(hook_south->GetValue() && !item.hookSouth)
+					continue;
+				if(has_elevation->GetValue() && !item.hasElevation)
+					continue;
+				if(ignore_look->GetValue() && !item.ignoreLook)
+					continue;
+
+				result->AddPosition(wxstr(item.name), tile->getPosition());
+			}
+		}
+		g_gui.DestroyLoadBar();
+		EndModal(1);
+	}
+	else if(items_list->GetItemCount() != 0) {
 		Brush* brush = items_list->GetSelectedBrush();
 		if(brush) {
 			result_brush = brush;
 			result_id = brush->asRaw()->getItemID();
+			floor_id = floor_choice->GetSelection();
 			EndModal(wxID_OK);
 		}
 	}
 }
-
 void FindItemDialog::OnClickCancel(wxCommandEvent& event)
 {
 	EndModal(wxID_CANCEL);

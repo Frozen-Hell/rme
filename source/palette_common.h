@@ -165,6 +165,7 @@ public:
 
 	// wxWidgets event handling
 	void OnClickGravelButton(wxCommandEvent& event);
+	void OnClickBorderOptionsButton(wxSpinEvent& event);
 	void OnClickEraserButton(wxCommandEvent& event);
 	// ----
 	void OnClickNormalDoorButton(wxCommandEvent& event);
@@ -178,6 +179,7 @@ public:
 	void OnClickNOPVPBrushButton(wxCommandEvent& event);
 	void OnClickNoLogoutBrushButton(wxCommandEvent& event);
 	void OnClickPVPZoneBrushButton(wxCommandEvent& event);
+	void OnClickReplace_Option(wxCommandEvent& event);
 public:
 	void DeselectAll();
 
@@ -198,7 +200,15 @@ public:
 	BrushButton* nopvpBrushButton;
 	BrushButton* nologBrushButton;
 	BrushButton* pvpzoneBrushButton;
-
+	wxCheckBox* Active_check;
+	wxCheckBox* Replace_check;
+	wxCheckBox* Above_check;
+	wxSpinCtrl* First_ground;
+	wxSpinCtrl* Second_ground;
+	wxCheckBox* Replace_Ground;
+	wxCheckBox* Replace_Border;
+	wxCheckBox* Swap_Border;
+	wxToggleButton* Apply_Replace;
 	DECLARE_EVENT_TABLE()
 };
 

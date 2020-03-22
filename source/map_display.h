@@ -67,6 +67,8 @@ public:
 	void OnCut(wxCommandEvent& event);
 	void OnCopy(wxCommandEvent& event);
 	void OnCopyPosition(wxCommandEvent& event);
+	void OnSetPos(wxCommandEvent& event);
+	void OnCopyId(wxCommandEvent& event);
 	void OnBrowseTile(wxCommandEvent& event);
 	void OnPaste(wxCommandEvent& event);
 	void OnDelete(wxCommandEvent& event);

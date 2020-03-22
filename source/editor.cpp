@@ -762,7 +762,7 @@ bool Editor::importMap(FileName filename, int import_x_offset, int import_y_offs
 	g_gui.PopupDialog("Success", "Map imported successfully, " + i2ws(discarded_tiles) + " tiles were discarded as invalid.", wxOK);
 
 	g_gui.RefreshPalettes();
-	g_gui.FitViewToMap();
+	//g_gui.FitViewToMap();
 
 	return true;
 }
@@ -1450,34 +1450,122 @@ void Editor::drawInternal(const PositionVector& tilestodraw, bool alt, bool dodr
 
 	if(brush->isOptionalBorder()) {
 		// We actually need to do borders, but on the same tiles we draw to
-		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
-			TileLocation* location = map.createTileL(*it);
-			Tile* tile = location->get();
-			if(tile) {
-				if(dodraw) {
-					Tile* new_tile = tile->deepCopy(map);
+		if(g_settings.getInteger(Config::ACTIVE_CHECK) == 0) {
+			for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
+				TileLocation* location = map.createTileL(*it);
+				Tile* tile = location->get();
+				if(tile) {
+					if(dodraw) {
+						Tile* new_tile = tile->deepCopy(map);
+						brush->draw(&map, new_tile);
+						new_tile->borderize(&map);
+						action->addChange(newd Change(new_tile));
+					} else if(!dodraw && tile->hasOptionalBorder()) {
+						Tile* new_tile = tile->deepCopy(map);
+						brush->undraw(&map, new_tile);
+						new_tile->borderize(&map);
+						action->addChange(newd Change(new_tile));
+					}
+				} else if(dodraw) {
+					Tile* new_tile = map.allocator(location);
 					brush->draw(&map, new_tile);
 					new_tile->borderize(&map);
-					action->addChange(newd Change(new_tile));
-				} else if(!dodraw && tile->hasOptionalBorder()) {
-					Tile* new_tile = tile->deepCopy(map);
-					brush->undraw(&map, new_tile);
-					new_tile->borderize(&map);
+					if(new_tile->size() == 0) {
+						delete new_tile;
+						continue;
+					}
 					action->addChange(newd Change(new_tile));
 				}
-			} else if(dodraw) {
-				Tile* new_tile = map.allocator(location);
-				brush->draw(&map, new_tile);
-				new_tile->borderize(&map);
-				if(new_tile->size() == 0) {
-					delete new_tile;
-					continue;
-				}
-				action->addChange(newd Change(new_tile));
 			}
+		} else {
+			int FirstGround = g_settings.getInteger(Config::FIRST_GROUND);
+			int SecondGround = g_settings.getInteger(Config::SECOND_GROUND);
+			int Replace = g_settings.getInteger(Config::REPLACE_CHECK);
+			int Above = g_settings.getInteger(Config::ABOVE_CHECK);
+			Item* item1 = Item::Create(FirstGround);
+			Item* item2 = Item::Create(SecondGround);
+			GroundBrush* groundBrush1 = item1->getGroundBrush();
+			GroundBrush* groundBrush2 = item2->getGroundBrush();
+			ItemType& item_type = g_items.getItemType(406);
+			GroundBrush* groundBrush3 = item_type.brush->asGround();
+			const GroundBrush::BorderBlock* borderBlock1 = GroundBrush::getBrushTo(groundBrush3, groundBrush1);
+			const GroundBrush::BorderBlock* borderBlock2 = GroundBrush::getBrushTo(groundBrush3, groundBrush2);
+
+			if(groundBrush1 == 0 || groundBrush2 == 0 || borderBlock1 == 0 || borderBlock2 == 0){
+				g_gui.PopupDialog("Error", "No outer border found.", wxOK);
+			} else {
+				if(Replace == 1){
+					TileLocation* location = map.createTileL(*tilestodraw.begin());
+					Tile* tile = location->get();
+					if(tile) {
+						Tile* new_tile = tile->deepCopy(map);
+						for(ItemVector::const_iterator item_iter = new_tile->items.begin(); item_iter != new_tile->items.end(); ++item_iter) {
+							Item* item = *item_iter;
+							for(int i = 0; i <= 12; ++i) {
+								int find_id = borderBlock1->autoborder->tiles[i];
+								int with_id = borderBlock2->autoborder->tiles[i];
+								if (find_id && with_id && item->getID() == find_id)
+								{
+									transformItem(item, with_id, new_tile);
+									action->addChange(newd Change(new_tile));
+								}
+							}
+						}
+					}
+				} else {
+					TileLocation* location = map.createTileL(*tilestodraw.begin());
+					Tile* tile = location->get();
+					if(tile) {
+						Tile* new_tile = tile->deepCopy(map);
+						bool Border_exist = false;
+						std::vector<std::pair<Tile*, int> >  items_ontile;
+						items_ontile.clear();
+						for(ItemVector::const_iterator item_iter = new_tile->items.begin(); item_iter != new_tile->items.end(); ++item_iter) {
+							Item* item = *item_iter;
+							int border_ignore = 0;
+							for(int i = 0; i <= 12; ++i) {
+								int find_id = borderBlock1->autoborder->tiles[i];
+								int with_id = borderBlock2->autoborder->tiles[i];
+								if (find_id && with_id && item->getID() == find_id)
+								{
+									Border_exist = true;
+									border_ignore = item->getID();
+									if(Above == 1){
+										items_ontile.push_back(std::make_pair(new_tile, find_id));
+										items_ontile.push_back(std::make_pair(new_tile, with_id));
+									} else {
+										items_ontile.push_back(std::make_pair(new_tile, with_id));
+										items_ontile.push_back(std::make_pair(new_tile, find_id));
+									}
+								}
+							}
+							if (item->getID() != border_ignore)
+								items_ontile.push_back(std::make_pair(new_tile, item->getID()));
+						}
+
+						if(Border_exist == true){
+							for(ItemVector::iterator item_iter = new_tile->items.begin(); item_iter != new_tile->items.end();) {
+								delete *item_iter;
+								item_iter = new_tile->items.erase(item_iter);
+							}
+							for(std::vector<std::pair<Tile*, int> >::const_iterator iter = items_ontile.begin(); iter != items_ontile.end(); ++iter) {
+								Tile* tile = iter->first;
+								Item* item = Item::Create(iter->second);
+								tile->addItem(item);
+							}
+							action->addChange(newd Change(new_tile));
+						}
+					}
+				}
+
+
+
+			}
+
+
 		}
 	} else {
-		
+
 		for(PositionVector::const_iterator it = tilestodraw.begin(); it != tilestodraw.end(); ++it) {
 			TileLocation* location = map.createTileL(*it);
 			Tile* tile = location->get();

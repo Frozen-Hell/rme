@@ -71,7 +71,7 @@ void ContainerItemButton::OnMouseRightRelease(wxMouseEvent& WXUNUSED(event))
 
 void ContainerItemButton::OnAddItem(wxCommandEvent& WXUNUSED(event))
 {
-	FindItemDialog dialog(GetParent(), "Choose Item to add", true);
+	FindItemDialog dialog(GetParent(), "Choose Item to add", false);
 
 	if(dialog.ShowModal() != 0) {
 		Container* container = getParentContainer();

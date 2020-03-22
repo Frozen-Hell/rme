@@ -95,12 +95,12 @@
 #    endif
 #endif
 
-#ifndef _DONT_USE_PROCESS_COM
+/*#ifndef _DONT_USE_PROCESS_COM
 #   if defined __WINDOWS__ && !defined _USE_PROCESS_COM
 #       define _USE_PROCESS_COM
 #   endif
 #endif
-
+*/
 // Mathematical constants
 #define PI 3.14159265358979323846264338327950288419716939937510
 #define DEG2RAD (PI/180.0)

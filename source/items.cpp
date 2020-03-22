@@ -79,6 +79,7 @@ ItemType::ItemType() :
 	isTable(false),
 	isCarpet(false),
 
+	floorChange(""),
 	floorChangeDown(true),
 	floorChangeNorth(false),
 	floorChangeSouth(false),
@@ -867,6 +868,10 @@ bool ItemDatabase::loadItemFromGameXml(pugi::xml_node itemNode, int id)
 			if((attribute = itemAttributesNode.attribute("value"))) {
 				it.charges = pugi::cast<int32_t>(attribute.value());
 				it.extra_chargeable = true;
+			}
+		}else if(key == "floorchange") {
+			if((attribute = itemAttributesNode.attribute("value"))) {
+				it.floorChange = attribute.as_string();
 			}
 		}
 	}

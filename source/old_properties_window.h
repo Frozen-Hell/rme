@@ -42,6 +42,10 @@ protected:
 	wxChoice* splash_type_field;
 	wxTextCtrl* text_field;
 	wxTextCtrl* description_field;
+	wxCheckBox* Swap_check;
+	wxCheckBox* Replace_check;
+	wxCheckBox* Border_check;
+	wxCheckBox* Ground_check;
 	std::vector<ContainerItemButton*> container_items;
 
 	friend class ContainerItemButton;

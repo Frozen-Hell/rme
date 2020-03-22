@@ -26,7 +26,8 @@
 #include "common_windows.h"
 #include "application.h"
 #include "palette_waypoints.h"
-
+#include "ground_brush.h"
+#include "map.h"
 // ============================================================================
 // Palette Panel
 
@@ -395,6 +396,10 @@ BEGIN_EVENT_TABLE(BrushToolPanel, PalettePanel)
 	EVT_TOGGLEBUTTON(PALETTE_TERRAIN_NOPVP_TOOL,BrushToolPanel::OnClickNOPVPBrushButton)
 	EVT_TOGGLEBUTTON(PALETTE_TERRAIN_NOLOGOUT_TOOL,BrushToolPanel::OnClickNoLogoutBrushButton)
 	EVT_TOGGLEBUTTON(PALETTE_TERRAIN_PVPZONE_TOOL,BrushToolPanel::OnClickPVPZoneBrushButton)
+	EVT_CHECKBOX(BORDER_OPTIONS, BrushToolPanel::OnClickGravelButton)
+	EVT_SPINCTRL(BORDER_OPTIONS, BrushToolPanel::OnClickBorderOptionsButton)
+	EVT_TOGGLEBUTTON(REPLACE_OPTIONS, BrushToolPanel::OnClickReplace_Option)
+
 END_EVENT_TABLE()
 
 BrushToolPanel::BrushToolPanel(wxWindow* parent) :
@@ -413,6 +418,7 @@ BrushToolPanel::BrushToolPanel(wxWindow* parent) :
 	nopvpBrushButton(nullptr),
 	nologBrushButton(nullptr),
 	pvpzoneBrushButton(nullptr)
+
 {
 	////
 }
@@ -440,7 +446,6 @@ void BrushToolPanel::InvalidateContents()
 		nopvpBrushButton =
 		nologBrushButton =
 		pvpzoneBrushButton = nullptr;
-
 		loaded = false;
 	}
 }
@@ -520,6 +525,7 @@ void BrushToolPanel::LoadAllContents()
 		ASSERT(g_gui.window_door_brush);
 		sub_sizer->Add(windowDoorButton = newd BrushButton(this, g_gui.window_door_brush, RENDER_SIZE_32x32, PALETTE_TERRAIN_WINDOW_DOOR));
 			windowDoorButton->SetToolTip("Window Tool");
+
 	} else {
 		// Create the tool page with 16x16 icons
 		// Create tool window #1
@@ -578,8 +584,59 @@ void BrushToolPanel::LoadAllContents()
 		ASSERT(g_gui.pvp_brush);
 		sub_sizer->Add(pvpzoneBrushButton = newd BrushButton(this, g_gui.pvp_brush, RENDER_SIZE_16x16, PALETTE_TERRAIN_PVPZONE_TOOL));
 			pvpzoneBrushButton->SetToolTip("PVP Zone Tool");
-	}
 
+
+	}
+	if(g_settings.getInteger(Config::EXTRA_BORDER_OPTIONS) == 1) {
+		size_sizer->Add(sub_sizer);
+		sub_sizer = newd wxStaticBoxSizer(newd wxStaticBox(this, wxID_ANY, "Extra Border Options", wxDefaultPosition, wxDefaultSize), wxVERTICAL);
+
+		Active_check = newd wxCheckBox(this, BORDER_OPTIONS, "Active");
+		sub_sizer->Add(Active_check, wxSizerFlags(0).Expand());
+		Active_check->SetToolTip("Activate the extra border options");
+
+		wxFlexGridSizer* grid = newd wxFlexGridSizer(3, 10, 10);
+		grid->AddGrowableCol(1);
+
+		grid->Add(newd wxStaticText(this, wxID_ANY, "1st Ground:"));
+		First_ground = newd wxSpinCtrl(this, BORDER_OPTIONS, wxEmptyString, wxDefaultPosition, wxSize(60, 20), wxSP_ARROW_KEYS, 1, 0xFFFF);
+		grid->Add(First_ground, 0, wxEXPAND);
+		First_ground->SetToolTip("First groud id, must be ground brush");
+
+		Replace_check = newd wxCheckBox(this, BORDER_OPTIONS, "Replace");
+		grid->Add(Replace_check, wxSizerFlags(0).Expand());
+		Replace_check->SetToolTip("Replace the border of first ground with second one");
+
+		grid->Add(newd wxStaticText(this, wxID_ANY, "2nd Ground:"));
+		Second_ground = newd wxSpinCtrl(this, BORDER_OPTIONS, wxEmptyString, wxDefaultPosition, wxSize(60, 20), wxSP_ARROW_KEYS, 1, 0xFFFF);
+		grid->Add(Second_ground, 0, wxEXPAND);
+		Second_ground->SetToolTip("Second groud id, must be ground brush");
+
+		Above_check = newd wxCheckBox(this, BORDER_OPTIONS, "Above");
+		grid->Add(Above_check, wxSizerFlags(0).Expand());
+		Above_check->SetToolTip("Draw borders of second ground on top of first ground borders");
+		sub_sizer->Add(grid, 0, wxEXPAND);
+		wxFlexGridSizer* grid2 = newd wxFlexGridSizer(2, 10, 10);
+		grid2->AddGrowableCol(1);
+
+		size_sizer->Add(sub_sizer);
+		sub_sizer = newd wxStaticBoxSizer(newd wxStaticBox(this, wxID_ANY, "Replace Ground On Map Option", wxDefaultPosition, wxDefaultSize), wxVERTICAL);
+
+		Replace_Ground = newd wxCheckBox(this, wxID_ANY, "Replace Ground");
+		grid2->Add(Replace_Ground, wxSizerFlags(0).Expand());
+		Replace_Ground->SetToolTip("Replace first ground with second ground on whole map");
+		Apply_Replace = newd wxToggleButton(this, REPLACE_OPTIONS, "Replace");
+		grid2->Add(Apply_Replace, 0, wxEXPAND);
+
+		Replace_Border = newd wxCheckBox(this, wxID_ANY, "Replace Border");
+		grid2->Add(Replace_Border, wxSizerFlags(0).Expand());
+		Replace_Border->SetToolTip("Replace first ground border with second ground border on whole map");
+
+		Swap_Border = newd wxCheckBox(this, wxID_ANY, "Swap ID");
+		grid2->Add(Swap_Border, wxSizerFlags(0).Expand());
+		Swap_Border->SetToolTip("Swap the grounds");
+		sub_sizer->Add(grid2, 0, wxEXPAND);
+	}
 	size_sizer->Add(sub_sizer);
 	SetSizerAndFit(size_sizer);
 
@@ -691,6 +748,81 @@ void BrushToolPanel::OnClickGravelButton(wxCommandEvent& event)
 {
 	g_gui.ActivatePalette(GetParentPalette());
 	g_gui.SelectBrush(g_gui.optional_brush);
+	g_settings.setInteger(Config::ACTIVE_CHECK, Active_check->GetValue());
+	g_settings.setInteger(Config::REPLACE_CHECK, Replace_check->GetValue());
+	g_settings.setInteger(Config::ABOVE_CHECK, Above_check->GetValue());
+	g_settings.setInteger(Config::FIRST_GROUND, First_ground->GetValue());
+	g_settings.setInteger(Config::SECOND_GROUND, Second_ground->GetValue());
+}
+
+void BrushToolPanel::OnClickBorderOptionsButton(wxSpinEvent& event)
+{
+	g_settings.setInteger(Config::ACTIVE_CHECK, Active_check->GetValue());
+	g_settings.setInteger(Config::REPLACE_CHECK, Replace_check->GetValue());
+	g_settings.setInteger(Config::ABOVE_CHECK, Above_check->GetValue());
+	g_settings.setInteger(Config::FIRST_GROUND, First_ground->GetValue());
+	g_settings.setInteger(Config::SECOND_GROUND, Second_ground->GetValue());
+}
+
+void BrushToolPanel::OnClickReplace_Option(wxCommandEvent& event)
+{
+		int Replace_Ground_value = Replace_Ground->GetValue();
+		int Replace_Border_value = Replace_Border->GetValue();
+		int Swap_Border_value = Swap_Border->GetValue();
+		int First_ground_value = First_ground->GetValue();
+		int Second_ground_value = Second_ground->GetValue();
+
+		Item* item1 = Item::Create(First_ground_value);
+		Item* item2 = Item::Create(Second_ground_value);
+		GroundBrush* groundBrush1 = item1->getGroundBrush();
+		GroundBrush* groundBrush2 = item2->getGroundBrush();
+		ItemType& item_type = g_items.getItemType(406);
+
+		GroundBrush* groundBrush3 = item_type.brush->asGround();
+		const GroundBrush::BorderBlock* borderBlock1 = GroundBrush::getBrushTo(groundBrush3, groundBrush1);
+		const GroundBrush::BorderBlock* borderBlock2 = GroundBrush::getBrushTo(groundBrush3, groundBrush2);
+
+		Map* map = &g_gui.GetCurrentMap();
+
+		for(MapIterator mit = map->begin(); mit != map->end(); ++mit) {
+			Tile* tile = (*mit)->get();
+			if(tile->empty())
+				continue;
+
+			for(ItemVector::const_iterator item_iter = tile->items.begin(); item_iter != tile->items.end(); ++item_iter) {
+				Item* item = *item_iter;
+				if (groundBrush1 != 0 && groundBrush2 != 0 && Replace_Border_value == 1){
+					if(borderBlock1 == 0 || borderBlock2 == 0){
+						g_gui.PopupDialog(this, "Error", "No outer border found.", wxOK);
+						return;
+					}else {
+						for(uint16_t i = 0; i <= 12; ++i) {
+							uint16_t find_id = borderBlock1->autoborder->tiles[i];
+							uint16_t with_id = borderBlock2->autoborder->tiles[i];
+							if (Swap_Border_value == 1){
+								find_id = borderBlock2->autoborder->tiles[i];
+								with_id = borderBlock1->autoborder->tiles[i];
+							}
+							if (find_id && with_id && item->getID() == find_id)
+								transformItem(item, with_id, tile);
+						}
+					}
+				}
+			}
+			if (Replace_Ground_value == 1 && item1->isGroundTile() && item2->isGroundTile()){
+				if (tile->hasGround() && tile->getGroundBrush() && (tile->getGroundBrush()->getID() == item1->getGroundBrush()->getID() || tile->getGroundBrush()->getID() == item2->getGroundBrush()->getID())){
+					if (Swap_Border_value == 0){
+						groundBrush1->undraw(map, tile);
+						groundBrush2->draw(map, tile, nullptr);
+					}
+					else {
+						groundBrush2->undraw(map, tile);
+						groundBrush1->draw(map, tile, nullptr);
+					}
+				}
+			}
+		}
+
 }
 
 void BrushToolPanel::OnClickEraserButton(wxCommandEvent& event)
