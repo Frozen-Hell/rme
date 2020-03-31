@@ -4,7 +4,7 @@
 	author="Remere"
 	authorurl="https://twitter.com/leremere"
 	description="This adds a new doodad brush and modifies an old one."
-	client="8.00;8.20 - 8.31">
+	client="8.54;8.00;8.20 - 8.31">
 
 	<brush name="rudder of the boat" type="doodad" server_lookid="1281" draggable="true" on_blocking="true" thickness="10/10">
 		<alternate> <item id="1281" chance="30"/> </alternate> -- south --

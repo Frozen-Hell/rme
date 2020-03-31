@@ -292,6 +292,18 @@ bool GraphicManager::loadEditorSprites()
 			loadPNGFile(no_pvp_png)
 		);
 
+	sprite_space[EDITOR_SPRITE_NOLEGEND_TOOL] =
+		newd EditorSprite(
+			loadPNGFile(no_legend_small_png),
+			loadPNGFile(no_legend_png)
+		);
+
+	sprite_space[EDITOR_SPRITE_NOBIKE_TOOL] =
+		newd EditorSprite(
+			loadPNGFile(no_bike_small_png),
+			loadPNGFile(no_bike_png)
+		);
+
 	sprite_space[EDITOR_SPRITE_DOOR_NORMAL] =
 		newd EditorSprite(
 			loadPNGFile(door_normal_small_png),
@@ -715,8 +727,9 @@ bool GraphicManager::loadSpriteData(const FileName& datafile, wxString& error, w
 	for(std::vector<uint32_t>::iterator sprite_iter = sprite_indexes.begin(); sprite_iter != sprite_indexes.end(); ++sprite_iter, ++id) {
 		uint32_t index = *sprite_iter + 3;
 		fh.seek(index);
-		uint16_t size;
-		safe_get(U16, size);
+		uint16_t size = 0;
+		if (*sprite_iter)
+			safe_get(U16, size);
 
 		ImageMap::iterator it = image_space.find(id);
 		if(it != image_space.end()) {
@@ -768,6 +781,12 @@ bool GraphicManager::loadSpriteDump(uint8_t*& target, uint16_t& size, int sprite
 
 	uint32_t to_seek = 0;
 	if(fh.getU32(to_seek)) {
+		if (!to_seek) {
+			// Empty GameSprite
+			size = 0;
+			target = nullptr;
+			return true;
+		}
 		fh.seek(to_seek+3);
 		uint16_t sprite_size;
 		if(fh.getU16(sprite_size)) {
@@ -1106,15 +1125,10 @@ void GameSprite::NormalImage::clean(int time)
 
 uint8_t* GameSprite::NormalImage::getRGBData()
 {
-	if(!dump) {
-		if(g_settings.getInteger(Config::USE_MEMCACHED_SPRITES)) {
-			return nullptr;
-		}
 
-		if(!g_gui.gfx.loadSpriteDump(dump, size, id)) {
-			return nullptr;
-		}
-	}
+	bool use_memcached = g_settings.getInteger(Config::USE_MEMCACHED_SPRITES);
+	if (!dump && (use_memcached ? size : !g_gui.gfx.loadSpriteDump(dump, size, id)))
+		return nullptr;
 
 	const int pixels_data_size = SPRITE_PIXELS * SPRITE_PIXELS * 3;
 	uint8_t* data = newd uint8_t[pixels_data_size];
@@ -1157,15 +1171,9 @@ uint8_t* GameSprite::NormalImage::getRGBData()
 
 uint8_t* GameSprite::NormalImage::getRGBAData()
 {
-	if(!dump) {
-		if(g_settings.getInteger(Config::USE_MEMCACHED_SPRITES)) {
-			return nullptr;
-		}
-
-		if(!g_gui.gfx.loadSpriteDump(dump, size, id)) {
-			return nullptr;
-		}
-	}
+	bool use_memcached = g_settings.getInteger(Config::USE_MEMCACHED_SPRITES);
+	if (!dump && (use_memcached ? size : !g_gui.gfx.loadSpriteDump(dump, size, id)))
+		return nullptr;
 
 	const int pixels_data_size = SPRITE_PIXELS * SPRITE_PIXELS * 4;
 	uint8_t* data = newd uint8_t[pixels_data_size];
@@ -1177,8 +1185,6 @@ uint8_t* GameSprite::NormalImage::getRGBAData()
 	// decompress pixels
 	while(read < size && write < pixels_data_size) {
 		int transparent = dump[read] | dump[read + 1] << 8;
-		if(use_alpha && transparent >= size) // Corrupted sprite?
-			break;
 		read += 2;
 		for(int i = 0; i < transparent && write < pixels_data_size; i++) {
 			data[write + 0] = 0x00; // red

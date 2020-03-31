@@ -1,4 +1,4 @@
-<materialsextension name="Underwater palette 8.10+" author="Sadza" description="This extension adds underwater doodad palette" client="8.10;8.20 - 8.31">  
+<materialsextension name="Underwater palette 8.10+" author="Sadza" description="This extension adds underwater doodad palette" client="8.54;8.10;8.20 - 8.31">  
 	<border id="58900"> -- underwater border --  
 		<borderitem edge="n"   item="5427"/>  
 		<borderitem edge="e"   item="5429"/>  
@@ -15,7 +15,6 @@
 	</border>  
 
 	<brush name="Shallow water" type="border" server_lookid="5410" z-order="3000">  
-		<item id="5405" chance="25"/>  
 		<item id="5406" chance="25"/>  
 		<item id="5407" chance="25"/>  
 		<item id="5408" chance="25"/>  

@@ -90,7 +90,7 @@ public:
 	  wxScrollBar(parent, id, wxDefaultPosition, wxDefaultSize, style), canvas(canvas) {}
 	virtual ~MapScrollBar() {}
 
-	void OnKey(wxKeyEvent& event) {canvas->GetEventHandler()->AddPendingEvent(event);}
+	void OnKey(wxKeyEvent& event) {event.Skip(); return; canvas->GetEventHandler()->AddPendingEvent(event);}
 	void OnWheel(wxMouseEvent& event) {canvas->GetEventHandler()->AddPendingEvent(event);}
 	void OnFocus(wxFocusEvent& event) {canvas->SetFocus();}
 

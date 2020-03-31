@@ -1,0 +1,22 @@
+<materialsextension
+	name="pokexgames.pl"
+	author="zygzagZ"
+	authorurl=""
+	description="pxgpl"
+	client="8.54">
+
+	<brush name="white stone trapdoor" type="doodad" server_lookid="433" draggable="true" on_blocking="true" redo_borders="true" one_size="true" thickness="100/100">
+		<item id="433" chance="10"/>
+	</brush>
+
+	<brush name="white marble trapdoor" type="doodad" server_lookid="10543" draggable="true" on_blocking="true" redo_borders="true" one_size="true" thickness="100/100">
+		<item id="10543" chance="10"/>
+	</brush>
+	
+	<tileset name="Stairs">
+		<terrain>
+			<brush name="white stone trapdoor" after="gray stone trapdoor"/>
+			<brush name="white marble trapdoor" after="gray stone trapdoor"/>
+		</terrain>
+    </tileset>
+</materialsextension>

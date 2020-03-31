@@ -38,6 +38,7 @@ public:
 
 	// Operations on the entire map
 	void cleanInvalidTiles(bool showdialog = false);
+	void cleanWater(bool showdialog = false);
 	// Save a bmp image of the minimap
 	bool exportMinimap(FileName filename, int floor = GROUND_LAYER, bool showdialog = false);
 	//

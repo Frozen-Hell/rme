@@ -2,7 +2,7 @@
 	name="New Walls"
 	author="Bobany"
 	description="Additional walls"
-	client="8.10;8.20 - 8.31">
+	client="8.54;8.10;8.20 - 8.31">
 
 	<brush name="frozen wall" type="wall" server_lookid="6740">
 		<wall type="horizontal">

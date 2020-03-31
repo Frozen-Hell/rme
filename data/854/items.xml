@@ -14481,7 +14481,7 @@
 	<item id="6428" article="a" name="large branch"/>
 	<item id="6429" article="a" name="large branch"/>
 	<item id="6430" article="a" name="large branch"/>
-	<item id="6431" article="a" name="branch"/>															   
+	<item id="6431" article="a" name="branch"/>
 	<item id="6432" article="a" name="branch"/>
 	<item id="6433" article="a" name="necromancer shield">
 		<attribute key="description" value="It is enchanted with unholy, necromantic powers."/>
@@ -16379,7 +16379,7 @@
 	<item id="7371" article="a" name="bronze trophy">
 		<attribute key="weight" value="2500"/>
 	</item>
-	<item id="7372" article="an" name="ice cream cone"> 
+	<item id="7372" article="an" name="ice cream cone">
 		<attribute key="description" value="It's the famous ''crispy chocolate chips'' flavour."/>
 		<attribute key="weight" value="100"/>
 	</item>
@@ -16787,7 +16787,7 @@
 		<attribute key="defense" value="24"/>
 		<attribute key="attack" value="44"/>
 		<attribute key="weaponType" value="axe"/>
-		<attribute key="slotType" value="two-handed"/>	
+		<attribute key="slotType" value="two-handed"/>
 	</item>
 	<item id="7437" article="a" name="sapphire hammer">
 		<attribute key="weight" value="2100"/>
@@ -16799,7 +16799,7 @@
 	<item id="7438" article="an" name="elvish bow">
 		<attribute key="weight" value="3900"/>
 		<attribute key="description" value="This beautifully ornamented bow was made by a skilled elvish bowmaker."/>
-		<attribute key="slotType" value="two-handed"/>	
+		<attribute key="slotType" value="two-handed"/>
 		<attribute key="weaponType" value="distance"/>
 		<attribute key="ammoType" value="arrow"/>
 		<attribute key="range" value="6"/>
@@ -18860,7 +18860,7 @@
 	<item id="7918" article="a" name="mysterious machine" editorsuffix=" (Moving)"/>
 	<item id="7919" article="an" name="armillary sphere"/>
 	<item id="7920" article="a" name="chalk board"/>
-	<item id="7921" article="a" name="chalk board"/> 
+	<item id="7921" article="a" name="chalk board"/>
 	<item id="7922" article="a" name="chalk board"/>
 	<item id="7923" article="a" name="chalk board"/>
 	<item id="7924" name="stone stairs">
@@ -18881,7 +18881,7 @@
 		<attribute key="containerSize" value="7"/>
 		<attribute key="decayTo" value="7928"/>
 		<attribute key="duration" value="900"/>
-		<attribute key="corpseType" value="blood"/>	
+		<attribute key="corpseType" value="blood"/>
 		<attribute key="fluidSource" value="blood"/>
 	</item>
 	<item id="7928" article="a" name="dead troll">
@@ -22679,12 +22679,6 @@
 		<attribute key="duration" value="900"/>
 		<attribute key="corpseType" value="blood"/>
 	</item>
-	<item id="9915" article="a" name="slain nightstalker" editorsuffix=" (Unmoveable)">
-		<attribute key="containerSize" value="10"/>
-		<attribute key="decayTo" value="9916"/>
-		<attribute key="duration" value="10"/>
-		<attribute key="corpseType" value="blood"/>
-	</item>
 	<item id="9916" article="a" name="slain nightstalker">
 		<attribute key="containerSize" value="10"/>
 		<attribute key="decayTo" value="9917"/>
@@ -23121,7 +23115,7 @@
 	<item id="10034" article="a" name="metal fitting">
 		<attribute key="weight" value="250"/>
 	</item>
-	<item id="10035" article="a" name="ladder"/> 
+	<item id="10035" article="a" name="ladder"/>
 	<item id="10038" article="a" name="crucible"/>
 	<item id="10039" article="a" name="bellow"/>
 	<item id="10040" article="a" name="bellow"/>
@@ -23160,7 +23154,7 @@
 	<item id="10109" article="a" name="bundle of rags">
 		<attribute key="weight" value="900"/>
 		<attribute key="description" value="It also contains an old dress of Queen Eloise."/>
-	</item> 
+	</item>
 	<item id="10111" article="a" name="black book">
 		<attribute key="weight" value="1300"/>
 		<attribute key="writeable" value="1"/>
@@ -23207,7 +23201,7 @@
 	<item id="10152" article="a" name="worm punisher">
 		<attribute key="description" value="The hammer would be more effective when heated."/>
 		<attribute key="weight" value="6450"/>
-	</item> 
+	</item>
 	<item id="10153" article="a" name="golem disassembler">
 		<attribute key="description" value="It looks suspiciously similar to a crowbar."/>
 		<attribute key="weight" value="1500"/>
@@ -23216,7 +23210,7 @@
 		<attribute key="weight" value="260"/>
 	</item>
 	<item id="10157" article="a" name="Worm queen Tooth">
-		<attribute key="weight" value="850"/> 
+		<attribute key="weight" value="850"/>
 	</item>
 	<item id="10158" article="a" name="deep crystal">
 		<attribute key="description" value="It is pulsating with spectral energy."/>
@@ -23446,7 +23440,7 @@
 		<attribute key="defense" value="16"/>
 		<attribute key="attack" value="10"/>
 		<attribute key="weaponType" value="club"/>
-	</item> 
+	</item>
 	<item id="10291" article="an" name="odd hat">
 		<attribute key="description" value="It has to be one of the fabled helmets of light."/>
 		<attribute key="slottype" value="head"/>
@@ -23492,7 +23486,7 @@
 		<attribute key="weight" value="1700"/>
 		<attribute key="defense" value="8"/>
 		<attribute key="weaponType" value="shield"/>
-	</item> 
+	</item>
 	<item id="10298" article="a" name="helmet of ultimate terror">
 		<attribute key="description" value="There is evil inside."/>
 		<attribute key="slottype" value="head"/>
@@ -23540,7 +23534,7 @@
 		<attribute key="defense" value="8"/>
 		<attribute key="attack" value="10"/>
 		<attribute key="weaponType" value="sword"/>
-	</item> 
+	</item>
 	<item id="10306" article="a" name="fan doll of King Tibianus">
 		<attribute key="description" value="The small label reads: For my greatest admirer."/>
 		<attribute key="weight" value="650"/>
@@ -23548,7 +23542,7 @@
 	<item id="10308" article="a" name="fan club membership card">
 		<attribute key="weight" value="150"/>
 		<attribute key="description" value="This king Tibianus fan club premium membership card is issued to 'The Evil Mastermind'."/>
-	</item> 
+	</item>
 	<item id="10309" article="a" name="claw of 'The Noxious Spawn'">
 		<attribute key="description" value="It's like a glove and you can't wear a ring on it. You are not sure if you should really put it on."/>
 		<attribute key="slottype" value="hand"/>
@@ -23580,7 +23574,7 @@
 		<attribute key="weight" value="5200"/>
 		<attribute key="defense" value="25"/>
 		<attribute key="weaponType" value="shield"/>
-	</item> 
+	</item>
 	<item id="10319" article="a" name="dead human">
 		<attribute key="containerSize" value="10"/>
 		<attribute key="decayTo" value="3058"/>
@@ -23848,7 +23842,7 @@
 	<item id="10516" article="a" name="jammed whacking driller of fate">
 		<attribute key="weight" value="300"/>
 		<attribute key="description" value="This nifty gadget can be used for many vital and less vital purposes. If it's not jammed, that is."/>
-	</item> 
+	</item>
 	<item id="10518" article="a" name="demon backpack">
 		<attribute key="weight" value="1800"/>
 		<attribute key="containerSize" value="20"/>
@@ -24033,10 +24027,2422 @@
 		<attribute key="containerSize" value="20"/>
 		<attribute key="slotType" value="backpack"/>
 	</item>
-	<item id="11257" article="a" name="fluffy santa backpack">
-		<attribute key="weight" value="1800"/>
+	<item id="11257" name="Fluffy santa plecak">
 		<attribute key="containerSize" value="20"/>
-		<attribute key="slotType" value="backpack"/>
+		<attribute key="slotType" value="Backpack"/>
+	</item>
+	<item id="11258" name="Dragon gobelin"/>
+
+	<item id="11260" name="Schody">
+		<attribute key="floorchange" value="North"/>
+	</item>
+	<item id="11262" name="Schody">
+		<attribute key="floorchange" value="West"/>
+	</item>
+	<item id="11297" name="Zaoan shoes">
+		<attribute key="armor" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="speed" value="10"/>
+		<attribute key="weight" value="700"/>
+	</item>
+	<item id="11299" name="Drakinata">
+		<attribute key="defense" value="20"/>
+		<attribute key="attack" value="47"/>
+		<attribute key="weaponType" value="Axe"/>
+		<attribute key="slotType" value="Two-handed"/>
+		<attribute key="weight" value="5400"/>
+	</item>
+	<item id="11300" name="Sais">
+		<attribute key="defense" value="27"/>
+		<attribute key="attack" value="45"/>
+		<attribute key="weaponType" value="Sword"/>
+		<attribute key="slotType" value="Two-handed"/>
+		<attribute key="weight" value="5000"/>
+	</item>
+	<item id="11302" name="Drachaku">
+		<attribute key="defense" value="25"/>
+		<attribute key="attack" value="46"/>
+		<attribute key="weaponType" value="Club"/>
+		<attribute key="slotType" value="Two-handed"/>
+		<attribute key="weight" value="6000"/>
+	</item>
+	<item id="11303" name="Twin hooks">
+		<attribute key="defense" value="22"/>
+		<attribute key="attack" value="32"/>
+		<attribute key="weaponType" value="Axe"/>
+		<attribute key="slotType" value="Two-handed"/>
+		<attribute key="weight" value="5000"/>
+	</item>
+	<item id="11318" name="Shaggy tail">
+		<attribute key="weight" value="112"/>
+	</item>
+	<item id="11319" name="Spiked iron ball">
+		<attribute key="weight" value="125"/>
+	</item>
+	<item id="11320" name="Corrupted flag">
+		<attribute key="weight" value="112"/>
+	</item>
+	<item id="11321" name="Cursed shoulder spikes" plural="Cursed shoulder's spikes" pluralfive="Cursed shoulder's spikes">
+		<attribute key="weight" value="75"/>
+	</item>
+	<item id="11322" name="Widow mandibles" plural="Widow's mandibles" pluralfive="Widow's mandibles">
+		<attribute key="weight" value="105"/>
+	</item>
+	<item id="11323" name="Wailing widow naszyjnik">
+		<attribute key="weight" value="540"/>
+		<attribute key="slotType" value="Necklace"/>
+	</item>
+	<item id="11324" name="Zaogun flag">
+		<attribute key="weight" value="98"/>
+	</item>
+	<item id="11325" name="Zaogun shoulderplates" plural="Zaogun's shoulderplates" pluralfive="Zaogun's shoulderplates">
+		<attribute key="weight" value="103"/>
+	</item>
+	<item id="11326" name="High guard flag">
+		<attribute key="weight" value="112"/>
+	</item>
+	<item id="11327" name="High guard shoulderplates" plural="High guard's shoulderplates" pluralfive="High guard's shoulderplates">
+		<attribute key="weight" value="103"/>
+	</item>
+	<item id="11328" name="Legionnaire flags" plural="Legionnaire's flags" pluralfive="Legionnaire's flags">
+		<attribute key="weight" value="110"/>
+	</item>
+	<item id="11331" name="Petrified scream" plural="Petrified scream" pluralfive="Petrified scream">
+		<attribute key="weight" value="150"/>
+	</item>
+	<item id="11363" name="Terramite shell">
+		<attribute key="weight" value="150"/>
+	</item>
+	<item id="11364" name="Terramite eggs" plural="Terramite's eggs" pluralfive="Terramite's eggs">
+		<attribute key="weight" value="20"/>
+		<attribute key="showcount" value="0"/>
+	</item>
+	<item id="11366" name="Lancer beetle shell">
+		<attribute key="weight" value="107"/>
+	</item>
+	<item id="11367" name="Sandcrawler shell">
+		<attribute key="weight" value="75"/>
+	</item>
+	<item id="11368" name="Beetle naszyjnik">
+		<attribute key="speed" value="4"/>
+		<attribute key="weight" value="820"/>
+		<attribute key="slotType" value="Necklace"/>
+		<attribute key="showattributes" value="1"/>
+	</item>
+	<item id="11371" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11388" name="Lucky clover amulet">
+		<attribute key="description" value="It is rumouczerwony to bpierścień you good luck! Luck sponsoczerwony by Tibiałottery."/>
+		<attribute key="weight" value="150"/>
+		<attribute key="slotType" value="Necklace"/>
+	</item>
+	<item id="11389" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11631" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11391" name="Pokonany aipom">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11393" name="Pokonany ampharos">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11394" name="Pokonany ariados">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11395" name="Pokonany azumarill">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11396" name="Pokonany bayleef">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11397" name="Pokonany bellossom">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11398" name="Pokonany blissey">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11399" name="Pokonany celebi">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11400" name="Pokonany chikorita">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11401" name="Pokonany chinchou">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11402" name="Pokonany cleffa">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11403" name="Pokonany corsola">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11404" name="Pokonany crobat">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11405" name="Pokonany croconaw">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11406" name="Pokonany cyndaquil">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11407" name="Pokonany delibird">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11408" name="Pokonany donphan">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11409" name="Pokonany dunsparce">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11410" name="Pokonany elekid">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11411" name="Pokonany entei">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11412" name="Pokonany espeon">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11413" name="Pokonany feraligatr">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11414" name="Pokonany flaaffy">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11415" name="Pokonany forretress">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11416" name="Pokonany furret">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11630" name="Pokonany gallade">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11417" name="Pokonany girafarig">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11418" name="Pokonany gligar">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11419" name="Pokonany granbull">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11420" name="Pokonany heracross">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11421" name="Pokonany hitmontop">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11422" name="Pokonany ho oh">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11423" name="Pokonany hoothoot">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11424" name="Pokonany hoppip">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11425" name="Pokonany houndoom">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11426" name="Pokonany houndour">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11427" name="Pokonany igglybuff">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11428" name="Pokonany jumpluff">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11429" name="Pokonany kingdra">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11430" name="Pokonany lanturn">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11431" name="Pokonany larvitar">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11432" name="Pokonany ledian">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11433" name="Pokonany ledyba">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11434" name="Pokonany lugia">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11435" name="Pokonany magby">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11436" name="Pokonany magcarbo">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11437" name="Pokonany mantine">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11438" name="Pokonany mareep">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11439" name="Pokonany marill">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11440" name="Pokonany meganium">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11441" name="Pokonany miltank">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11442" name="Pokonany misdreavus">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11443" name="Pokonany murkrow">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11444" name="Pokonany natu">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11445" name="Pokonany noctowl">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11446" name="Pokonany octillery">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11447" name="Pokonany phanpy">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11448" name="Pokonany pichu">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11449" name="Pokonany piloswine">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11450" name="Pokonany pineco">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11451" name="Pokonany politoed">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11452" name="Pokonany porygon2">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11453" name="Pokonany pupitar">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11454" name="Pokonany quaqsire">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11455" name="Pokonany quilava">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11456" name="Pokonany qwilfish">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11457" name="Pokonany raikou">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11458" name="Pokonany remoraid">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11459" name="Pokonany scizor">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11460" name="Pokonany shuckle">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11461" name="Pokonany sentret">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11462" name="Pokonany skarmory">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11463" name="Pokonany skiploom">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11464" name="Pokonany slowking">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11465" name="Pokonany slugma">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11466" name="Pokonany smeargle">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11467" name="Pokonany smoochum">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11468" name="Pokonany sneasel">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11469" name="Pokonany snubbull">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11470" name="Pokonany spinarak">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11471" name="Pokonany stantler">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11472" name="Pokonany steelix">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11473" name="Pokonany sudowoodo">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11474" name="Pokonany suicune">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11475" name="Pokonany sunflora">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11476" name="Pokonany sunkern">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11477" name="Pokonany swinub">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11478" name="Pokonany teddiursa">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11479" name="Pokonany togepi">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11480" name="Pokonany togetic">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11481" name="Pokonany totodile">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11482" name="Pokonany typhlosion">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11483" name="Pokonany tyranitar">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11484" name="Pokonany tyrogue">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11485" name="Pokonany umbreon">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11488" name="Pokonany unown">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+    <item id="11512" name="Pokonany ursaring">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11513" name="Pokonany wobbuffet">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11514" name="Pokonany wooper">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11515" name="Pokonany xatu">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11516" name="Pokonany yanma">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item fromid="11517" toid="11616" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11617" name="Bulb">
+		<attribute key="description" value="Item raro que cai das costas de um bulbasaur."/>
+	</item>
+	<item id="11618" name="Ciemny ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="11619" name="Używany ciemny ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+	</item>
+	<item id="11620" name="Zużyty ciemny ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="11621" name="Love ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="11622" name="Używany love ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+	</item>
+	<item id="11623" name="Zużyty love ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="11624" name="Złoty ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="11625" name="Używany złoty ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+	</item>
+	<item id="11626" name="Zużyty złoty ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="11627" name="Frozen ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="11628" name="Używany frozen ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+	</item>
+	<item id="11629" name="Zużyty frozen ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="11632" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11633" name="Pokonany giratina">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11634" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11635" name="Pokonany palkia">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11636" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11637" name="Pokonany rayquaza">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11638" name="Pokonany primal dialga">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11639" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11640" name="Pokonany dialga">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11641" name="Portret pokemona">
+		<attribute key="slotType" value="Legs"/>
+	</item>
+	<item id="11642" name="Łódź path"/>
+	<item id="11643" name="Locked badge"/>
+	<item id="11644" name="Locked badge"/>
+	<item id="11645" name="Locked badge"/>
+	<item id="11646" name="Locked badge"/>
+	<item id="11647" name="Locked badge"/>
+	<item id="11648" name="Locked badge"/>
+	<item id="11649" name="Locked badge"/>
+	<item id="11650" name="Locked badge"/>
+	<item id="11651" name="Boulder Badge"/>
+	<item id="11652" name="Cascade Badge"/>
+	<item id="11653" name="Thunder Badge"/>
+	<item id="11654" name="Rainbow Badge"/>
+	<item id="11655" name="Soul Badge"/>
+	<item id="11656" name="Marsh Badge"/>
+	<item id="11657" name="Volcano Badge"/>
+	<item id="11658" name="Earth Badge"/>
+	<item id="11659" name="Facebook Plecak">
+		<attribute key="containerSize" value="36"/>
+		<attribute key="slotType" value="Backpack"/>
+	</item>
+	<item id="11660" name="Łódź at night"/>
+	<item id="11661" name="Portret pokemona"/>
+	<item id="11662" name="Pokonany munchlax">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11663" name="Pokonany rhyperior">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11664" name="Portret pokemona"/>
+	<item id="11665" name="Pokonany magmortar">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11666" name="Portret pokemona"/>
+	<item id="11667" name="Portret pokemona"/>
+	<item id="11668" name="Pokonany electrive">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11669" name="Portret pokemona"/>
+	<item id="11670" name="Pokonany jadeite golem">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11671" name="Portret pokemona"/>
+	<item id="11672" name="Pokonany leafeon">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11673" name="Pokonany glaceon">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11674" name="Portret pokemona"/>
+	<item id="11675" name="Portret pokemona"/>
+	<item id="11676" name="Pokonany terror gengar">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11677" name="Portret pokemona"/>
+	<item id="11678" name="Pokonany big snorlax">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11679" name="Pokonany ciemnyness alakazam">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11680" name="Portret pokemona"/>
+	<item id="11681" name="Portret pokemona"/>
+	<item id="11682" name="Pokonany cymophane dragonair">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11683" name="Portret pokemona"/>
+	<item id="11684" name="Pokonany y-quilava">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11685" name="Portret pokemona"/>
+	<item id="11686" name="Portret pokemona"/>
+	<item id="11687" name="Pokonany togekiss">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11688" name="Portret pokemona"/>
+	<item id="11689" name="Pokonany sulphur delibird">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11690" name="Pokonany aquamarine kingdra">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11691" name="Portret pokemona"/>
+	<item id="11692" name="Portret pokemona"/>
+	<item id="11693" name="Portret pokemona"/>
+	<item id="11694" name="Pokonany ezapalonae hitmontop">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11695" name="Pokonany rage charmeleon">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11696" name="Portret pokemona"/>
+	<item id="11697" name="Portret pokemona"/>
+	<item id="11698" name="Pokonany nightmare vileplume">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11699" name="Pokonany shadow fearow">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11700" name="Portret pokemona"/>
+	<item id="11701" name="Pokonany supreme nidoking">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11702" name="Portret pokemona"/>
+	<item id="11703" name="Portret pokemona"/>
+	<item id="11704" name="Pokonany pale ekans">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11705" name="Pokonany pale arbok">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11706" name="Pokonany mudkip">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11707" name="Pokonany drzewocko">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11708" name="Pokonany pochodniaic">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11709" name="Portret pokemona"/>
+	<item id="11710" name="Portret pokemona"/>
+	<item id="11711" name="Portret pokemona"/>
+	<item id="11712" name="Portret pokemona"/>
+	<item id="11713" name="Portret pokemona"/>
+	<item id="11714" name="Portret pokemona"/>
+	<item id="11715" name="Portret pokemona"/>
+	<item id="11716" name="Portret pokemona"/>
+	<item id="11717" name="Portret pokemona"/>
+	<item id="11718" name="Pokonany grovyle">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11719" name="Pokonany sceptile">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11720" name="Pokonany combusken">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11721" name="Pokonany blaziken">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11722" name="Pokonany marshtomp">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11723" name="Pokonany swampert">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11724" name="Pokonany absol">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11725" name="Portret pokemona"/>
+	<item id="11726" name="Kryształowyized Magma"/>
+	<item id="11727" name="King's kamień"/>
+	<item id="11728" name="Kamień słońca"/>
+		<attribute key="description" value="Kanień słonca wymagany jest do ewolucji pokemonów."/>
+	<item id="11729" name="Ametyst Pokeorb"/>
+	<item id="11730" name="Bronze Pokeorb"/>
+	<item id="11731" name="Miedziany Pokeorb"/>
+	<item id="11732" name="Bixbit Pokeorb"/>
+	<item id="11733" name="Emerald Pokeorb"/>
+	<item id="11734" name="Lazuli Pokeorb"/>
+	<item id="11735" name="Onyx Pokeorb"/>
+	<item id="11736" name="Ruby Pokeorb"/>
+	<item id="11737" name="Sapphire Pokeorb"/>
+	<item id="11738" name="Topaz Pokeorb"/>
+	<item id="11739" name="Pokemon portoil"/>
+	<item id="11740" name="Pokemon portoil"/>
+	<item id="11741" name="Pokemon portoil"/>
+	<item id="11742" name="Pokemon portoil"/>
+	<item id="11743" name="Pokemon portoil"/>
+	<item id="11744" name="Pokonany ametyst lapras">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11745" name="Pokonany heliodor lickitung">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11746" name="Pokonany fluoryt slowbro">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11747" name="Pokonany rodochrozyt slowpoke">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11748" name="Pokonany sapphire starmie">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11749" name="Pokonany maroon sandslash">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11750" name="Pokonany vymiotning nidoqueen">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11751" name="Pokonany sepia onix">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11752" name="Pokonany frozen cloyster">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11753" name="Perła pokeorb"/>
+	<item id="11754" name="Portret pokemona"/>
+	<item id="11755" name="Portret pokemona"/>
+	<item id="11756" name="Portret pokemona"/>
+	<item id="11757" name="Portret pokemona"/>
+	<item id="11758" name="Portret pokemona"/>
+	<item id="11759" name="Portret pokemona"/>
+	<item id="11760" name="Portret pokemona"/>
+	<item id="11761" name="Portret pokemona"/>
+	<item id="11762" name="Portret pokemona"/>
+	<item id="11763" name="Portret pokemona"/>
+	<item id="11764" name="Portret pokemona"/>
+	<item id="11765" name="Portret pokemona"/>
+	<item id="11766" name="Portret pokemona"/>
+	<item id="11767" name="Portret pokemona"/>
+	<item id="11768" name="Portret pokemona"/>
+	<item id="11769" name="Pokonany solar hypno">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11770" name="Pokonany poisoned tangela">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11771" name="Pokonany rage pinsir">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11772" name="Pokonany glare pidgeot">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11773" name="Pokonany emerald marowak">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11774" name="Pokonany bloody golbat">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11775" name="Pokonany crystal cubone">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11776" name="Pokonany metal steelix">
+		<attribute key="containerSize" value="8"/>
+		<attribute key="decayTo" value="0"/>
+		<attribute key="duration" value="60"/>
+	</item>
+	<item id="11777" name="Malachitowy pokeorb"/>
+	<item fromid="11778" toid="11795" name="Podłoga"/>
+	<item fromid="11805" toid="11808" name="Podłoga"/>
+	<item id="11809" name="Kamień"/>
+	<item id="11810" name="Kamień"/>
+	<item id="11811" name="Platforma"/>
+	<item id="11812" name="Schody"/>
+	<item id="11813" name="Moltres posąg"/>
+	<item id="11814" name="Zapdos posąg"/>
+	<item id="11815" name="Articune posąg"/>
+	<item fromid="11816" toid="11817" name="Skamielina Kabuto"/>
+	<item fromid="11818" toid="11819" name="Zamrożony kamień"/>
+	<item fromid="11820" toid="11822" name="Skamielina Kabuto"/>
+	<item fromid="11823" toid="11835" name="Podłoga"/>
+	<item id="11836" name="Biały góra"/>
+	<item id="11837" name="Schody">
+		<attribute key="floorchange" value="North"/>
+	</item>
+	<item id="11838" name="Fotel">
+		<attribute key="rotateTo" value="11852"/>
+	</item>
+	<item id="11839" name="Fotel">
+		<attribute key="rotateTo" value="11838"/>
+	</item>
+	<item id="11852" name="Fotel">
+		<attribute key="rotateTo" value="11853"/>
+	</item>
+	<item id="11853" name="Fotel">
+		<attribute key="rotateTo" value="11839"/>
+	</item>
+	<item id="11840" name="Fotel">
+		<attribute key="rotateTo" value="11854"/>
+	</item>
+	<item id="11841" name="Fotel">
+		<attribute key="rotateTo" value="11840"/>
+	</item>
+	<item id="11854" name="Fotel">
+		<attribute key="rotateTo" value="11855"/>
+	</item>
+	<item id="11855" name="Fotel">
+		<attribute key="rotateTo" value="11841"/>
+	</item>
+	<item id="11842" name="Fotel">
+		<attribute key="rotateTo" value="11856"/>
+	</item>
+	<item id="11843" name="Fotel">
+		<attribute key="rotateTo" value="11842"/>
+	</item>
+	<item id="11856" name="Fotel">
+		<attribute key="rotateTo" value="11857"/>
+	</item>
+	<item id="11857" name="Fotel">
+		<attribute key="rotateTo" value="11843"/>
+	</item>
+	<item id="11844" name="Fotel">
+		<attribute key="rotateTo" value="11858"/>
+	</item>
+	<item id="11845" name="Fotel">
+		<attribute key="rotateTo" value="11844"/>
+	</item>
+	<item id="11858" name="Fotel">
+		<attribute key="rotateTo" value="11859"/>
+	</item>
+	<item id="11859" name="Fotel">
+		<attribute key="rotateTo" value="11845"/>
+	</item>
+	<item id="11846" name="Fotel">
+		<attribute key="rotateTo" value="11860"/>
+	</item>
+	<item id="11847" name="Fotel">
+		<attribute key="rotateTo" value="11846"/>
+	</item>
+	<item id="11860" name="Fotel">
+		<attribute key="rotateTo" value="11861"/>
+	</item>
+	<item id="11861" name="Fotel">
+		<attribute key="rotateTo" value="11847"/>
+	</item>
+	<item id="11848" name="Fotel">
+		<attribute key="rotateTo" value="11862"/>
+	</item>
+	<item id="11849" name="Fotel">
+		<attribute key="rotateTo" value="11848"/>
+	</item>
+	<item id="11862" name="Fotel">
+		<attribute key="rotateTo" value="11863"/>
+	</item>
+	<item id="11863" name="Fotel">
+		<attribute key="rotateTo" value="11849"/>
+	</item>
+	<item id="11850" name="Fotel">
+		<attribute key="rotateTo" value="11864"/>
+	</item>
+	<item id="11851" name="Fotel">
+		<attribute key="rotateTo" value="11850"/>
+	</item>
+	<item id="11864" name="Fotel">
+		<attribute key="rotateTo" value="11865"/>
+	</item>
+	<item id="11865" name="Fotel">
+		<attribute key="rotateTo" value="11851"/>
+	</item>
+	<item id="11866" name="Bulbasaur komputer">
+		<attribute key="rotateTo" value="11873"/>
+	</item>
+	<item id="11867" name="Charizard komputer">
+		<attribute key="rotateTo" value="11874"/>
+	</item>
+	<item id="11868" name=" komputer">
+		<attribute key="rotateTo" value="11875"/>
+	</item>
+	<item id="11869" name="Komputer Pikachu">
+		<attribute key="rotateTo" value="11875"/>
+	</item>
+	<item id="11870" name="Komputer Snorlax">
+		<attribute key="rotateTo" value="11876"/>
+	</item>
+	<item id="11871" name="Komputer Mew">
+		<attribute key="rotateTo" value="11877"/>
+	</item>
+	<item id="11872" name="Komputer Squirtle">
+		<attribute key="rotateTo" value="11878"/>
+	</item>
+	<item id="11873" name="Komputer Bulbasaur">
+		<attribute key="rotateTo" value="11866"/>
+	</item>
+	<item id="11874" name="Komputer Charizard">
+		<attribute key="rotateTo" value="11867"/>
+	</item>
+	<item id="11875" name="Komputer Pikachu">
+		<attribute key="rotateTo" value="11869"/>
+	</item>
+	<item id="11876" name="Komputer Snorlax">
+		<attribute key="rotateTo" value="11870"/>
+	</item>
+	<item id="11877" name="Komputer Mew">
+		<attribute key="rotateTo" value="11871"/>
+	</item>
+	<item id="11878" name="Komputer Squirtle">
+		<attribute key="rotateTo" value="11872"/>
+	</item>
+	<item fromid="11881" toid="11884" name="Magiczna ściana"/>
+	<item fromid="11885" toid="11896" name="Kamień safari"/>
+	<item fromid="11897" toid="11898" name="Kamienny filar"/>
+	<item id="11899" name="Podłoga"/>
+	<item id="11900" name="Jakieś śmieci"/>
+	<item id="11985" name="Tabletka z kwasem"/>
+	<item id="11986" name="Plecak Ditto">
+		<attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11988" name="Plecak Haunter">
+		<attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11989" name="Plecak Machamp">
+		<attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11990" name="Plecak Mr.mime">
+		<attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11991" name="Plecak Pidgeot">
+	    <attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11987" name="Plecak Scyther">
+	    <attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11992" name="Plecak Pikachu">
+	    <attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11993" name="Plecak Snorlax">
+		<attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11994" name="Plecak Dragonite">
+		<attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11995" name="Plecak Arbok">
+		<attribute key="containerSize" value="20"/>
+	</item>
+	<item id="11996" name="Plecak Charizard"/>
+	<item id="11997" name="Kamienna ściana"/>
+	<item id="11998" name="Akwarium"/>
+	<item id="11999" name="Wir wodny"/>
+	<item id="12022" article="a" name="mountain"/>
+	<item id="12023" name="Półka sklepowa"/>
+	<item id="12024" article="a" name="throne"/>
+	<item id="12028" article="a" name="doll">
+				<attribute key="weight" value="650"/>
+	</item>
+	<item id="12029" name="Koń na biegunach"/>
+	<item id="12030" name="Śmieci">
+				<attribute key="weight" value="50" />
+	</item>
+	<item id="12031" name="Śmieci">
+		<attribute key="weight" value="10" />
+	</item>
+	<item id="12032" name="Zgniły ziemniak"/>
+	<item id="12033" name="Widelec"/>
+	<item id="12034" name="Kamienny filar" />
+	<item id="12035" />
+	<item id="12038" article="a" name="sign"/>
+	<item id="12040" name="Duży szary telewizor">
+		<attribute key="weight" value="500"/>
+	</item>
+	<item id="12041" name="Zaawansowany komputer"/>
+	<item id="12042" name="Czarny telewizor"/>
+    <item id="12045" article="a" name="public television">
+		<attribute key="description" value="You can watch some channels for free." />
+	</item>
+	<item id="12048" article="a" name="wall lamp"/>
+	<item id="12049" article="a" name="cubone's monument"/>
+	<item fromid="12053" toid="12056" name="Agregat"/>
+	<item id="12057" name="Lampa"/>
+	<item id="12062" article="a" name="playstation 2">
+		<attribute key="rotateTo" value="11456" />
+	</item>
+	<item id="12063" article="a" name="playstation 2">
+		<attribute key="rotateTo" value="11455" />
+	</item>
+	<item id="12064" article="a" name="game cube">
+		<attribute key="rotateTo" value="11460" />
+	</item>
+	<item id="12065" name="Game Boy"/>
+	<item id="12066" name="Komputer">
+		<attribute key="rotateTo" value="12067"/>
+	</item>
+	<item id="12067" name="Komputer">
+		<attribute key="rotateTo" value="12066"/>
+	</item>
+	<item id="12068" article="a" name="desktop">
+		<attribute key="rotateTo" value="11465"/>
+	</item>
+	<item id="12069" article="a" name="desktop">
+		<attribute key="rotateTo" value="11464"/>
+	</item>
+	<item id="12070" article="a" name="black desktop">
+		<attribute key="rotateTo" value="11467"/>
+	</item>
+	<item id="12071" article="a" name="black desktop">
+		<attribute key="rotateTo" value="11466"/>
+	</item>
+	<item id="12072" article="a" name="notebook">
+		<attribute key="rotateTo" value="11469"/>
+	</item>
+	<item id="12073" article="a" name="notebook">
+		<attribute key="rotateTo" value="11468"/>
+	</item>
+	<item id="12074" article="a" name="round chair"/>
+	<item id="12077" article="a" name="big stone table"/>
+	<item id="12079" name="Niebieski blat"/>
+	<item id="12080" name="Drewniany blat"/>
+	<item id="12081" article="a" name="red table"/>
+	<item id="12082" article="a" name="purple table"/>
+	<item id="12083" article="a" name="stone table"/>
+	<item id="12084" article="a" name="wooden table"/>
+	<item id="12085" article="a" name="white refrigerator">
+		<attribute key="rotateTo" value="11484"/>
+	</item>
+	<item id="12086" article="a" name="white freezer">
+		<attribute key="rotateTo" value="11486"/>
+	</item>
+	<item id="12087" article="a" name="black freezer">
+		<attribute key="rotateTo" value="11489"/>
+	</item>
+	<item id="12088" article="a" name="black freezer">
+		<attribute key="rotateTo" value="11488"/>
+	</item>
+	<item id="12089" name="Czarne krzesło">
+		<attribute key="rotateTo" value="11491"/>
+	</item>
+	<item id="12090" name="Czarne krzesło">
+		<attribute key="rotateTo" value="11490"/>
+	</item>
+	<item id="12091" name="Czarne krzesło">
+		<attribute key="rotateTo" value="11497"/>
+	</item>
+	<item id="12092" name="Czarne krzesło">
+		<attribute key="rotateTo" value="11494"/>
+	</item>
+	<item id="12093" name="Czarne krzesło">
+		<attribute key="rotateTo" value="11495"/>
+	</item>
+	<item id="12094" name="Czerwone krzesło">
+		<attribute key="rotateTo" value="11501"/>
+	</item>
+	<item id="12095" name="Czerwone krzesło">
+		<attribute key="rotateTo" value="11498"/>
+	</item>
+	<item id="12096" name="Komoda z mieczami"/>
+	<item id="12097" article="a" name="sale shelf">
+		<attribute key="containerSize" value="10" />
+	</item>
+	<item id="12098" article="a" name="pokemart sign"/>
+	<item id="12099" name="Centrum pokemon"/>
+	<item id="12100" article="an" name="offer poster"/>
+	<item id="12101" article="a" name="max food shop sign"/>
+	<item id="12102" article="a" name="eletronics shop sign"/>
+	<item id="12103" article="a" name="shopping center sign"/>
+	<item id="12104" name="Kasa"/>
+	<item id="12105" name="Japoński gobelin">
+		<attribute key="forceSerialize" value="1"/>
+	</item>
+	<item id="12106" name="Japoński gobelin"/>
+	<item id="12107" article="a" name="pizza place sign"/>
+	<item id="12108" article="a" name="toys store sign"/>
+	<item id="12109" article="a" name="megalithic monument"/>
+	<item id="12111" name="Wysoka pochodnia"/>
+	<item id="12112" name="Statua Dragonite"/>
+	<item id="12114" name="Statua Gengar"/>
+	<item id="12117" name="Statua Machamp"/>
+	<item id="12118" name="Statua Gengar"/>
+	<item id="12119" name="Statua Alakazam"/>
+	<item id="12121" name="Statua Chansey"/>
+	<item id="12122" name="Tablica"/>
+	<item id="12123" name="Podłoga"/>
+	<item id="12124" name="sidewalk pavement" />
+	<item fromid="12126" toid="12128" name="Podłoga"/>
+	<item id="12129" name="sidewalk pavement"/>
+	<item id="12140" name="asphalt" />
+	<item id="12141" name="Podłoga"/>
+	<item id="12142" article="a" name="stone pokebench"/>
+    <item fromid="12168" toid="12177" name="Biała linia"/>
+	<item fromid="12178" toid="12183" name="Pokeball"/>
+	<item fromid="12184" toid="12187" name="Ceglana balustrada"/>
+	<item fromid="12188" toid="12196" name="Biała kamienna ściana"/>
+	<item fromid="12197" toid="12199" name="Brama"/>
+	<item id="12200" name="Zamknięte drzwi">
+		<attribute key="type" value="door"/>
+		<attribute key="blockprojectile" value="1"/>
+		<attribute key="description" value="It is locked."/>
+	</item>
+	<item id="12201" name="Zamknięte drzwi">
+		<attribute key="type" value="door"/>
+		<attribute key="blockprojectile" value="1"/>
+	</item>
+	<item id="12202" name="Zamknięte drzwi">
+		<attribute key="type" value="door" />
+		<attribute key="blockprojectile" value="1"/>
+		<attribute key="description" value="It is locked."/>
+	</item>
+	<item id="12203" name="Zamknięte drzwi">
+		<attribute key="type" value="door"/>
+		<attribute key="blockprojectile" value="1"/>
+	</item>
+	<item id="12204" name="Drewniane krzesło">
+		<attribute key="rotateTo" value="12205"/>
+	</item>
+	<item id="12205" name="Drewniane krzesło">
+		<attribute key="rotateTo" value="12204"/>
+	</item>
+	<item id="12206" name="Drewniane krzesło">
+		<attribute key="rotateTo" value="12205"/>
+	</item>
+	<item id="12207" name="Drewniane krzesło">
+		<attribute key="rotateTo" value="12206"/>
+	</item>
+	<item id="12208" name="Schody">
+		<attribute key="floorchange" value="north"/>
+	</item>
+	<item id="12209" article="a" name="marble wall window">
+		<attribute key="type" value="door"/>
+		<attribute key="blockprojectile" value="1"/>
+	</item>
+	<item id="12211" name="Schody">
+		<attribute key="floorchange" value="west"/>
+	</item>
+	<item id="12212" article="a" name="white stone railing"/>
+	<item id="12221" article="an" name="archway"/>
+	<item id="12222" article="a" name="Olbrzym pancerz żółwia" plural="Olbrzymie pancerze żółwi">
+		 <attribute key="description" value="Wielki żółw używa tego do ochrony." />
+	</item>
+    <item id="12228" name="Podłoga"/>
+	<item id="12223" article="a" name="grid wall"/>
+	<item fromid="12229" toid="12230" name="Podłoga"/>
+	<item id="12231" name="Dekoracja"/>
+	<item id="12232" name="PvP"/>
+	<item fromid="12283" toid="12285" name="Podłoga"/>
+	<item id="12286" name="Pokeball"/>
+	<item fromid="12287" toid="12289" name="Czerwony blat"/>
+	<item id="12290" name="Aparatura medyczna"/>
+	<item fromid="12291" toid="12294" name="Biała kamienna ściana"/>
+	<item id="12295" name="Podświetlana kolumna"/>
+	<item id="20001" name="Wodą" plural="Wody"/>
+	<item id="20002" name="Krwią" plural="Krwi"/>
+	<item id="20003" name="Piwem" plural="Piwa"/>
+	<item id="20004" name="Trucizną" plural="Trucizny"/>
+	<item id="20005" name="Lemoniadą" plural="Lemoniady"/>
+	<item id="20006" name="Mlekiem" plural="Mleka"/>
+	<item id="20007" name="Misturą many" plural="Mikstury many"/>
+	<item id="20010" name="Miksturą życia" plural="Mikstury życia"/>
+	<item id="20011" name="Olejem" plural="Oleju"/>
+	<item id="20014" name="Mleczkiem kokosowym" plural="Mleczka kokosowego"/>
+	<item id="20015" name="Winem" plural="Wina"/>
+	<item id="20019" name="Błotem" plural="Błota"/>
+	<item id="20021" name="Sokiem owocowym" plural="Soku owocowego"/>
+	<item id="20026" name="Lawą" plural="Lawy"/>
+	<item id="20027" name="Rumem" plural="Rumu"/>
+	<item id="20028" name="Błotem" plural="Błota"/>
+	<item id="20035" name="Herbatą" plural="Herbaty"/>
+	<item id="9915" name="Magiczny kamien"/>
+    <item fromid="12296" toid="12297" name="Gebelin"/>
+	<item id="12298" name="Pokeball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12299" name="Używany pokeball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="2223"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12300" name="Zużyty pokeball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12301" name="Ultra ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12302" name="Używany ultra ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="2221"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12303" name="Zużyty ultra ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12304" name="Great ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12305" name="Używany great ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="2652"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12306" name="Zużyty great ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12307" name="Super ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12308" name="Używany super ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="2654"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12309" name="Zużyty super ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12310" name="Saffari ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12311" name="Używany saffari ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="2656"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12312" name="Zużyty saffari ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12313" name="Ciemny ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12314" name="Używany ciemny ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="11619"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12315" name="Zużyty ciemny ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12316" name="Love ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12317" name="Używany love ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="11622"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12318" name="Zużyty love ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12319" name="Złoty ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12320" name="Używany złoty ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="11625"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12321" name="Zużyty złoty ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12322" name="Frozen ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12323" name="Używany frozen ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="11628"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12324" name="Zużyty frozen ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12325" name="Czarny kamienny blat">
+		<attribute key="rotateTo" value="12325"/>
+	</item>
+	<item id="12326" name="Czerwony kamienny blat">
+		<attribute key="rotateTo" value="12326"/>
+	</item>
+	<item id="12327" name="Ciemna materia" plural="Ciemne materie" pluralfive="Ciemnych materii">
+		<attribute key="description" value="Niektóre pokemony ciemności są nią przesycone."/>
+	</item>
+	<item id="12329" name="Biały kamienny płot"/>
+	<item id="12330" name="Gałąź">
+		<attribute key="description" value="Nadaje się do naprawy sań mikołaja."/>
+	</item>
+	<item fromid="12331" toid="12333" name="Sanie">
+		<attribute key="description" value="Podobno mikołaj się nimi rozbił."/>
+	</item>
+	<item id="12334" name="Rozbity balon">
+		<attribute key="description" value="Ma na powłoce oznaczenia Zespołu R."/>
+	</item>
+	<item id="12335" name="Prezent" plural="Prezenty" pluralfive="Prezentów">
+		<attribute key="description" value="Takie zostały zgubione przez mikołaja."/>
+	</item>
+	<item id="12336" name="Miejsce na zarzucenie liny">
+		<attribute key="description" value="W suficie widać niewielką dziurę."/>
+	</item>
+	<item id="12337" name="Plecak Sandslash">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12338" name="Plecak Vaporeon">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12339" name="Plecak Jolteon">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12340" name="Plecak Chikorita">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12341" name="Plecak Scizor">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12342" name="Plecak Dewgong">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12343" name="Plecak Victreebel">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12344" name="Plecak Flareon">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12345" name="Plecak Mew">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12346" name="Plecak Mewtwo">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12347" name="Plecak Aerodactyl">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12348" name="Plecak Golduck">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12349" name="Plecak Eevee">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12350" name="Plecak Wartortle">
+		<attribute key="containerSize" value="30"/>
+	</item>
+	<item id="12351" name="Gis ball" plural="Gis balle" pluralfive="Gis balli">
+		<attribute key="pokeball" value="empty"/>
+	</item>
+	<item id="12352" name="Gis ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12353" name="Używany gis ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+	</item>
+	<item id="12354" name="Zużyty gis ball">
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12355" name="Gis ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="poke"/>
+	</item>
+	<item id="12356" name="Używany gis ball">
+		<attribute key="showduration" value="1"/>
+		<attribute key="decayTo" value="11628"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="used"/>
+		<attribute key="duration" value="18000"/>
+	</item>
+	<item id="12357" name="Zużyty gis ball">
+		<attribute key="stopduration" value="1"/>
+		<attribute key="showduration" value="1"/>
+		<attribute key="weight" value="1"/>
+		<attribute key="slotType" value="Feet"/>
+		<attribute key="pokeball" value="discharged"/>
+	</item>
+	<item id="12358" name="Ciemny kryształ"/>
+	<item fromid="12359" toid="12790" name="Starożytny krąg"/>
+	<item id="12791" name="Album"/>
+	<item id="12792" name="Odwrót karty"/>
+	<item fromid="12793" toid="12795" name="Starożytny krąg"/>
+	<item id="12796" name="Choinka"/>
+	<item id="12797" name="Karta Mew">
+	    <attribute key="description" value="Legendarna karta kolekcjonerska"/>
+	</item>
+	<item id="12798" name="Karta Mewtwo">
+		    <attribute key="description" value="Legendarna karta kolekcjonerska"/>
+	</item>
+	<item id="12799" name="Statua Articuno"/>
+	<item id="12800" name="Statua Moltres"/>
+	<item id="12801" name="Statua Zapdos"/>
+	<item id="12802" name="Świąteczna ozdoba"/>
+	<item id="12803" name="Kula Articuno">
+	    <attribute key="description" value="Legendarna kula z przepowiedni"/>
+	</item>
+	<item id="12804" name="Kula Moltres">
+	    <attribute key="description" value="Legendarna kula z przepowiedni"/>
+	</item>
+	<item id="12805" name="Kula Zapdos">
+	    <attribute key="description" value="Legendarna kula z przepowiedni"/>
+	</item>
+		<item id="12806" name="Kamień"/>
+	<item id="12813" name="Karta Ninetales">
+		<attribute key="description" value="Bardzo rzadka karta kolekcjonerska"/>
+	</item>
+	<item id="12820" name="Playstation 3">
+		<attribute key="description" value="Możesz to rozpakować na podłodze swojego domku."/>
+	</item>
+	<item fromid="12855" toid="12861" name="Lada"/>
+	<item id="12862" name="Klawiatura"/>
+	<item fromid="12865" toid="12868" name="Maszyna do leczenia PokeBalli"/>
+	<item id="12960" name="Narzędzia"/>
+	<item fromid="12970" toid="12974" name="Kanapa"/>
+	<item fromid="12875" toid="12959" name="Podłoga"/>
+	<item fromid="12978" toid="12985" name="Podłoga"/>
+	<item id="12986" name="Stolik"/>
+	<item id="12987" name="Stołek"/>
+	<item fromid="13003" toid="13005" name="Lada"/>
+	<item fromid="13017" toid="13038" name="Dach"/>
+	<item id="13039" name="Terminal"/>
+	<item fromid="13040" toid="13045" name="Wystawa"/>
+	<item fromid="13046" toid="13050" name="Kwiat"/>
+	<item id="13051" name="Doniczka"/>
+	<item id="13060" name="Półka"/>
+	<item fromid="13071" toid="13072" name="Komputer"/>
+	<item id="13076" name="Półka"/>
+	<item id="13177" name="Śmietnik"/>
+	<item fromid="13079" toid="13174" name="Podłoga"/>
+	<item fromid="13305" toid="13314" name="Podłoga"/>
+	<item fromid="13315" toid="13320" name="Ściana"/>
+	<item fromid="13321" toid="13324" name="Okno"/>
+	<item fromid="13325" toid="13328" name="Ściana"/>
+	<item fromid="13329" toid="13332" name="Okno"/>
+	<item fromid="13333" toid="13336" name="Ściana"/>
+	<item fromid="13337" toid="13340" name="Okno"/>
+	<item fromid="13341" toid="13344" name="Ściana"/>
+	<item fromid="13345" toid="13348" name="Murek"/>
+	<item fromid="13380" toid="13383" name="Drzwi"/>
+	<item id="13385" name="Schody"/>
+	<item id="13386" name="Posąg Gyaradosa"/>
+	<item id="13387" name="Strumień wody"/>
+	<item id="13389" name="Schody"/>
+	<item fromid="13390" toid="13393" name="Drzwi"/>
+	<item fromid="13394" toid="13397" name="Lampa"/>
+	<item fromid="13483" toid="13495" name="Ściana"/>
+	<item fromid="13398" toid="13409" name="Łuk"/>
+	<item fromid="13410" toid="13413" name="Ławka"/>
+	<item id="13590" name="Medal VIP">
+		<attribute key="description" value="Po użyciu dodaje 7 dni VIP do twojego konta!"/>
+	</item>
+	<item fromid="13606" toid="13607" name="Ławka"/>
+	<item id="13610" name="Tablica"/>
+	<item id="13611" name="Kamień"/>
+	<item fromid="13612" toid="13613" name="Obraz"/>
+	<item id="13614" name="Tablica"/>
+	<item id="13615" name="Lampa"/>
+	<item fromid="13616" toid="13621" name="Krzew"/>
+	<item fromid="13622" toid="13623" name="Kamienna rzeźba"/>
+	<item id="13624" name="Drewniana szafka"/>
+	<item fromid="13625" toid="13626" name="Drewniany zegar"/>
+	<item fromid="13627" toid="13628" name="Drewniana szafka"/>
+	<item fromid="13629" toid="13632" name="Drewniana szafa"/>
+	<item fromid="13633" toid="13634" name="Drewniana szafka"/>
+	<item fromid="13635" toid="13637" name="Zdobione krzesło"/>
+	<item fromid="13638" toid="13641" name="Drewniane krzesło"/>
+	<item id="13642" name="Kwiat"/>
+	<item fromid="13643" toid="13646" name="Zdobiony stół"/>
+	<item id="13648" name="Kandelabr"/>
+	<item id="13649" name="Blat"/>
+	<item id="13650" name="Telewizor"/>
+	<item id="13651" name="Stolik"/>
+	<item fromid="13652" toid="13653" name="Koń na biegunach">
+		<attribute key="description" value="Wygląda jak Ponyta."/>
+	</item>
+	<item id="13671" name="Drewniana szafa"/>
+	<item fromid="13676" toid="13677" name="Akwarium"/>
+	<item id="13680" name="Pomarańcze">
+		<attribute key="description" value="Masz, poczęstuj się."/>
+	</item>
+	<item fromid="13682" toid="13690" name="Złoto"/>
+	<item id="13691" name="Zdobiony stolik"/>
+	<item fromid="13692" toid="13700" name="Złoto"/>
+	<item id="13703" name="Zdobiony stolik"/>
+	<item fromid="13706" toid="13707" name="Zdobiony stolik"/>
+	<item id="13712" name="Paproć"/>
+	<item fromid="13796" toid="13802" name="Jedzenie"/>
+	<item id="13803" name="Kontener na śmieci"/>
+	<item id="13804" name="Koszyk"/>
+	<item fromid="13805" toid="13812" name="Kwiat"/>
+	<item fromid="13813" toid="13821" name="Kryształ"/>
+	<item id="14111" name="Reklama"/>
+	<item fromid="14116" toid="14123" name="Pudło"/>
+	<item fromid="14124" toid="14133" name="Paleta"/>
+	<item fromid="14134" toid="14135" name="Pudło"/>
+	<item fromid="14144" toid="14147" name="Skrzynia"/>
+	<item fromid="14148" toid="14150" name="Kamienie"/>
+	<item fromid="14151" toid="14153" name="Drzewo"/>
+	<item id="14154" name="Kryształowa kolumna"/>
+	<item id="14155" name="Sople lodu"/>
+	<item fromid="14156" toid="14157" name="Drzewo"/>
+	<item id="14158" name="Korzenie"/>
+	<item id="14159" name="Drzewo"/>
+	<item fromid="14160" toid="14164" name="Kamienie"/>
+	<item fromid="14167" toid="14181" name="Liście"/>
+	<item id="14182" name="Nagła Śmierć">
+		<attribute key="description" value="Magiczny przedmiot stworzony przez Ducha Bohatera."/>
+	</item>
+	<item id="14183" name="Destruktywna Nagła Śmierć">
+		<attribute key="description" value="Magiczny przedmiot stworzony przez Ducha Bohatera. Posiada nałożoną Klątwę Klanu Gengarów i zabezpieczenie energii."/>
+	</item>
+	<item id="14184" name="Operowany snorlax">
+		<attribute key="containerSize" value="6"/>
+	</item>
+	<item id="14185" name="Liście"/>
+
+	<item id="14747" name="Lalka Mew">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14748" name="Lalka Mewtwo">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14749" name="Lalka Dragonite">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14750" name="Lalka Dragonair">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14751" name="Lalka Dratini">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14752" name="Lalka Moltres">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14753" name="Lalka Zapdos">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14754" name="Lalka Articuno">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14755" name="Lalka Snorlax">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14756" name="Lalka Aerodactyl">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14757" name="Lalka Kabutops">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14758" name="Lalka Kabuto">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14759" name="Lalka Omastar">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14760" name="Lalka Omanyte">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14761" name="Lalka Porygon">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14762" name="Lalka Flareon">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14763" name="Lalka Jolteon">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14764" name="Lalka Vaporeon">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14765" name="Lalka Eevee">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14766" name="Lalka Ditto">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14767" name="Lalka Lapras">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14768" name="Lalka Gyarados">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14769" name="Lalka Magikarp">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14770" name="Lalka Tauros">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14771" name="Lalka Pinsir">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14772" name="Lalka Magmar">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14773" name="Lalka Electabuzz">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14774" name="Lalka Jynx">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14775" name="Lalka Scyther">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14776" name="Lalka Mr.Mime">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14777" name="Lalka Starmie">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14778" name="Lalka Staryu">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14779" name="Lalka Seaking">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14780" name="Lalka Goldeen">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14781" name="Lalka Seadra">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14782" name="Lalka Horsea">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14783" name="Lalka Kangaskhan">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14784" name="Lalka Tangela">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14785" name="Lalka Chansey">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14786" name="Lalka Rhydon">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14787" name="Lalka Rhyhorn">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14788" name="Lalka Weezing">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14789" name="Lalka Koffing">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14790" name="Lalka Lickitung">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14791" name="Lalka Hitmonlee">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14792" name="Lalka Hitmonchan">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14793" name="Lalka Marowak">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14794" name="Lalka Cubone">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14795" name="Lalka Exeggutor">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14796" name="Lalka Exeggcute">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14797" name="Lalka Electrode">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14798" name="Lalka Voltorb">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14799" name="Lalka Kingler">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14800" name="Lalka Krabby">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14801" name="Lalka Hypno">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14802" name="Lalka Drowzee">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14803" name="Lalka Onix">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14804" name="Lalka Gengar">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14805" name="Lalka Haunter">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14806" name="Lalka Gastly">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14807" name="Lalka Cloyster">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14808" name="Lalka Shellder">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14809" name="Lalka Muk">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14810" name="Lalka Grimer">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14811" name="Lalka Dewgong">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14812" name="Lalka Seel">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14813" name="Lalka Dugtrio">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14814" name="Lalka Doduo">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14815" name="Lalka Farfetchd">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14816" name="Lalka Magneton">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14817" name="Lalka Magnemite">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14818" name="Lalka Slowbro">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14819" name="Lalka Slowpoke">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14820" name="Lalka Rapidash">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14821" name="Lalka Ponyta">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14822" name="Lalka Golem">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14823" name="Lalka Graveler">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14824" name="Lalka Geodude">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14825" name="Lalka Tentacruel">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14826" name="Lalka Tentacool">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14827" name="Lalka Victreebel">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14828" name="Lalka Weepinbell">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14829" name="Lalka Bellsprout">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14830" name="Lalka Machamp">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14831" name="Lalka Machoke">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14832" name="Lalka Machop">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14833" name="Lalka Alakazam">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14834" name="Lalka Kadabra">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14835" name="Lalka Abra">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14836" name="Lalka Poliwrath">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14837" name="Lalka Poliwhirl">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14838" name="Lalka Poliwag">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14839" name="Lalka Arcanine">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14840" name="Lalka Growlithe">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14841" name="Lalka Primeape">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14842" name="Lalka Mankey">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14843" name="Lalka Golduck">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14844" name="Lalka Psyduck">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14845" name="Lalka Persian">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14846" name="Lalka Meowth">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14847" name="Lalka Dugtrio">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14848" name="Lalka Diglett">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14849" name="Lalka Venomoth">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14850" name="Lalka Venonat">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14851" name="Lalka Parasect">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14852" name="Lalka Paras">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14853" name="Lalka Vileplume">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14854" name="Lalka Gloom">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14855" name="Lalka Oddish">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14856" name="Lalka Golbat">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14857" name="Lalka Zubat">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14858" name="Lalka Wigglytuff">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14859" name="Lalka Jigglypuff">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14860" name="Lalka Ninetales">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14861" name="Lalka Vulpix">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14862" name="Lalka Clefable">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14863" name="Lalka Clefairy">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14864" name="Lalka Nidoking">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14865" name="Lalka Nidorino">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14866" name="Lalka Nidoran Male">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14867" name="Lalka Nidoqueen">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14868" name="Lalka Nidorina">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14869" name="Lalka Nidoran Female">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14870" name="Lalka Sandslash">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14871" name="Lalka Sandshrew">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14872" name="Lalka Raichu">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14873" name="Lalka Pikachu">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14874" name="Lalka Arbok">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14875" name="Lalka Ekans">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14876" name="Lalka Fearow">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14877" name="Lalka Spearow">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14878" name="Lalka Raticate">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14879" name="Lalka Rattata">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14880" name="Lalka Pidgeot">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14881" name="Lalka Pidgeotto">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14882" name="Lalka Pidgey">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14883" name="Lalka Beedrill">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14884" name="Lalka Kakuna">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14885" name="Lalka Weedle">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14886" name="Lalka Butterfree">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14887" name="Lalka Metapod">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14888" name="Lalka Caterpie">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14889" name="Lalka Blastoise">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14890" name="Lalka Wartortle">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14891" name="Lalka Squirtle">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14892" name="Lalka Charizard">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14893" name="Lalka Charmeleon">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14894" name="Lalka Charmander">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14895" name="Lalka Venusaur">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14896" name="Lalka Ivysaur">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item id="14897" name="Lalka Bulbasaur">
+		<attribute key="description" value="Wysokiej jakości lalka pokemon. Wykonana z doskonałego materiału."/>
+	</item>
+	<item fromid="14898" toid="14901" name="Dywan Ursaring"/>
+	<item id="14902" name="Śpiący eevee">
+		<attribute key="containerSize" value="4"/>
+	</item>
+	<item id="14903" name="Płetwy"/>
+	<item id="14904" name="Maska do nurkowania"/>
+	<item id="14905" name="Butla tlenowa"/>
+	<item id="14906" name="Skarb Geodude"/>
+	<item fromid="14907" toid="14911" name="Krzak jagód"/>
+	<item id="14912" name="Jagoda brzoskwiniowa" plural="Jagody brzoskwiniowe" pluralfive="Jagód brzoskwiniowych">
+		<attribute key="description" value="Już po zdjęciu skórki."/>
+	</item>
+	<item id="14913" name="Jagoda ananasowa" plural="Jagody ananasowe" pluralfive="Jagód ananasowych">
+		<attribute key="description" value="Już po obraniu."/>
+	</item>
+	<item id="14914" name="Jagoda tenisowa" plural="Jagody tenisowe" pluralfive="Jagód tenisowych"/>
+	<item id="14915" name="Jagoda wiśniowa" plural="Jagody wiśniowe" pluralfive="Jagód wiśniowych"/>
+	<item id="14916" name="Jagoda z Bikini Dolnego" plural="Jagody z Bikini Dolnego" pluralfive="Jagód z Bikini Dolnego"/>
+	<item id="14917" name="Sok leczniczy" plural="Soki lecznicze" pluralfive="Soków leczniczych"/>
+	<item id="14918" name="Plecak Garchomp">
+		<attribute key="containerSize" value="20"/>
+		<attribute key="slotType" value="Backpack"/>
+	</item>
+	<item id="14919" name="Smoczy ząb" plural="Smocze zęby" pluralfive="Smoczych zębów"/>
+	<item id="14920" name="Smoczy szpon" plural="Smocze szpony" pluralfive="Smoczych szponów"/>
+	<item id="14921" name="Smocza łuska" plural="Smocze łuski" pluralfive="Smoczych łusek"/>
+	<item id="14922" name="Tort z lukrem"/>
+	<item id="14923" name="Jagodowy tort"/>
+	<item id="14924" name="Strzała Amora" plural="Strzały Amora" pluralfive="Strzał Amora"/>
+	<item id="14925" name="Lalka Teddiursa"/>
+	<item id="14926" name="Lalka Cubchoo"/>
+	<item id="14927" name="Lalka Flareon"/>
+	<item id="14928" name="Lalka Jolteon"/>
+	<item id="14929" name="Lalka Espeon"/>
+	<item id="14930" name="Walentynkowy koszyk"/>
+	<item id="14931" name="Lalka Sylveon"/>
+	<item id="14932" name="Karta walentynkowa">
+		<attribute key="writeable" value="1"/>
+		<attribute key="maxTextLen" value="512"/>
+	</item>
+	<item id="14933" name="Biały kwiat" plural="Białe kwiaty" pluralfive="Białych kwiatów"/>
+	<item id="14934" name="Niebieski kwiat" plural="Niebieskie kwiaty" pluralfive="Niebieskich kwiatów"/>
+	<item id="14935" name="Fioletowy kwiat" plural="Fioletowe kwiaty" pluralfive="Fioletowych kwiatów"/>
+	<item id="14936" name="Zielony kwiat" plural="Zielone kwiaty" pluralfive="Zielonych kwiatów"/>
+	<item id="14937" name="Żółty kwiat" plural="Żółte kwiaty" pluralfive="Żółtych kwiatów"/>
+	<item id="14938" name="Magnolia" plural="Magnolie" pluralfive="Magnolii"/>
+	<item id="14939" name="Róża" plural="Róże" pluralfive="Róż"/>
+	<item id="14940" name="Fiołek" plural="Fiołki" pluralfive="Fiołków"/>
+	<item id="14941" name="Walentynkowy gobelin"/>
+	<item id="14942" name="Walentynkowa pieczeń"/>
+	<item id="14943" name="Serce" plural="Serca" pluralfive="Serc"/>
+	<item id="14944" name="Walentynkowy plecak">
+		<attribute key="containerSize" value="15"/>
+		<attribute key="slotType" value="Backpack"/>
+	</item>
+	<item id="14945" name="Znak"/>
+	<item id="14946" name="Podłoga">
+		<attribute key="description" value="Po użyciu w domku zmieni się podłoga we wszystkich pomieszczeniach, do których drzwi są otwarte."/>
 	</item>
 	<item id="20001" name="water"/>
 	<item id="20002" name="blood"/>

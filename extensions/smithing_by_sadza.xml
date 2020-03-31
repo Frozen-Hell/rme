@@ -1,4 +1,4 @@
-<materialsextension name="Smithing" author="SADZA" description="This adds Smithing sprites from 8.20" client="8.20">	
+<materialsextension name="Smithing" author="SADZA" description="This adds Smithing sprites from 8.20" client="8.54;8.20">	
 
 	<brush name="gutter" type="wall" server_lookid="8661">
 		<wall type="pole">               <item id="8661" chance="1"/> </wall>

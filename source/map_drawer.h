@@ -47,6 +47,7 @@ struct DrawingOptions {
 	bool show_only_colors;
 	bool show_only_modified;
 	bool show_preview;
+	bool show_underground;
 	bool hide_items_when_zoomed;
 };
 
@@ -130,6 +131,8 @@ protected:
 	void glColor(wxColor color);
 	void glColor(BrushColor color);
 	void glColorCheck(Brush* brush, const Position& pos);
+
+	inline int getFloorAdjustment(int floor);
 };
 
 

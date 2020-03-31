@@ -26,7 +26,7 @@
 #include "editor.h"
 
 MapWindow::MapWindow(wxWindow* parent, Editor& editor) :
-	wxPanel(parent, PANE_MAIN),
+	wxPanel(parent, PANE_MAIN, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER |  wxWANTS_CHARS),
 	editor(editor)
 {
 	int GL_settings[3];

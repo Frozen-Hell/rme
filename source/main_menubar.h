@@ -78,6 +78,7 @@ namespace MenuBar
 		EDIT_ITEMS,
 		EDIT_MONSTERS,
 		MAP_CLEANUP,
+		MAP_WATER_CLEANUP,
 		MAP_REMOVE_ITEMS,
 		MAP_REMOVE_CORPSES,
 		MAP_REMOVE_UNREACHABLE_TILES,
@@ -106,6 +107,7 @@ namespace MenuBar
 		SHOW_PATHING,
 		SHOW_TOOLTIPS,
 		SHOW_PREVIEW,
+		SHOW_UNDERGROUND,
 		WIN_MINIMAP,
 		NEW_PALETTE,
 		TAKE_SCREENSHOT,
@@ -226,6 +228,7 @@ public:
 	void OnMapEditMonsters(wxCommandEvent& event);
 	void OnMapCleanHouseItems(wxCommandEvent& event);
 	void OnMapCleanup(wxCommandEvent& event);
+	void OnMapWaterCleanup(wxCommandEvent& event);
 	void OnMapProperties(wxCommandEvent& event);
 	void OnMapStatistics(wxCommandEvent& event);
 

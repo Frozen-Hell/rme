@@ -54,6 +54,7 @@ void DrawingOptions::SetDefault()
 	show_only_colors = false;
 	show_only_modified = false;
 	show_preview = false;
+	show_underground = false;
 	hide_items_when_zoomed = true;
 }
 
@@ -80,6 +81,7 @@ void DrawingOptions::SetIngame()
 	show_only_colors = false;
 	show_only_modified = false;
 	show_preview = false;
+	show_underground = false;
 	hide_items_when_zoomed = false;
 }
 
@@ -106,7 +108,9 @@ void MapDrawer::SetupVars()
 	floor = canvas->GetFloor();
 
 	if(options.show_all_floors) {
-		if(floor < 8)
+		if (options.show_underground)
+			start_z = MAP_MAX_LAYER;
+		else if(floor < 8)
 			start_z = GROUND_LAYER;
 		else
 			start_z = std::min(MAP_MAX_LAYER, floor + 2);
@@ -115,7 +119,7 @@ void MapDrawer::SetupVars()
 		start_z = floor;
 
 	end_z = floor;
-	superend_z = (floor > GROUND_LAYER ? 8 : 0);
+	superend_z = (floor > GROUND_LAYER && !options.show_underground ? 8 : 0);
 
 	start_x = view_scroll_x / TILE_SIZE;
 	start_y = view_scroll_y / TILE_SIZE;
@@ -196,12 +200,9 @@ void MapDrawer::DrawBackground()
 	//glEnable(GL_ALPHA_TEST);
 }
 
-inline int getFloorAdjustment(int floor)
+inline int MapDrawer::getFloorAdjustment(int floor)
 {
-	if(floor > GROUND_LAYER) // Underground
-		return 0; // No adjustment
-	else
-		return TILE_SIZE * (GROUND_LAYER - floor);
+	return TILE_SIZE * (GROUND_LAYER - floor);
 }
 
 void MapDrawer::DrawMap()
@@ -312,11 +313,7 @@ void MapDrawer::DrawMap()
 					Tile* tile = g_gui.secondary_map->getTile(pos);
 					if(tile) {
 						// Compensate for underground/overground
-						int offset;
-						if(map_z <= GROUND_LAYER)
-							offset = (GROUND_LAYER - map_z) * TILE_SIZE;
-						else
-							offset = TILE_SIZE * (floor - map_z);
+						int offset = (GROUND_LAYER - map_z) * TILE_SIZE;
 
 						int draw_x = ((map_x * TILE_SIZE) - view_scroll_x) - offset;
 						int draw_y = ((map_y * TILE_SIZE) - view_scroll_y) - offset;
@@ -349,7 +346,15 @@ void MapDrawer::DrawMap()
 							if(options.show_special_tiles && tile->getMapFlags() & TILESTATE_NOPVP) {
 								g /= 2;
 							}
-							BlitItem(draw_x, draw_y, tile, tile->ground, true, r, g, b, 160);
+							if(options.show_special_tiles && tile->getMapFlags() & TILESTATE_NOLEGEND) {
+								g /= 2;
+								b /= 2;
+							}
+							if(options.show_special_tiles && tile->getMapFlags() & TILESTATE_NOBIKE) {
+								r = r/3*2;
+								g = g/3*2;
+							}
+							BlitItem(draw_x, draw_y, tile, tile->ground, true, r, g, b);
 						}
 
 						// Draw items on the tile
@@ -357,7 +362,7 @@ void MapDrawer::DrawMap()
 							ItemVector::iterator it;
 							for(it = tile->items.begin(); it != tile->items.end(); it++) {
 								if((*it)->isBorder()) {
-									BlitItem(draw_x, draw_y, tile, *it, true, 160, r, g, b);
+									BlitItem(draw_x, draw_y, tile, *it, true, r, g, b);
 								} else {
 									BlitItem(draw_x, draw_y, tile, *it, true, 160, 160, 160, 160);
 								}
@@ -502,7 +507,7 @@ void MapDrawer::DrawDraggingShadow()
 
 	// Draw dragging shadow
 	if(!editor.selection.isBusy() && dragging && !options.ingame) {
-		for(TileVector::iterator tit = editor.selection.begin(); tit != editor.selection.end(); tit++) {
+		for(TileSet::iterator tit = editor.selection.begin(); tit != editor.selection.end(); tit++) {
 			Tile* tile = *tit;
 			Position pos = tile->getPosition();
 
@@ -521,11 +526,7 @@ void MapDrawer::DrawDraggingShadow()
 
 			// On screen and dragging?
 			if(pos.x+2 > start_x && pos.x < end_x && pos.y+2 > start_y && pos.y < end_y && (move_x != 0 || move_y != 0 || move_z != 0)) {
-				int offset;
-				if(pos.z <= GROUND_LAYER)
-					offset = (GROUND_LAYER - pos.z) * TILE_SIZE;
-				else
-					offset = TILE_SIZE * (floor - pos.z);
+				int offset = (GROUND_LAYER - pos.z) * TILE_SIZE;
 
 				int draw_x = ((pos.x * TILE_SIZE) - view_scroll_x) - offset;
 				int draw_y = ((pos.y * TILE_SIZE) - view_scroll_y) - offset;
@@ -561,11 +562,7 @@ void MapDrawer::DrawHigherFloors()
 			for(int map_y = start_y; map_y <= end_y; map_y++) {
 				Tile* tile = editor.map.getTile(map_x, map_y, map_z);
 				if(tile) {
-					int offset;
-					if (map_z <= GROUND_LAYER)
-						offset = (GROUND_LAYER - map_z) * TILE_SIZE;
-					else
-						offset = TILE_SIZE*(floor - map_z);
+					int offset = (GROUND_LAYER - map_z) * TILE_SIZE;
 
 					int draw_x = ((map_x * TILE_SIZE) - view_scroll_x) - offset;
 					int draw_y = ((map_y * TILE_SIZE) - view_scroll_y) - offset;
@@ -663,11 +660,7 @@ void MapDrawer::DrawLiveCursors()
 			);
 		}
 
-		int offset;
-		if (cursor.pos.z <= GROUND_LAYER)
-			offset = (GROUND_LAYER - cursor.pos.z) * TILE_SIZE;
-		else
-			offset = TILE_SIZE * (floor - cursor.pos.z);
+		int offset = (GROUND_LAYER - cursor.pos.z) * TILE_SIZE;
 
 		float draw_x = ((cursor.pos.x * TILE_SIZE) - view_scroll_x) - offset;
 		float draw_y = ((cursor.pos.y * TILE_SIZE) - view_scroll_y) - offset;
@@ -1347,11 +1340,7 @@ void MapDrawer::DrawTile(TileLocation* location)
 
 	bool only_colors = options.show_only_colors;
 
-	int offset;
-	if (map_z <= GROUND_LAYER)
-		offset = (GROUND_LAYER - map_z) * TILE_SIZE;
-	else
-		offset = TILE_SIZE * (floor - map_z);
+	int offset = (GROUND_LAYER - map_z) * TILE_SIZE;
 
 	int draw_x = ((map_x * TILE_SIZE) - view_scroll_x) - offset;
 	int draw_y = ((map_y * TILE_SIZE) - view_scroll_y) - offset;
@@ -1407,6 +1396,16 @@ void MapDrawer::DrawTile(TileLocation* location)
 			g /= 2;
 		}
 
+		if(showspecial && tile->getMapFlags() & TILESTATE_NOLEGEND) {
+			g /= 2;
+			b /= 2;
+		}
+
+		if(showspecial && tile->getMapFlags() & TILESTATE_NOBIKE) {
+			r = r/3*2;
+			g = g/3*2;
+		}
+
 		if(only_colors) {
 			if(r != 255 || g != 255 || b != 255) {
 				glBlitSquare(draw_x, draw_y, r, g, b, 128);
@@ -1418,7 +1417,7 @@ void MapDrawer::DrawTile(TileLocation* location)
 			BlitItem(draw_x, draw_y, tile, tile->ground, false, r, g, b);
 		}
 
-		if(options.show_tooltips && map_z == floor)
+		if(options.show_tooltips && map_z == floor && tile->ground)
 			WriteTooltip(tile->ground, tooltip);
 	}
 

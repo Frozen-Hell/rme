@@ -194,6 +194,7 @@ void MapCanvas::OnPaint(wxPaintEvent& event)
 			options.show_only_colors = g_settings.getBoolean(Config::SHOW_ONLY_TILEFLAGS);
 			options.show_only_modified = g_settings.getBoolean(Config::SHOW_ONLY_MODIFIED_TILES);
 			options.show_preview = g_settings.getBoolean(Config::SHOW_PREVIEW);
+			options.show_underground = g_settings.getBoolean(Config::SHOW_UNDERGROUND);
 			options.hide_items_when_zoomed = g_settings.getBoolean(Config::HIDE_ITEMS_WHEN_ZOOMED);
 		}
 
@@ -315,10 +316,10 @@ void MapCanvas::ScreenToMap(int screen_x, int screen_y, int* map_x, int* map_y)
 		*map_y = int(start_y + (screen_y * zoom)) / TILE_SIZE;
 	}
 
-	if(floor <= GROUND_LAYER) {
+	// if(floor <= GROUND_LAYER) {
 		*map_x += GROUND_LAYER - floor;
 		*map_y += GROUND_LAYER - floor;
-	}/* else {
+	/*} else {
 		*map_x += MAP_MAX_LAYER - floor;
 		*map_y += MAP_MAX_LAYER - floor;
 	}*/
