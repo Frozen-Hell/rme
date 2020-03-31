@@ -20,6 +20,14 @@ data/user
 *.suo
 *.obj
 
+/bin/debug/*
+!/bin/debug/.gitkeep
+/bin/release/*
+!/bin/release/.gitkeep
+/obj/debug/*
+!/obj/debug/.gitkeep
+/obj/release/*
+!/obj/release/.gitkeep
 vcproj/ipch/
 vcproj/Beta Release/
 vcproj/Debug/
@@ -31,7 +39,11 @@ vcproj/Installer/Beta Release/
 vcproj/Installer/Debug/
 vcproj/Installer/Release/
 
-
 # Xcode
 xcuserdata
 .DS_STORE
+
+# Misc
+tags
+.ycm_extra_conf.pyc
+

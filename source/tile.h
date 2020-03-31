@@ -24,6 +24,7 @@
 #include "item.h"
 #include "map_region.h"
 
+class Audio;
 
 enum {
 	TILESTATE_NONE           = 0x0000,
@@ -46,12 +47,13 @@ enum {
 class Tile
 {
 public: // Members
-	TileLocation*  location;
-	Item*          ground;
-	ItemVector     items;
-	Creature*      creature;
-	Spawn*         spawn;
-	uint32_t house_id; // House id for this tile (pointer not safe)
+	TileLocation * location = nullptr;
+	Item * ground = nullptr;
+	ItemVector items;
+	Creature * creature = nullptr;
+	Spawn * spawn = nullptr;
+	Audio * audio = nullptr;
+	uint32_t house_id = 0; // House id for this tile (pointer not safe)
 
 public:
 	// ALWAYS use this constructor if the Tile is EVER going to be placed on a map

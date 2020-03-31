@@ -8,6 +8,9 @@
 #include <time.h>
 #include <wx/wfstream.h>
 
+#include "events.h"
+#include "mediator.h"
+
 #include "gui.h"
 #include "editor.h"
 #include "brush.h"
@@ -33,7 +36,7 @@
 #include "raw_brush.h"
 #include "carpet_brush.h"
 #include "table_brush.h"
-
+#include "audio_brush.h"
 
 BEGIN_EVENT_TABLE(MapCanvas, wxGLCanvas)
 	EVT_KEY_DOWN(MapCanvas::OnKeyDown)
@@ -75,6 +78,7 @@ BEGIN_EVENT_TABLE(MapCanvas, wxGLCanvas)
 	EVT_MENU(MAP_POPUP_MENU_SELECT_TABLE_BRUSH, MapCanvas::OnSelectTableBrush)
 	EVT_MENU(MAP_POPUP_MENU_SELECT_CREATURE_BRUSH, MapCanvas::OnSelectCreatureBrush)
 	EVT_MENU(MAP_POPUP_MENU_SELECT_SPAWN_BRUSH, MapCanvas::OnSelectSpawnBrush)
+	EVT_MENU(MAP_POPUP_MENU_SELECT_AUDIO, MapCanvas::OnSelectAudio)
 	EVT_MENU(MAP_POPUP_MENU_SELECT_HOUSE_BRUSH, MapCanvas::OnSelectHouseBrush)
 	// ----
 	EVT_MENU(MAP_POPUP_MENU_PROPERTIES, MapCanvas::OnProperties)
@@ -172,11 +176,14 @@ void MapCanvas::OnPaint(wxPaintEvent& event)
 			options.show_only_colors = settings.getInteger(Config::SHOW_ONLY_TILEFLAGS);
 			options.show_only_modified = settings.getInteger(Config::SHOW_ONLY_MODIFIED_TILES);
 			options.hide_items_when_zoomed = settings.getInteger(Config::HIDE_ITEMS_WHEN_ZOOMED);
+			
+			options.showAudioPointSources = settings.getInteger(Config::SHOW_AUDIO_POINT_SOURCES);
+			options.showAudioAreas = settings.getInteger(Config::SHOW_AUDIO_AREAS);
 		}
 
 		options.dragging = boundbox_selection;
 
-		MapDrawer drawer(options, this, pdc);
+		MapDrawer drawer(options, this, &pdc);
 
 		drawer.Draw();
 
@@ -233,7 +240,7 @@ void MapCanvas::TakeScreenshot(wxFileName path, wxString format)
 		date << wxT("-") << current_time->tm_min;
 		date << wxT("-") << current_time->tm_sec;
 		
-		int type = 0;
+		wxBitmapType type = wxBITMAP_TYPE_ANY;
 		path.SetName(date);
 		if(format == wxT("bmp"))
 		{
@@ -828,7 +835,9 @@ void MapCanvas::OnMouseActionClick(wxMouseEvent& event)
 				} else {
 					editor.draw(tilestodraw, tilestoborder, event.AltDown());
 				}
-			} else if(dynamic_cast<DoodadBrush*>(gui.GetCurrentBrush()) || dynamic_cast<SpawnBrush*>(gui.GetCurrentBrush()) || dynamic_cast<CreatureBrush*>(gui.GetCurrentBrush()))
+			} else if (dynamic_cast <DoodadBrush *> (gui.GetCurrentBrush()) || dynamic_cast <SpawnBrush *> (gui.GetCurrentBrush()) ||
+			           dynamic_cast <CreatureBrush *> (gui.GetCurrentBrush()) || dynamic_cast <AudioPointBrush *> (gui.GetCurrentBrush()) ||
+								 dynamic_cast <AudioAreaBrush *> (gui.GetCurrentBrush()))
 			{
 				if(event.ControlDown())
 				{
@@ -1346,15 +1355,29 @@ void MapCanvas::OnMousePropertiesClick(wxMouseEvent& event)
 		editor.selection.start(); // Start a selection session
 		editor.selection.clear();
 		editor.selection.commit();
-		if(tile->spawn && settings.getInteger(Config::SHOW_SPAWNS))
+		if (tile->spawn && settings.getInteger(Config::SHOW_SPAWNS))
 		{
 			editor.selection.add(tile, tile->spawn);
-		} else if(tile->creature && settings.getInteger(Config::SHOW_CREATURES))
+		}
+		else if (tile->creature && settings.getInteger(Config::SHOW_CREATURES))
 		{
 			editor.selection.add(tile, tile->creature);
-		} else {
-			Item* item = tile->getTopItem();
-			if(item)
+		}
+		else if (tile->audio)
+		{
+			if (tile->audio->getType() == Audio::TYPE_POINT && settings.getInteger(Config::SHOW_AUDIO_POINT_SOURCES))
+			{
+				editor.selection.add(tile, tile->audio);
+			}
+			else if (tile->audio->getType() == Audio::TYPE_AREA && settings.getInteger(Config::SHOW_AUDIO_AREAS))
+			{
+				editor.selection.add(tile, tile->audio);
+			}
+		}
+		else
+		{
+			Item * item = tile->getTopItem();
+			if (item)
 			{
 				editor.selection.add(tile, item);
 			}
@@ -2127,6 +2150,15 @@ void MapCanvas::OnSelectSpawnBrush(wxCommandEvent& WXUNUSED(event))
 	gui.SelectBrush(gui.spawn_brush, TILESET_CREATURE);
 }
 
+void MapCanvas::OnSelectAudio(wxCommandEvent & WXUNUSED(event))
+{
+	if (editor.selection.size() != 1) return;
+	Tile * tile = editor.selection.getSelectedTile();
+	if (!tile) return;
+	gui.SelectPalettePage(TILESET_AUDIO);
+	Mediator::publishEvent(RME_EVT_AUDIO_SELECTED, tile);
+}
+
 void MapCanvas::OnProperties(wxCommandEvent& WXUNUSED(event))
 {
 	if(editor.selection.size() != 1)
@@ -2311,10 +2343,11 @@ void MapPopupMenu::Update()
 			bool hasWall = false;
 			bool hasCarpet = false;
 			bool hasTable = false;
-			Item* topItem = nullptr;
-			Item* topSelectedItem = (selected_items.size() == 1? selected_items.back() : nullptr);
-			Creature* topCreature = tile->creature;
-			Spawn* topSpawn = tile->spawn;
+			Item * topItem = nullptr;
+			Item * topSelectedItem = (selected_items.size() == 1? selected_items.back() : nullptr);
+			Creature * topCreature = tile->creature;
+			Spawn * topSpawn = tile->spawn;
+			Audio * topAudio = tile->audio;
 
 			for(ItemVector::iterator it = tile->items.begin(); it != tile->items.end(); ++it)
 			{
@@ -2375,6 +2408,11 @@ void MapPopupMenu::Update()
 				if(topSpawn)
 					Append( MAP_POPUP_MENU_SELECT_SPAWN_BRUSH, wxT("Select Spawn"), wxT("Select the spawn brush"));
 
+				if (topAudio)
+				{
+					Append(MAP_POPUP_MENU_SELECT_AUDIO, wxT("Select Audio"), wxT("Selects the audio object"));
+				}
+
 				Append( MAP_POPUP_MENU_SELECT_RAW_BRUSH, wxT("Select RAW"), wxT("Uses the top item as a RAW brush"));
 
 				if(hasWall)
@@ -2409,6 +2447,11 @@ void MapPopupMenu::Update()
 
 				if(topSpawn)
 					Append( MAP_POPUP_MENU_SELECT_SPAWN_BRUSH, wxT("Select Spawn"), wxT("Select the spawn brush"));
+
+				if (topAudio)
+				{
+					Append(MAP_POPUP_MENU_SELECT_AUDIO, wxT("Select Audio"), wxT("Selects the audio object"));
+				}
 
 				Append( MAP_POPUP_MENU_SELECT_RAW_BRUSH, wxT("Select RAW"), wxT("Uses the top item as a RAW brush"));
 				if(hasWall)

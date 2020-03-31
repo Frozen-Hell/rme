@@ -67,15 +67,16 @@ public:
 protected:
 	void UpdateProtocolList();
 
-	MapTab* view;
-	Editor& editor;
-	wxSpinCtrl* height_spin;
-	wxSpinCtrl* width_spin;
-	wxChoice* version_choice;
-	wxChoice* protocol_choice;
-	wxTextCtrl* description_ctrl;
-	wxTextCtrl* house_filename_ctrl;
-	wxTextCtrl* spawn_filename_ctrl;
+	MapTab * view = nullptr;
+	Editor & editor;
+	wxSpinCtrl * height_spin = nullptr;
+	wxSpinCtrl * width_spin = nullptr;
+	wxChoice * version_choice = nullptr;
+	wxChoice * protocol_choice = nullptr;
+	wxTextCtrl * description_ctrl = nullptr;
+	wxTextCtrl * house_filename_ctrl = nullptr;
+	wxTextCtrl * spawn_filename_ctrl = nullptr;
+	wxTextCtrl * audioFilenameText = nullptr;
 
 	DECLARE_EVENT_TABLE();
 };

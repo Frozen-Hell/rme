@@ -1,11 +1,14 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(rme)
+project(RME)
 
 if(NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE RelWithDebInfo)
+	set(CMAKE_BUILD_TYPE Release)
 endif()
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin/release/linux")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "../bin/debug/linux")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "../bin/release/linux")
 set(CMAKE_CXX_FLAGS                "-Wall -Wextra -Wno-unused-parameter -Wno-unused-variable -Wno-deprecated-declarations -std=c++0x")
 set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g -D__DEBUG__")
 set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
@@ -20,7 +23,7 @@ find_package(wxWidgets COMPONENTS html aui gl adv core net base REQUIRED)
 include(${wxWidgets_USE_FILE})
 
 include(source/CMakeLists.txt)
-add_executable(rme ${rme_SRC})
+add_executable(RME ${RME_SRC})
 
 include_directories(${Boost_INCLUDE_DIRS} ${LibArchive_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR})
-target_link_libraries(rme ${wxWidgets_LIBRARIES} ${Boost_LIBRARIES} ${LibArchive_LIBRARIES} ${OPENGL_LIBRARIES})
+target_link_libraries(RME ${wxWidgets_LIBRARIES} ${Boost_LIBRARIES} ${LibArchive_LIBRARIES} ${OPENGL_LIBRARIES})

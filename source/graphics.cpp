@@ -27,6 +27,7 @@
 #include "gui.h"
 
 #include <wx/mstream.h>
+#include <wx/rawbmp.h>
 #include "pngfiles.h"
 
 // All 133 template colors
@@ -61,6 +62,8 @@ GraphicManager::GraphicManager() :
 	unloaded(true),
 	datVersion(DAT_VERSION_UNKNOWN),
 	sprVersion(SPR_VERSION_UNKNOWN),
+	item_count(0),
+	creature_count(0),
 	loaded_textures(0),
 	lastclean(0)
 {
@@ -93,6 +96,43 @@ GLuint GraphicManager::getFreeTextureID()
 {
 	static GLuint id_counter = 0x10000000;
 	return id_counter++; // This should (hopefully) never run out
+}
+
+GLuint GraphicManager::convertBitmapToTexture(wxBitmap * bitmap)
+{
+	// loading audio point texture
+	int width = bitmap->GetWidth(), height = bitmap->GetHeight(), x = 0, y = 0;
+	int pixelCount = width * height, bytesCount = pixelCount * 4;
+	GLubyte * buffer = newd GLubyte[bytesCount];
+	wxAlphaPixelData pixelData(*bitmap);
+	wxAlphaPixelData::Iterator it = pixelData.GetPixels();
+	for (int i = 0, p = 0; i < pixelCount; ++i)
+	{
+		it.MoveTo(pixelData, x, y);
+		buffer[p++] = it.Red();
+		buffer[p++] = it.Green();
+		buffer[p++] = it.Blue();
+		buffer[p++] = it.Alpha();
+		++x;
+		if (x >= width)
+		{
+			x = 0;
+			++y;
+		}
+	}
+
+	GLuint texture = gui.gfx.getFreeTextureID();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear Filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Linear Filtering
+	glTexParameteri(GL_TEXTURE_2D, 0x2802, 0x812F);
+	glTexParameteri(GL_TEXTURE_2D, 0x2803, 0x812F);
+	gui.gfx.loaded_textures += 1;
+
+	delete [] buffer;
+
+	return texture;
 }
 
 void GraphicManager::clear()
@@ -183,6 +223,7 @@ inline wxBitmap* _wxGetBitmapFromMemory(const unsigned char* data, int length)
 	wxMemoryInputStream is(data, length);
 	wxImage img(is, wxT("image/png"));
 	if(!img.IsOk()) return nullptr;
+	if (!img.HasAlpha()) img.InitAlpha();
 	return newd wxBitmap(img, -1);
 }
 
@@ -339,6 +380,28 @@ bool GraphicManager::loadEditorSprites()
 		);
 
 	return true;
+}
+
+GLuint GraphicManager::getAudioPointTexture()
+{
+	if (audioPointTexture == 0)
+	{
+		wxBitmap * bitmap = loadPNGFile(audio_point_png);
+		audioPointTexture = convertBitmapToTexture(bitmap);
+		delete bitmap;
+	}
+	return audioPointTexture;
+}
+
+GLuint GraphicManager::getAudioAreaTexture()
+{
+	if (audioAreaTexture == 0)
+	{
+		wxBitmap * bitmap = loadPNGFile(audio_area_png);
+		audioAreaTexture = convertBitmapToTexture(bitmap);
+		delete bitmap;
+	}
+	return audioAreaTexture;
 }
 
 bool GraphicManager::loadSpriteMetadata(const FileName& datafile, wxString& error, wxArrayString& warnings)
@@ -542,7 +605,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer74(FileReadHandle& file, GameSpri
 			default:
 			{
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< optbyte << wxT("'") << wxT(" after '") 
 					<< lastopt << wxT("'");
 				warnings.push_back(err);
@@ -731,7 +794,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer76(FileReadHandle& file, GameSpri
 			default:
 			{
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< (int)optbyte << wxT("'") << wxT(" after '") 
 					<< (int)lastopt << wxT("'");
 				warnings.push_back(err);
@@ -878,7 +941,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer78(FileReadHandle& file, GameSpri
 				break;
 			default: {
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< (int)optbyte << wxT("'") << wxT(" after '") 
 					<< (int)lastopt << wxT("'");
 				warnings.push_back(err);
@@ -1036,7 +1099,7 @@ bool GraphicManager::loadSpriteMetadataFlagsVer86(FileReadHandle& file, GameSpri
 				break;
 			default: {
 				wxString err;
-				err << wxT("Tibia.dat: Unknown optbyte '") 
+				err << wxT("fof.dat: Unknown optbyte '") 
 					<< (int)optbyte << wxT("'") << wxT(" after '") 
 					<< (int)lastopt << wxT("'");
 				warnings.push_back(err);
@@ -1089,11 +1152,11 @@ bool GraphicManager::loadSpriteData(const FileName& datafile, wxString& error, w
 			return false;
 	}
 
-	if(settings.getInteger(Config::USE_MEMCACHED_SPRITES) == false) {
+	/*if(settings.getInteger(Config::USE_MEMCACHED_SPRITES) == false) {
 		spritefile = nstr(datafile.GetFullPath());
 		unloaded = false;
 		return true;
-	}
+	}*/
 
 	std::vector<uint> sprite_indexes;
 	for(uint i = 0; i < total_pics; ++i) {
@@ -1136,6 +1199,53 @@ bool GraphicManager::loadSpriteData(const FileName& datafile, wxString& error, w
 			fh.seekRelative(size);
 		}
 	}
+#undef safe_get
+	unloaded = false;
+	return true;
+}
+
+bool GraphicManager::loadSpriteAlphaTransparency(const FileName & datafile, wxString & error, wxArrayString & warnings)
+{
+	FileReadHandle fh(nstr(datafile.GetFullPath()));
+
+	if(fh.isOk() == false) {
+		error = wxT("Failed to open file for reading");
+		return false;
+	}
+
+#define safe_get(func, ...) do {\
+		if(!fh.get##func(__VA_ARGS__)) {\
+			error = wxstr(fh.getErrorMessage()); \
+			return false; \
+		} \
+	} while(false)
+
+	uint32_t alpSignature = 0;
+	safe_get(U32, alpSignature);
+
+	uint32_t spritesCount = 0;
+	safe_get(U32, spritesCount);
+	uint32_t id = 0, offset = 0, currentOffset = 0;
+
+	for (uint32_t i = 0; i < spritesCount; ++i)
+	{
+		safe_get(U32, id);
+		safe_get(U32, offset);
+		ImageMap::iterator it = image_space.find(id);
+		if (it != image_space.end())
+		{
+			GameSprite::NormalImage * spr = dynamic_cast <GameSprite::NormalImage *> (it->second);
+			if (spr)
+			{
+				currentOffset = fh.tell();
+				fh.seek(offset);
+				spr->alpha = new uint8_t[1024];
+				fh.getRAW(spr->alpha, 1024);
+				fh.seek(currentOffset);
+			}
+		}
+	}
+
 #undef safe_get
 	unloaded = false;
 	return true;
@@ -1380,220 +1490,116 @@ GLuint GameSprite::getHardwareID(int _x, int _y, int _dir, const Outfit& _outfit
 	return spriteList[v]->getHardwareID();
 }
 
-wxMemoryDC* GameSprite::getDC(SpriteSize sz) {
-	if(!dc[sz]) {
-		const int bgshade = settings.getInteger(Config::ICON_BACKGROUND);
+wxMemoryDC * GameSprite::getDC(SpriteSize sz)
+{
+	// customization by @dtroiskiy
+	// code here has been completely re-written, because old code was not flexible and handled only certain cases of
+	// object sizes: 1x1, 1x2, 2x1 and 2x2 and not any of bigger object sizes (they resulted in being drawn in solid red color in palette)
+	// new code can handle arbitrary object sizes
+	if (!dc[sz])
+	{
+		int spriteSize = 32, rgbSize = 3072, alphaSize = 1024;
+		int objSize = width * height;
+		int rgbLen = objSize * rgbSize, alphaLen = objSize * alphaSize;
+		int resultWidth = width * spriteSize;
+		int resultHeight = height * spriteSize;
+		unsigned char * resultRGB = new unsigned char[rgbLen];
+		unsigned char * resultAlpha = new unsigned char[alphaLen];
 
-		uint8_t* rgb = nullptr;
-		uint ht, wt;
+		memset(resultRGB, 0, rgbLen);
+		memset(resultAlpha, 0, alphaLen);
 
-		if(width == 2 && height == 2) {
-			wt = 2, ht = 2;
-			rgb = newd uint8_t[2*2*32*32*3];
-			memset(rgb, bgshade, 2*2*32*32*3);
+		unsigned char ** bitmapsRGB = new unsigned char * [objSize];
+		unsigned char ** bitmapsAlpha = new unsigned char * [objSize];
 
-			for(int cf = 0; cf != frames; ++cf) {
-				uint8_t* rgb32x32[2][2] = {
-					{spriteList[(cf*2+1)*2+1]->getRGBData(),spriteList[(cf*2+1)*2]->getRGBData()},
-					{spriteList[cf*4+1]->getRGBData(),spriteList[cf*4]->getRGBData()}
-				};
-				for(int cy = 0; cy < 64; ++cy) {
-					for(int cx = 0; cx < 64; ++cx) {
-						int cw = cx/32;
-						int ch = cy/32;
-						if(!rgb32x32[ch][cw]) continue;
-
-						int rx = cx%32;
-						int ry = cy%32;
-
-						uint8_t r = rgb32x32[ch][cw][32*3*ry + 3*rx + 0];
-						uint8_t g = rgb32x32[ch][cw][32*3*ry + 3*rx + 1];
-						uint8_t b = rgb32x32[ch][cw][32*3*ry + 3*rx + 2];
-
-						if(r == 0xFF && g == 0x00 && b == 0xFF) {
-							// Transparent.. let it pass
-						} else {
-							rgb[64*3*cy + 3*cx + 0] = r;
-							rgb[64*3*cy + 3*cx + 1] = g;
-							rgb[64*3*cy + 3*cx + 2] = b;
-						}
-					}
-				}
-				delete[] rgb32x32[0][0];
-				delete[] rgb32x32[0][1];
-				delete[] rgb32x32[1][0];
-				delete[] rgb32x32[1][1];
-			}
-			// (cf*2+ch)*2+cw
-		} else if(width == 2 && height == 1) {
-			wt = 2, ht = 2;
-			rgb = newd uint8_t[2*2*32*32*3];
-			memset(rgb, bgshade, 2*2*32*32*3);
-
-			for(int cf = 0; cf != frames; ++cf) {
-				uint8_t* rgb32x32[2] = {
-					spriteList[cf*2+1]->getRGBData(),
-					spriteList[cf*2+0]->getRGBData()
-				};
-				for(int cy = 16; cy < 48; ++cy) {
-					for(int cx = 0; cx < 64; ++cx) {
-						int cw = cx/32;
-						int rx = cx%32;
-						int ry = cy-16;
-						if(!rgb32x32[cw]) continue;
-
-						uint8_t r = rgb32x32[cw][32*3*ry + 3*rx + 0];
-						uint8_t g = rgb32x32[cw][32*3*ry + 3*rx + 1];
-						uint8_t b = rgb32x32[cw][32*3*ry + 3*rx + 2];
-
-						if(r == 0xFF && g == 0x00 && b == 0xFF) {
-							// Transparent.. let it pass
-						} else {
-							rgb[64*3*cy + 3*cx + 0] = r;
-							rgb[64*3*cy + 3*cx + 1] = g;
-							rgb[64*3*cy + 3*cx + 2] = b;
-						}
-					}
-				}
-				delete[] rgb32x32[0];
-				delete[] rgb32x32[1];
-			}
-		} else if(width == 1 && height == 2) {
-			wt = 2, ht = 2;
-			rgb = newd uint8_t[2*2*32*32*3];
-			memset(rgb, bgshade, 2*2*32*32*3);
-
-			for(int cf = 0; cf != frames; ++cf) {
-				uint8_t* rgb32x32[2] = {
-					spriteList[cf*2+1]->getRGBData(),
-					spriteList[cf*2+0]->getRGBData()
-				};
-				for(int cy = 0; cy < 64; ++cy) {
-					for(int cx = 16; cx < 48; ++cx) {
-						int ch = cy/32;
-						int rx = cx-16;
-						int ry = cy%32;
-						if(!rgb32x32[ch]) continue;
-
-						uint8_t r = rgb32x32[ch][32*3*ry + 3*rx + 0];
-						uint8_t g = rgb32x32[ch][32*3*ry + 3*rx + 1];
-						uint8_t b = rgb32x32[ch][32*3*ry + 3*rx + 2];
-
-						if(r == 0xFF && g == 0x00 && b == 0xFF) {
-							// Transparent.. let it pass
-						} else {
-							rgb[64*3*cy + 3*cx + 0] = r;
-							rgb[64*3*cy + 3*cx + 1] = g;
-							rgb[64*3*cy + 3*cx + 2] = b;
-						}
-					}
-				}
-				delete[] rgb32x32[0];
-				delete[] rgb32x32[1];
-			}
-		} else if(width == 1 && height == 1) {
-			wt = 1, ht = 1;
-			rgb = newd uint8_t[32*32*3];
-			memset(rgb, bgshade, 32*32*3);
-
-			for(int cf = 0; cf != frames; ++cf) {
-				uint8_t* rgb32x32 = spriteList[cf]->getRGBData();
-				if(!rgb32x32) continue;
-
-				for(int cy = 0; cy < 32; ++cy) {
-					for(int cx = 0; cx < 32; ++cx) {
-						uint8_t r = rgb32x32[32*3*cy + 3*cx + 0];
-						uint8_t g = rgb32x32[32*3*cy + 3*cx + 1];
-						uint8_t b = rgb32x32[32*3*cy + 3*cx + 2];
-
-						if(r == 0xFF && g == 0x00 && b == 0xFF) {
-							// Transparent.. let it pass
-						} else {
-							rgb[32*3*cy + 3*cx + 0] = r;
-							rgb[32*3*cy + 3*cx + 1] = g;
-							rgb[32*3*cy + 3*cx + 2] = b;
-						}
-					}
-				}
-				delete[] rgb32x32;
-			}
-		} else {
-			return nullptr;
+		for (int i = 0; i < objSize; ++i)
+		{
+			bitmapsRGB[i] = new unsigned char[rgbSize];
+			bitmapsAlpha[i] = new unsigned char[alphaSize];
+			memset(bitmapsRGB[i], 0, rgbSize);
+			memset(bitmapsAlpha[i], 255, alphaSize);
 		}
 
-		// Now comes the resizing / antialiasing
-		if(sz == SPRITE_SIZE_16x16) {
-			uint8_t* rgb16x16 = reinterpret_cast<uint8_t*>(malloc(16*16*3));
-
-			uint pixels_per_line = 32*wt;
-			uint pixels_per_pixel = 2*wt;
-			uint bytes_per_line = 3*pixels_per_line;
-			uint bytes_per_pixel = 3*pixels_per_pixel;
-
-
-			for(uint y = 0; y < 16; ++y) {
-				for(uint x = 0; x < 16; ++x) {
-					uint r = 0, g = 0, b = 0, c = 0;
-					for(uint u = 0; u < 2; ++u) {
-						for(uint v = 0; v < 2; ++v) {
-							r += rgb[bytes_per_line * (pixels_per_pixel*y + u) + (bytes_per_pixel*x + 3*v) + 0];
-							g += rgb[bytes_per_line * (pixels_per_pixel*y + u) + (bytes_per_pixel*x + 3*v) + 1];
-							b += rgb[bytes_per_line * (pixels_per_pixel*y + u) + (bytes_per_pixel*x + 3*v) + 2];
-							//r += rgb[96 * (2*y + u) + (6*x + v*3) + 0];
-							//g += rgb[96 * (2*y + u) + (6*x + v*3) + 1];
-							//b += rgb[96 * (2*y + u) + (6*x + v*3) + 2];
-							++c;
-						}
-					}
-					ASSERT(c);
-
-					rgb16x16[48*y+x*3+0] = r/c;
-					rgb16x16[48*y+x*3+1] = g/c;
-					rgb16x16[48*y+x*3+2] = b/c;
-				}
+		int startSprite = 0, endSprite = startSprite + objSize;
+		for (int i = endSprite - 1, j = 0; i >= startSprite; --i, ++j)
+		{
+			GameSprite::NormalImage * sprite = spriteList[i];
+			memcpy(bitmapsRGB[j], sprite->getRGBData(), rgbSize);
+			if (sprite->alpha)
+			{
+				memcpy(bitmapsAlpha[j], sprite->alpha, alphaSize);
 			}
-
-			wxImage img(16,16, rgb16x16);
-			wxBitmap bmp(img);
-			dc[sz] = newd wxMemoryDC(bmp);
-			delete[] rgb;
-			gui.gfx.addSpriteToCleanup(this);
-		} else if(sz == SPRITE_SIZE_32x32) {
-			uint8_t* rgb32x32 = reinterpret_cast<uint8_t*>(malloc(32*32*3));
-
-			uint pixels_per_line = 32*wt;
-			uint pixels_per_pixel = wt;
-			uint bytes_per_line = 3*pixels_per_line;
-			uint bytes_per_pixel = 3*pixels_per_pixel;
-
-
-			for(uint y = 0; y < 32; ++y) {
-				for(uint x = 0; x < 32; ++x) {
-					uint r = 0, g = 0, b = 0, c = 0;
-					for(uint u = 0; u < ht; ++u) {
-						for(uint v = 0; v < wt; ++v) {
-							r += rgb[bytes_per_line * (pixels_per_pixel*y + u) + (bytes_per_pixel*x + 3*v) + 0];
-							g += rgb[bytes_per_line * (pixels_per_pixel*y + u) + (bytes_per_pixel*x + 3*v) + 1];
-							b += rgb[bytes_per_line * (pixels_per_pixel*y + u) + (bytes_per_pixel*x + 3*v) + 2];
-							++c;
-						}
-					}
-					ASSERT(c);
-
-					rgb32x32[96*y+x*3+0] = r/c;
-					rgb32x32[96*y+x*3+1] = g/c;
-					rgb32x32[96*y+x*3+2] = b/c;
-				}
-			}
-
-			wxImage img(32,32, rgb32x32);
-			wxBitmap bmp(img);
-			dc[sz] = newd wxMemoryDC(bmp);
-			delete[] rgb;
-			gui.gfx.addSpriteToCleanup(this);
-		} else {
-			ASSERT(sz == 0);
 		}
+
+		int x = 0, y = 0;
+		for (int i = 0; i < objSize; ++i)
+		{
+			unsigned char * srcRGB = bitmapsRGB[i];
+			unsigned char * srcAlpha = bitmapsAlpha[i];
+
+			// copying 32x32 bitmap buffer into result buffer with alpha-blending
+			unsigned int dap = y * resultWidth + x; // destination alpha pointer
+			unsigned int drp = dap * 3; // destination RGB pointer
+			unsigned int sap = 0, srp = 0; // no offsets in source for now
+			for (int sy = 0; sy < spriteSize; ++sy)
+			{
+				for (int sx = 0; sx < spriteSize; ++sx)
+				{
+					float srca = srcAlpha[sap] / 255.0f, dsta = resultAlpha[dap] / 255.0f;
+					float msrca = 1.0f - srca;
+					resultRGB[drp] = srcRGB[srp] * srca + resultRGB[drp] * dsta * msrca;
+					resultRGB[drp + 1] = srcRGB[srp + 1] * srca + resultRGB[drp + 1]  * dsta * msrca;
+					resultRGB[drp + 2] = srcRGB[srp + 2] * srca + resultRGB[drp + 2]  * dsta * msrca;
+					resultAlpha[dap] = (srca + dsta * msrca) * 255.0f;
+					drp += 3;
+					srp += 3;
+					dap++;
+					sap++;
+				}
+				drp += (resultWidth - spriteSize) * 3;
+				dap += (resultWidth - spriteSize);
+			}
+
+			x += spriteSize;
+			if (x >= resultWidth)
+			{
+				x = 0;
+				y += spriteSize;
+			}
+			delete [] bitmapsRGB[i];
+			delete [] bitmapsAlpha[i];
+		}
+		delete [] bitmapsRGB;
+		delete [] bitmapsAlpha;
+
+		wxImage img(resultWidth, resultHeight, resultRGB, resultAlpha, true);
+		int targetSize = (sz == SPRITE_SIZE_32x32 ? 32 : 16);
+		if (resultWidth > targetSize || resultHeight > targetSize)
+		{
+			// rescaling image
+			int imgWidth = resultWidth, imgHeight = resultHeight;
+			if (imgWidth >= imgHeight)
+			{
+				float ratio = imgHeight / float(imgWidth);
+				imgWidth = targetSize;
+				imgHeight = imgWidth * ratio;
+			}
+			else
+			{
+				float ratio = imgWidth / float(imgHeight);
+				imgHeight = targetSize;
+				imgWidth = imgHeight * ratio;
+			}
+			img.Rescale(imgWidth, imgHeight, wxIMAGE_QUALITY_BICUBIC);
+			img.Resize(wxSize(targetSize, targetSize), wxPoint((targetSize - imgWidth) / 2, (targetSize - imgHeight) / 2));
+		}
+		wxBitmap bmp(img);
+		dc[sz] = newd wxMemoryDC(bmp);
+
+		delete [] resultRGB;
+		delete [] resultAlpha;
+
+		gui.gfx.addSpriteToCleanup(this);
 	}
 	return dc[sz];
 }
@@ -1665,19 +1671,23 @@ void GameSprite::Image::clean(int time) {
 GameSprite::NormalImage::NormalImage() :
 	id(0),
 	size(0),
-	dump(nullptr)
+	dump(nullptr),
+	alpha(nullptr)
 {
 }
 
 GameSprite::NormalImage::~NormalImage() {
-	delete[] dump;
+	delete [] dump;
+	delete [] alpha;
 }
 
 void GameSprite::NormalImage::clean(int time) {
 	Image::clean(time);
 	if(time - lastaccess > 5 && !settings.getInteger(Config::USE_MEMCACHED_SPRITES)) { // We keep dumps around for 5 seconds.
-		delete[] dump;
+		delete [] dump;
 		dump = nullptr;
+		delete [] alpha;
+		alpha = nullptr;
 	}
 }
 
@@ -1716,9 +1726,9 @@ uint8_t* GameSprite::NormalImage::getRGBData() {
 
 		for(int i = 0; i < chunk_size; ++i) {
 			// Transparent pixel
-			rgb32x32[96*y+x*3+0] = 0xFF;
-			rgb32x32[96*y+x*3+1] = 0x00;
-			rgb32x32[96*y+x*3+2] = 0xFF;
+			rgb32x32[96*y+x*3+0] = 0;
+			rgb32x32[96*y+x*3+1] = 0;
+			rgb32x32[96*y+x*3+2] = 0;
 			x++;
 			if(x >= 32) {
 				x = 0;
@@ -1756,9 +1766,9 @@ uint8_t* GameSprite::NormalImage::getRGBData() {
 
 	// Fill up any trailing pixels
 	while(y<32 && x<32) {
-		rgb32x32[96*y+x*3+0] = 0xFF; // Transparent
-		rgb32x32[96*y+x*3+1] = 0x00; // Transparent
-		rgb32x32[96*y+x*3+2] = 0xFF; // Transparent
+		rgb32x32[96*y+x*3+0] = 0;
+		rgb32x32[96*y+x*3+1] = 0;
+		rgb32x32[96*y+x*3+2] = 0;
 		x++;
 		if(x >= 32) {
 			x = 0;
@@ -1779,8 +1789,9 @@ uint8_t* GameSprite::NormalImage::getRGBAData() {
 			}
 		}
 	}
-	uint8_t* rgba32x32 = newd uint8_t[32*32*4];
-	memset(rgba32x32, 0, 32*32*4);
+	uint32_t rgbaSize = 32 * 32 * 4;
+	uint8_t* rgba32x32 = newd uint8_t[rgbaSize];
+	memset(rgba32x32, 0, rgbaSize);
 	/* SPR dump format
 	 *  The spr format contains chunks, a chunk can either be transparent or contain pixel data.
 	 *  First 2 bytes (unsigned short) are read, which tells us how long the chunk is. One
@@ -1852,6 +1863,15 @@ uint8_t* GameSprite::NormalImage::getRGBAData() {
 		if(x >= 32) {
 			x = 0;
 			y++;
+		}
+	}
+
+	// Additional functionality - adding alpha-transparency
+	if (alpha)
+	{
+		for (uint32_t i = 3, j = 0; i < rgbaSize; i += 4, ++j)
+		{
+			rgba32x32[i] = alpha[j];
 		}
 	}
 

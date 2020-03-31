@@ -25,6 +25,7 @@
 #include "town.h"
 #include "house.h"
 #include "spawn.h"
+#include "audio.h"
 #include "complexitem.h"
 #include "waypoints.h"
 #include "templates.h"
@@ -56,33 +57,34 @@ public:
 	bool clearChanges();
 
 	// Errors/warnings
-	bool hasWarnings() const {return warnings.size() != 0;}
-	const wxArrayString& getWarnings() const {return warnings;}
-	bool hasError() const {return error.size() != 0;}
-	wxString getError() const {return error;}
+	inline bool hasWarnings() const { return warnings.size() != 0; }
+	inline const wxArrayString& getWarnings() const { return warnings ;}
+	inline bool hasError() const { return error.size() != 0; }
+	inline wxString getError() const { return error; }
 
 	// Mess with spawns
 	bool addSpawn(Tile* spawn);
 	void removeSpawn(Tile* tile);
-	void removeSpawn(Position pos) {removeSpawn(getTile(pos));}
+	inline void removeSpawn(Position pos) { removeSpawn(getTile(pos)); }
 	// Returns all possible spawns on the target tile
 	SpawnList getSpawnList(Tile* t);
-	SpawnList getSpawnList(Position pos) {return getSpawnList(getTile(pos));}
-	SpawnList getSpawnList(int x, int y, int z) {return getSpawnList(getTile(x, y, z));}
+	inline SpawnList getSpawnList(Position pos) { return getSpawnList(getTile(pos)); }
+	inline SpawnList getSpawnList(int x, int y, int z) { return getSpawnList(getTile(x, y, z)); }
 
 	// Returns true if the map has been saved
 	// ie. it knows which file it should be saved to
 	bool hasFile() const;
-	std::string getFilename() const {return filename;}
-	std::string getName() const {return name;}
-	void setName(const std::string& n) {name = n;}
+	inline std::string getFilename() const { return filename; }
+	inline std::string getName() const { return name; }
+	inline void setName(const std::string& n) { name = n; }
 	
 	// Get map data
-	int getWidth() const {return width;}
-	int getHeight() const {return height;}
-	std::string getMapDescription() const {return description;}
-	std::string getHouseFilename() const {return housefile;}
-	std::string getSpawnFilename() const {return spawnfile;}
+	inline int getWidth() const { return width; }
+	inline int getHeight() const { return height; }
+	inline std::string getMapDescription() const { return description; }
+	inline std::string getHouseFilename() const { return housefile; }
+	inline std::string getSpawnFilename() const { return spawnfile; }
+	inline std::string getAudioFilename() const { return audioFile; }
 
 	// Set some map data
 	void setWidth(int new_width);
@@ -90,6 +92,7 @@ public:
 	void setMapDescription(const std::string& new_description);
 	void setHouseFilename(const std::string& new_housefile);
 	void setSpawnFilename(const std::string& new_spawnfile);
+	void setAudioFilename(const std::string& newAudioFile);
 
 	void flagAsNamed() {unnamed = false;}
 
@@ -110,15 +113,17 @@ protected:
 	MapVersion mapVersion;
 
 	// Map Width and Height - for info purposes
-	uint16_t width, height;
+	uint16_t width, height, visibleStartX, visibleStartY, visibleEndX, visibleEndY;
 
-	std::string spawnfile; // The maps spawnfile
-	std::string housefile; // The housefile
+	std::string spawnfile; // The maps spawn file
+	std::string housefile; // The house file
+	std::string audioFile; // The audio file
 
 public:
 	Towns towns;
 	Houses houses;
 	Spawns spawns;
+	Audios audios;
 
 protected:
 	bool has_changed; // If the map has changed

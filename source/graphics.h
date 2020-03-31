@@ -115,7 +115,7 @@ protected:
 
 		// This contains the pixel data
 		uint16_t size;
-		uint8_t* dump;
+		uint8_t * dump, * alpha;
 
 		virtual void clean(int time);
 
@@ -192,6 +192,9 @@ public:
 
 	// Get an unused texture id (this is acquired by simply increasing a value starting from 0x10000000)
 	GLuint getFreeTextureID();
+	GLuint convertBitmapToTexture(wxBitmap * bitmap);
+	GLuint getAudioPointTexture();
+	GLuint getAudioAreaTexture();
 
 	// This is part of the binary
 	bool loadEditorSprites();
@@ -203,6 +206,7 @@ public:
 	bool loadSpriteMetadataFlagsVer78(FileReadHandle& file, GameSprite* sType, wxString& error, wxArrayString& warnings);
 	bool loadSpriteMetadataFlagsVer86(FileReadHandle& file, GameSprite* sType, wxString& error, wxArrayString& warnings);
 	bool loadSpriteData(const FileName& datafile, wxString& error, wxArrayString& warnings);
+	bool loadSpriteAlphaTransparency(const FileName & datafile, wxString & error, wxArrayString & warnings);
 
 	// Cleans old & unused textures according to config settings
 	void garbageCollection();
@@ -223,6 +227,7 @@ private:
 	typedef std::map<int, GameSprite::Image*> ImageMap;
 	ImageMap image_space;
 	std::deque<GameSprite*> cleanup_list;
+	GLuint audioPointTexture = 0, audioAreaTexture = 0;
 
 	DatVersion datVersion;
 	SprVersion sprVersion;

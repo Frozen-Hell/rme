@@ -335,8 +335,6 @@ void Application::Unload()
 	gui.SaveHotkeys();
 	gui.SavePerspective();
 	gui.root->SaveRecentFiles();
-	ClientVersion::saveVersions();
-	ClientVersion::unloadVersions();
 	settings.save(true);
 	gui.root = nullptr;
 }

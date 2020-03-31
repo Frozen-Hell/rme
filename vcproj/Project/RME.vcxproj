@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Beta Release|Win32">
       <Configuration>Beta Release</Configuration>
@@ -36,11 +36,13 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Beta Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -57,10 +59,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -86,16 +90,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.21006.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\bin\$(Configuration)\win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\obj\$(Configuration)\win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\bin\$(Configuration)\win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\obj\$(Configuration)\win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">$(SolutionDir)..\bin\$(Configuration)\win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">$(SolutionDir)..\obj\$(Configuration)\win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Beta Release|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -116,23 +120,23 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\crille\Documents\GitHub\rme\dependencies\vs\include;E:\DevFolder\C++ Libraries\boost_1_55_0\include;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include\msvc;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\dependencies\vs\include;$(BOOST_ROOT);$(WXHOME)\include;$(WXHOME)\include\msvc;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\crille\Documents\GitHub\rme\dependencies\vs\include;E:\DevFolder\C++ Libraries\boost_1_55_0\include;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include\msvc;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\DevFolder\C++ Libraries\boost_1_55_0\lib;C:\Users\crille\Documents\GitHub\rme\dependencies\vs\lib;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)..\..\dependencies\vs\lib;$(BOOST_ROOT)\lib32-msvc-12.0;$(WXHOME)\lib\vc_lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\DevFolder\C++ Libraries\boost_1_55_0\lib;C:\Users\crille\Documents\GitHub\rme\dependencies\vs\lib;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\DevFolder\C++ Libraries\libarchive-3.1.2\include;E:\DevFolder\C++ Libraries\boost_1_55_0\include;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\x86\include\msvc;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\x86\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\dependencies\vs\include;$(BOOST_ROOT);$(WXHOME)\include;$(WXHOME)\include\msvc;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\DevFolder\C++ Libraries\zlib-1.2.8\include;C:\Users\crille\Documents\GitHub\rme\dependencies\vs\include;E:\DevFolder\C++ Libraries\boost_1_55_0\include;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\x64\include\msvc;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\x64\include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\DevFolder\C++ Libraries\boost_1_55_0\lib;E:\DevFolder\C++ Libraries\libarchive-3.1.2\lib;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\x86\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)..\..\dependencies\vs\lib;$(BOOST_ROOT)\lib32-msvc-12.0;$(WXHOME)\lib\vc_lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\DevFolder\C++ Libraries\zlib-1.2.8\lib;E:\DevFolder\C++ Libraries\boost_1_55_0\lib;C:\Users\crille\Documents\GitHub\rme\dependencies\vs\lib;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\x64\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">C:\Users\crille\Documents\GitHub\rme\dependencies\vs\include;E:\DevFolder\C++ Libraries\boost_1_55_0\include;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include\msvc;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">$(ProjectDir)..\dependencies\vs\include;$(BOOST_ROOT);$(WXHOME)\include;$(WXHOME)\include\msvc;$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Beta Release|x64'">C:\Users\crille\Documents\GitHub\rme\dependencies\vs\include;E:\DevFolder\C++ Libraries\boost_1_55_0\include;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include\msvc;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">E:\DevFolder\C++ Libraries\boost_1_55_0\lib;C:\Users\crille\Documents\GitHub\rme\dependencies\vs\lib;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Beta Release|Win32'">$(ProjectDir)..\dependencies\vs\lib;$(WXHOME)\lib\vc_lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Beta Release|x64'">E:\DevFolder\C++ Libraries\boost_1_55_0\lib;C:\Users\crille\Documents\GitHub\rme\dependencies\vs\lib;E:\DevFolder\C++ Libraries\wxWidgets-3.0.0\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\wxWidgets-2.9.3\include\msvc;F:\Libs\libarchive-3.0.3;C:\wxWidgets-2.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRTDBG_MAP_ALLOC;__DEBUG__;__EXPERIMENTAL__;LIVE_SERVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -144,8 +148,8 @@
       <PrecompiledHeaderFile>main.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>comctl32.lib;archive_static.lib;Rpcrt4.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\wxWidgets-2.9.3\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;Rpcrt4.lib;WS2_32.lib;archive.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <MapFileName>$(TargetName).map</MapFileName>
@@ -154,6 +158,9 @@
       <TargetMachine>MachineX86</TargetMachine>
       <IgnoreSpecificDefaultLibraries>wxscintillad.lib</IgnoreSpecificDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\dependencies\vs\bin\archive.dll $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -197,8 +204,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>comctl32.lib;archive.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\wxWidgets-2.9.3\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
       <OptimizeReferences>true</OptimizeReferences>
@@ -206,7 +213,11 @@
       <TargetMachine>MachineX86</TargetMachine>
       <Profile>false</Profile>
       <CLRThreadAttribute>DefaultThreadingAttribute</CLRThreadAttribute>
+      <ProgramDatabaseFile />
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\dependencies\vs\bin\archive.dll $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -240,7 +251,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>C:\wxWidgets-2.9.3\include\msvc;F:\Libs\libarchive-3.0.3;C:\wxWidgets-2.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;__RELEASE__;;__RELEASE__;__EXPERIMENTAL__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>false</FunctionLevelLinking>
@@ -253,7 +264,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>libxml2.lib;comctl32.lib;archive.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\wxWidgets-2.9.3\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
@@ -288,10 +299,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\audio.cpp" />
+    <ClCompile Include="..\..\source\audio_brush.cpp" />
     <ClCompile Include="..\..\source\brush_tables.cpp" />
+    <ClCompile Include="..\..\source\client_version.cpp" />
     <ClCompile Include="..\..\source\container_properties_window.cpp" />
+    <ClInclude Include="..\..\source\audio.h" />
+    <ClInclude Include="..\..\source\audio_brush.h" />
     <ClInclude Include="..\..\source\carpet_brush.h" />
     <ClCompile Include="..\..\source\carpet_brush.cpp" />
+    <ClInclude Include="..\..\source\client_version.h" />
     <ClInclude Include="..\..\source\common.h" />
     <ClCompile Include="..\..\source\common.cpp" />
     <ClInclude Include="..\..\source\container_properties_window.h" />
@@ -304,9 +321,11 @@
     <ClInclude Include="..\..\source\doodad_brush.h" />
     <ClCompile Include="..\..\source\doodad_brush.cpp" />
     <ClCompile Include="..\..\source\eraser_brush.cpp" />
+    <ClInclude Include="..\..\source\events.h" />
     <ClInclude Include="..\..\source\extension.h" />
     <ClInclude Include="..\..\source\extension_window.h" />
     <ClInclude Include="..\..\source\filehandle.h" />
+    <ClCompile Include="..\..\source\events.cpp" />
     <ClCompile Include="..\..\source\extension.cpp" />
     <ClCompile Include="..\..\source\extension_window.cpp" />
     <ClCompile Include="..\..\source\filehandle.cpp" />
@@ -332,15 +351,19 @@
     <ClInclude Include="..\..\source\map_allocator.h" />
     <ClInclude Include="..\..\source\map_region.h" />
     <ClCompile Include="..\..\source\map_region.cpp" />
+    <ClInclude Include="..\..\source\mediator.h" />
     <ClInclude Include="..\..\source\mt_rand.h" />
+    <ClCompile Include="..\..\source\mediator.cpp" />
     <ClCompile Include="..\..\source\mt_rand.cpp" />
     <ClInclude Include="..\..\source\net_connection.h" />
     <ClCompile Include="..\..\source\net_connection.cpp" />
     <ClInclude Include="..\..\source\numbertextctrl.h" />
+    <ClInclude Include="..\..\source\palette_audio.h" />
     <ClInclude Include="..\..\source\properties_window.h" />
     <ClInclude Include="..\..\source\pugicast.h" />
     <ClInclude Include="..\..\source\raw_brush.h" />
     <ClCompile Include="..\..\source\numbertextctrl.cpp" />
+    <ClCompile Include="..\..\source\palette_audio.cpp" />
     <ClCompile Include="..\..\source\properties_window.cpp" />
     <ClCompile Include="..\..\source\raw_brush.cpp" />
     <ClInclude Include="..\..\source\rme_forward_declarations.h" />
@@ -403,8 +426,6 @@
     <ClCompile Include="..\..\source\map_window.cpp" />
     <ClInclude Include="..\..\source\action.h" />
     <ClCompile Include="..\..\source\action.cpp" />
-    <ClInclude Include="..\..\source\client_version.h" />
-    <ClCompile Include="..\..\source\client_version.cpp" />
     <ClInclude Include="..\..\source\copybuffer.h" />
     <ClCompile Include="..\..\source\copybuffer.cpp" />
     <ClInclude Include="..\..\source\creatures.h" />
@@ -483,6 +504,8 @@
     <ClInclude Include="..\..\source\waypoint_brush.h" />
     <ClCompile Include="..\..\source\waypoint_brush.cpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\mkpch.cpp">
@@ -521,10 +544,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\data\clients.xml" />
-    <None Include="..\..\data\menubar.xml" />
+    <None Include="..\..\data\menubar.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="rme.rc" />
+    <Image Include="icon1.ico" />
+    <Image Include="icon2.ico" />
+    <Image Include="rme_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RME.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

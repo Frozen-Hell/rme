@@ -19,8 +19,10 @@
 #include "raw_brush.h"
 #include "table_brush.h"
 #include "waypoint_brush.h"
+#include "audio.h"
+#include "audio_brush.h"
 
-MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC& pdc) : canvas(canvas), editor(canvas->editor), pdc(pdc), options(options)
+MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC * pdc) : canvas(canvas), editor(canvas->editor), pdc(pdc), options(options)
 {
 	canvas->MouseToMap(&mouse_map_x, &mouse_map_y);
 	canvas->GetViewBox(&view_scroll_x, &view_scroll_y, &screensize_x, &screensize_y);
@@ -32,6 +34,27 @@ MapDrawer::MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC
 	tile_size = int(32/zoom); // after zoom
 	floor = canvas->GetFloor();
 	
+	SetupVars();
+	SetupGL();
+}
+
+MapDrawer::MapDrawer(Editor & editor, const DrawingOptions & options, wxGLCanvas * canvas, const wxPoint & renderStartPos, const wxSize & renderSize, int renderFloor)
+	: editor(editor), options(options)
+{
+	isDrawingOffscreen = true;
+	mouse_map_x = mouse_map_y = 0;
+	view_scroll_x = renderStartPos.x;
+	view_scroll_y = renderStartPos.y;
+	screensize_x = renderSize.GetWidth();
+	screensize_y = renderSize.GetHeight();
+	
+	dragging = false;
+	dragging_draw = false;
+
+	zoom = 1.0;
+	tile_size = 32;
+	floor = renderFloor;
+
 	SetupVars();
 	SetupGL();
 }
@@ -106,6 +129,9 @@ void DrawingOptions::SetDefault()
 	show_special_tiles = true;
 	show_items = true;
 
+	showAudioPointSources = true;
+	showAudioAreas = true;
+
 	highlight_items = false;
 	show_blocking = false;
 	show_only_colors = false;
@@ -130,6 +156,9 @@ void DrawingOptions::SetIngame()
 	show_special_tiles = false;
 	show_items = true;
 
+	showAudioPointSources = false;
+	showAudioAreas = false;
+	
 	highlight_items = false;
 	show_blocking = false;
 	show_only_colors = false;
@@ -150,15 +179,20 @@ void MapDrawer::Draw()
 {
 	DrawBackground();
 	DrawMap();
-	DrawDraggingShadow();
+	DrawAudio();
+	if (!isDrawingOffscreen) DrawDraggingShadow();
 	DrawHigherFloors();
-	if(options.dragging)
+	if (options.dragging && !isDrawingOffscreen)
+	{
 		DrawSelectionBox();
+	}
 	DrawLiveCursors();
-	DrawBrush();
+	if (!isDrawingOffscreen) DrawBrush();
 	DrawIngameBox();
-	if(options.show_grid)
+	if (options.show_grid)
+	{
 		DrawGrid();
+	}
 	//DrawTooltips();
 }
 
@@ -283,7 +317,7 @@ void MapDrawer::DrawMap()
 			Position normalPos;
 			Position to(mouse_map_x, mouse_map_y, floor);
 
-			if(canvas->isPasting())
+			if(canvas && canvas->isPasting())
 			{
 				normalPos = editor.copybuffer.getPosition();
 			}
@@ -380,6 +414,110 @@ void MapDrawer::DrawMap()
 
 	if(!options.show_only_colors)
 		glEnable(GL_TEXTURE_2D);
+}
+
+void MapDrawer::DrawAudio()
+{
+	if (!options.showAudioPointSources && !options.showAudioAreas) return;
+
+	glDisable(GL_TEXTURE_2D);
+	
+	int nd_start_x = start_x & ~3;
+	int nd_start_y = start_y & ~3;
+	int nd_end_x = (end_x & ~3) + 4;
+	int nd_end_y = (end_y & ~3) + 4;
+
+	for (int nd_map_x = nd_start_x; nd_map_x <= nd_end_x; nd_map_x += 4)
+	{
+		for (int nd_map_y = nd_start_y; nd_map_y <= nd_end_y; nd_map_y += 4)
+		{
+			QTreeNode * nd = editor.map.getLeaf(nd_map_x, nd_map_y);
+			if (!nd) continue;
+
+			for (int map_x = 0; map_x < 4; ++map_x)
+			{
+				for (int map_y = 0; map_y < 4; ++map_y)
+				{
+					TileLocation * location = nd->getTile(map_x, map_y, floor);
+					if (!location) continue;
+					Tile * tile = location->get();
+					if (tile && tile->audio)
+					{
+						int tileX = location->getX();
+						int tileY = location->getY();
+						int drawX = tileX * 32 - view_scroll_x;
+						if (floor <= 7)
+						{
+							drawX -= (7 - floor) * 32;
+						}
+						int drawY = tileY * 32 - view_scroll_y;
+						if (floor <= 7)
+						{
+							drawY -= (7 - floor) * 32;
+						}
+						
+						Audio * audio = tile->audio;
+						int radius = audio->getSize() * 32;
+						if (audio->getType() == Audio::TYPE_POINT && options.showAudioPointSources)
+						{
+							// drawing point audio radius as a circle
+							int radius = audio->getSize() * 32 - 16;
+							glColor4ub(255, 0, 0, 255);
+							glBegin(GL_LINE_LOOP);
+							for (int i = 0; i <= 32; ++i)
+							{
+								float angle = 2 * M_PI * i / 32;
+								float x = drawX + 16 + radius * cos(angle);
+								float y = drawY + 16 + radius * sin(angle);
+								glVertex2d(x, y);
+							}
+							glEnd();
+							
+							glEnable(GL_TEXTURE_2D);
+							if (audio->isSelected())
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 128, 128, 128, 255);
+							}
+							else
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioPointTexture(), 255, 255, 255, 255);
+							}
+							glDisable(GL_TEXTURE_2D);
+						}
+						else if (audio->getType() == Audio::TYPE_AREA && options.showAudioAreas)
+						{
+							const wxColor & renderColor = audio->getAreaColor();
+							int size = audio->getSize() * 32;
+							glColor4ub(renderColor.Red(), renderColor.Green(), renderColor.Blue(), 128);
+							glBegin(GL_QUADS);
+								glVertex2f(drawX - size, drawY + size + 32);
+								glVertex2f(drawX + size + 32, drawY + size + 32);
+								glVertex2f(drawX + size + 32, drawY - size);
+								glVertex2f(drawX - size, drawY - size);
+							glEnd();
+							
+							glEnable(GL_TEXTURE_2D);
+							if (audio->isSelected())
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioAreaTexture(), 128, 128, 128, 255);
+							}
+							else
+							{
+								glBlitTexture(drawX, drawY, gui.gfx.getAudioAreaTexture(), 255, 255, 255, 255);
+							}
+							glDisable(GL_TEXTURE_2D);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	// this is what DrawMap() does at the end, probably needed to maintain rendering flow (@dtroitskiy)
+	if (!options.show_only_colors)
+	{
+		glEnable(GL_TEXTURE_2D);
+	}
 }
 
 void MapDrawer::DrawIngameBox()
@@ -516,10 +654,10 @@ void MapDrawer::DrawDraggingShadow()
 						BlitItem(draw_x, draw_y, pos, *iit, true, 160,160,160,160);
 				}
 
-				if(tile->creature && tile->creature->isSelected() && options.show_creatures)
+				if (tile->creature && tile->creature->isSelected() && options.show_creatures)
+				{
 					BlitCreature(draw_x, draw_y, tile->creature);
-				if(tile->spawn && tile->spawn->isSelected())
-					BlitSpriteType(draw_x, draw_y, SPRITE_SPAWN, 160, 160, 160, 160);
+				}
 			}
 		}
 	}
@@ -669,21 +807,23 @@ void MapDrawer::DrawBrush()
 		return;
 
 	// This is SO NOT A GOOD WAY TO DO THINGS
-	Brush* brush = gui.GetCurrentBrush();
-	RAWBrush* rawbrush = dynamic_cast<RAWBrush*>(brush);
-	TerrainBrush* terrainbrush = dynamic_cast<TerrainBrush*>(brush);
-	WallBrush* wall_brush = dynamic_cast<WallBrush*>(brush);
-	TableBrush* table_brush = dynamic_cast<TableBrush*>(brush);
-	CarpetBrush* carpet_brush = dynamic_cast<CarpetBrush*>(brush);
-	DoorBrush* door_brush = dynamic_cast<DoorBrush*>(brush);
-	OptionalBorderBrush* optional_brush = dynamic_cast<OptionalBorderBrush*>(brush);
-	CreatureBrush* creature_brush = dynamic_cast<CreatureBrush*>(brush);
-	SpawnBrush* spawn_brush = dynamic_cast<SpawnBrush*>(brush);
-	HouseBrush* house_brush = dynamic_cast<HouseBrush*>(brush);
-	HouseExitBrush* house_exit_brush = dynamic_cast<HouseExitBrush*>(brush);
-	WaypointBrush* waypoint_brush = dynamic_cast<WaypointBrush*>(brush);
-	FlagBrush* flag_brush = dynamic_cast<FlagBrush*>(brush);
-	EraserBrush* eraser = dynamic_cast<EraserBrush*>(brush);
+	Brush * brush = gui.GetCurrentBrush();
+	RAWBrush * rawbrush = dynamic_cast <RAWBrush *> (brush);
+	TerrainBrush * terrainbrush = dynamic_cast <TerrainBrush *> (brush);
+	WallBrush * wall_brush = dynamic_cast <WallBrush *> (brush);
+	TableBrush * table_brush = dynamic_cast <TableBrush *> (brush);
+	CarpetBrush * carpet_brush = dynamic_cast <CarpetBrush *> (brush);
+	DoorBrush * door_brush = dynamic_cast <DoorBrush *> (brush);
+	OptionalBorderBrush * optional_brush = dynamic_cast <OptionalBorderBrush *> (brush);
+	CreatureBrush * creature_brush = dynamic_cast <CreatureBrush *> (brush);
+	SpawnBrush * spawn_brush = dynamic_cast <SpawnBrush *> (brush);
+	HouseBrush * house_brush = dynamic_cast <HouseBrush *> (brush);
+	HouseExitBrush * house_exit_brush = dynamic_cast <HouseExitBrush *> (brush);
+	WaypointBrush * waypoint_brush = dynamic_cast <WaypointBrush *> (brush);
+	FlagBrush * flag_brush = dynamic_cast <FlagBrush *> (brush);
+	EraserBrush * eraser = dynamic_cast <EraserBrush *> (brush);
+	AudioPointBrush * audioPointBrush = dynamic_cast <AudioPointBrush *> (brush);
+	AudioAreaBrush * audioAreaBrush = dynamic_cast <AudioAreaBrush *> (brush);
 	
 	BrushColor brushColor = COLOR_BLANK;
 	
@@ -967,7 +1107,7 @@ void MapDrawer::DrawBrush()
 		}
 		else if(!dynamic_cast<DoodadBrush*>(brush))
 		{
-			if(rawbrush)
+			if (rawbrush || audioPointBrush)
 			{ // Textured brush
 				glEnable(GL_TEXTURE_2D);
 			}
@@ -986,22 +1126,34 @@ void MapDrawer::DrawBrush()
 								y <= gui.GetBrushSize()
 							)
 						{
-							if(rawbrush)
+							if (rawbrush)
 							{
 								BlitSpriteType(cx, cy, rawbrush->getItemType()->sprite, 160, 160, 160, 160);
 							}
+							else if (audioPointBrush)
+							{
+								glBlitTexture(cx, cy, gui.gfx.getAudioPointTexture(), 128, 128, 128, 128);
+							}
 							else
 							{
-								if(waypoint_brush || house_exit_brush || optional_brush)
+								if (audioAreaBrush)
+								{
+									glColor(audioAreaBrush->getColor());
+								}
+								else if (waypoint_brush || house_exit_brush || optional_brush)
+								{
 									glColorCheck(brush, Position(mouse_map_x + x, mouse_map_y + y, floor));
+								}
 								else
+								{
 									glColor(brushColor);
+								}
 
 								glBegin(GL_QUADS);
-									glVertex2f(cx   ,cy+32);
-									glVertex2f(cx+32,cy+32);
-									glVertex2f(cx+32,cy);
-									glVertex2f(cx,   cy);
+									glVertex2f(cx, cy + 32);
+									glVertex2f(cx + 32, cy + 32);
+									glVertex2f(cx + 32, cy);
+									glVertex2f(cx, cy);
 								glEnd();
 							}
 						}
@@ -1470,7 +1622,7 @@ void MapDrawer::DrawTile(TileLocation* location) {
 		}
 		if(location->getWaypointCount() > 0 && options.show_houses)
 		{
-			BlitSpriteType(draw_x, draw_y, SPRITE_FLAME_BLUE, 64, 64, 255);
+			BlitSpriteType(draw_x, draw_y, SPRITE_WAYPOINT, 64, 64, 255);
 		}
 
 		if(tile->isHouseExit() && options.show_houses)
@@ -1482,20 +1634,6 @@ void MapDrawer::DrawTile(TileLocation* location) {
 			else
 			{
 				BlitSpriteType(draw_x, draw_y, SPRITE_FLAG_GREY, 64, 64, 255);
-			}
-		}
-		//if(tile->isTownExit()) {
-		//	BlitSpriteType(draw_x, draw_y, SPRITE_FLAG_GREY, 255, 255, 64);
-		//}
-		if(tile->spawn && options.show_spawns)
-		{
-			if(tile->spawn->isSelected())
-			{
-				BlitSpriteType(draw_x, draw_y, SPRITE_SPAWN, 128, 128, 128);
-			}
-			else
-			{
-				BlitSpriteType(draw_x, draw_y, SPRITE_SPAWN, 255, 255, 255);
 			}
 		}
 	}
@@ -1510,7 +1648,7 @@ void MapDrawer::DrawTooltips()
 	{
 		wxCoord width, height;
 		wxCoord lineHeight;
-		pdc.GetMultiLineTextExtent(wxstr(tooltip->tip), &width, &height, &lineHeight);
+		pdc->GetMultiLineTextExtent(wxstr(tooltip->tip), &width, &height, &lineHeight);
 
 		int start_sx = tooltip->x + 16 - width / 2;
 		int start_sy = tooltip->y + 16 - 7 - height;

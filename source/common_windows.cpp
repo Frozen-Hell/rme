@@ -91,12 +91,12 @@ MapPropertiesWindow::MapPropertiesWindow(wxWindow* parent, MapTab* view, Editor&
 		subsizer->Add(
 			width_spin = 
 				newd wxSpinCtrl(this, wxID_ANY, wxstr(i2s(map.getWidth())),
-					wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 256, 65000), wxSizerFlags(1).Expand()
+					wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 32, 1024), wxSizerFlags(1).Expand()
 			);
 		subsizer->Add(
 			height_spin = 
 				newd wxSpinCtrl(this, wxID_ANY, wxstr(i2s(map.getHeight())),
-				wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 256, 65000), wxSizerFlags(1).Expand()
+				wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 32, 1024), wxSizerFlags(1).Expand()
 			);
 		grid_sizer->Add(subsizer, 1, wxEXPAND);
 	}
@@ -114,11 +114,17 @@ MapPropertiesWindow::MapPropertiesWindow(wxWindow* parent, MapTab* view, Editor&
 	grid_sizer->Add(
 		newd wxStaticText(this, wxID_ANY, wxT("External Spawnfile"))
 		);
-
+	
 	grid_sizer->Add(
 		spawn_filename_ctrl =
 			newd wxTextCtrl(this, wxID_ANY, wxstr(map.getSpawnFilename())), 1, wxEXPAND
 		);
+
+	grid_sizer->Add(newd wxStaticText(this, wxID_ANY, wxT("External Audiofile")));
+
+	grid_sizer->Add(
+		audioFilenameText = newd wxTextCtrl(this, wxID_ANY, wxstr(map.getAudioFilename())), 1, wxEXPAND
+	);
 
 	topsizer->Add(grid_sizer, wxSizerFlags(1).Expand().Border(wxALL, 20));
 
@@ -320,6 +326,7 @@ void MapPropertiesWindow::OnClickOK(wxCommandEvent& WXUNUSED(event))
 	map.setMapDescription(nstr(description_ctrl->GetValue()));
 	map.setHouseFilename(nstr(house_filename_ctrl->GetValue()));
 	map.setSpawnFilename(nstr(spawn_filename_ctrl->GetValue()));
+	map.setAudioFilename(nstr(audioFilenameText->GetValue()));
 
 	// Only resize if we have to
 	int new_map_width = width_spin->GetValue();
@@ -737,7 +744,7 @@ void FindDialog::OnKeyDown(wxKeyEvent& event)
 			if(item_list->GetItemCount() > 0) 
 			{
 				size_t n = item_list->GetSelection();
-				if(n == wxNOT_FOUND) 
+				if(n == (size_t) wxNOT_FOUND) 
 					n = 0;
 				else if(n != amount && n - amount < n) // latter is needed for unsigned overflow
 					n -= amount;
@@ -754,7 +761,7 @@ void FindDialog::OnKeyDown(wxKeyEvent& event)
 			if(item_list->GetItemCount() > 0) {
 				size_t n = item_list->GetSelection();
 				size_t itemcount = item_list->GetItemCount();
-				if(n == wxNOT_FOUND)
+				if(n == (size_t) wxNOT_FOUND)
 					n = 0;
 				else if(uint(n) < itemcount - amount && itemcount - amount < itemcount)
 					n += amount;
@@ -1143,7 +1150,7 @@ void ReplaceItemDialog::OnKeyDown(wxKeyEvent& event)
 			if(item_list->GetItemCount() > 0) 
 			{
 				size_t n = item_list->GetSelection();
-				if(n == wxNOT_FOUND) 
+				if(n == (size_t) wxNOT_FOUND) 
 					n = 0;
 				else if(n != amount && n - amount < n) // latter is needed for unsigned overflow
 					n -= amount;
@@ -1160,7 +1167,7 @@ void ReplaceItemDialog::OnKeyDown(wxKeyEvent& event)
 			if(item_list->GetItemCount() > 0) {
 				size_t n = item_list->GetSelection();
 				size_t itemcount = item_list->GetItemCount();
-				if(n == wxNOT_FOUND)
+				if(n == (size_t) wxNOT_FOUND)
 					n = 0;
 				else if(uint(n) < itemcount - amount && itemcount - amount < itemcount)
 					n += amount;
@@ -1313,7 +1320,7 @@ void FindDialogListBox::AddBrush(Brush* brush)
 Brush* FindDialogListBox::GetSelectedBrush() 
 {
 	size_t n = GetSelection();
-	if(n == wxNOT_FOUND || no_matches || cleared)
+	if(n == (size_t) wxNOT_FOUND || no_matches || cleared)
 		return nullptr;
 	return brushlist[n];
 }

@@ -97,6 +97,7 @@ wxString PalettePanel::GetName() const {
 		case TILESET_HOUSE: return wxT("House Palette");
 		case TILESET_RAW: return wxT("RAW Palette");
 		case TILESET_WAYPOINT: return wxT("Waypoint Palette");
+		case TILESET_AUDIO: return wxT("Audio Palette");
 		case TILESET_UNKNOWN: return wxT("Unknown");
 	}
 	return wxEmptyString;

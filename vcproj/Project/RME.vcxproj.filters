@@ -70,9 +70,6 @@
     <ClInclude Include="..\..\source\brush_enums.h">
       <Filter>editor\brushes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\client_version.h">
-      <Filter>managers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\common.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -354,6 +351,26 @@
       <Filter>editor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\pugicast.h" />
+    <ClInclude Include="..\..\source\audio.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\palette_audio.h">
+      <Filter>gui\palette</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\audio_brush.h">
+      <Filter>editor\brushes</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
+    <ClInclude Include="..\..\source\mediator.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\events.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\client_version.h">
+      <Filter>managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\json\json_spirit_reader.cpp">
@@ -483,9 +500,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\templatemap854.cpp">
       <Filter>managers\templates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\client_version.cpp">
-      <Filter>managers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\creatures.cpp">
       <Filter>managers</Filter>
@@ -619,13 +633,42 @@
     <ClCompile Include="..\..\source\extension.cpp">
       <Filter>editor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\audio.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\palette_audio.cpp">
+      <Filter>gui\palette</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\audio_brush.cpp">
+      <Filter>editor\brushes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\mediator.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\events.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\client_version.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\data\menubar.xml" />
     <None Include="..\..\data\clients.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="rme.rc">
+    <Image Include="rme_icon.ico">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="icon1.ico">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="icon2.ico">
+      <Filter>resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RME.rc">
       <Filter>resources</Filter>
     </ResourceCompile>
   </ItemGroup>

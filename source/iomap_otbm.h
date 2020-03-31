@@ -49,6 +49,7 @@ enum OTBM_ItemAttribute
 	OTBM_ATTR_SLEEPERGUID = 20,
 	OTBM_ATTR_SLEEPSTART = 21,
 	OTBM_ATTR_CHARGES = 22,
+	OTBM_ATTR_EXT_AUDIO_FILE = 23,
 
 	OTBM_ATTR_ATTRIBUTE_MAP = 128
 };
@@ -124,25 +125,29 @@ public:
 	IOMapOTBM(MapVersion ver) {version = ver;}
 	~IOMapOTBM() {}
 
-	static bool getVersionInfo(const FileName& identifier, MapVersion& out_ver);
+	static bool getVersionInfo(const FileName & identifier, MapVersion & out_ver);
 
-	virtual bool loadMap(Map& map, const FileName& identifier);
-	virtual bool saveMap(Map& map, const FileName& identifier);
+	virtual bool loadMap(Map & map, const FileName & identifier);
+	virtual bool saveMap(Map & map, const FileName & identifier);
 
 protected:
-	static bool getVersionInfo(NodeFileReadHandle* f,  MapVersion& out_ver);
+	static bool getVersionInfo(NodeFileReadHandle * f,  MapVersion & out_ver);
 
-	virtual bool loadMap(Map& map, NodeFileReadHandle& handle);
-	bool loadSpawns(Map& map, const FileName& dir);
-	bool loadSpawns(Map& map, pugi::xml_document& doc);
-	bool loadHouses(Map& map, const FileName& dir);
-	bool loadHouses(Map& map, pugi::xml_document& doc);
+	virtual bool loadMap(Map & map, NodeFileReadHandle & handle);
+	bool loadSpawns(Map & map, const FileName & dir);
+	bool loadSpawns(Map & map, pugi::xml_document & doc);
+	bool loadHouses(Map & map, const FileName & dir);
+	bool loadHouses(Map & map, pugi::xml_document & doc);
+	bool loadAudio(Map & map, const FileName & dir);
+	bool loadAudio(Map & map, pugi::xml_document & doc);
 
-	virtual bool saveMap(Map& map, NodeFileWriteHandle& handle);
-	bool saveSpawns(Map& map, const FileName& dir);
-	bool saveSpawns(Map& map, pugi::xml_document& doc);
-	bool saveHouses(Map& map, const FileName& dir);
-	bool saveHouses(Map& map, pugi::xml_document& doc);
+	virtual bool saveMap(Map & map, NodeFileWriteHandle & handle);
+	bool saveSpawns(Map & map, const FileName & dir);
+	bool saveSpawns(Map & map, pugi::xml_document & doc);
+	bool saveHouses(Map & map, const FileName & dir);
+	bool saveHouses(Map & map, pugi::xml_document & doc);
+	bool saveAudio(Map & map, const FileName & dir);
+	bool saveAudio(Map & map, pugi::xml_document & doc);
 };
 
 #endif

@@ -93,9 +93,9 @@ public:
 	~ClientVersion() {}
 	
 	static void loadVersions();
-	static void unloadVersions();
-	static void saveVersions();
-
+	// changes by @dtroitskiy
+	// unloadVersions() and saveVersions() were removed, because we're using only 9.60 version
+	
 	static ClientVersion* get(ClientVersionID id);
 	static ClientVersion* get(std::string name);
 	static ClientVersionList getVisible(std::string from, std::string to);

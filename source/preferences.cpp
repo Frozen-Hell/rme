@@ -47,7 +47,8 @@ PreferencesWindow::PreferencesWindow(wxWindow* parent) : wxDialog(parent, wxID_A
 	book->AddPage(CreateEditorPage(), wxT("Editor"));
 	book->AddPage(CreateGraphicsPage(), wxT("Graphics"));
 	book->AddPage(CreateUIPage(), wxT("Interface"));
-	book->AddPage(CreateClientPage(), wxT("Client Version"));
+	// disabled by @dtroitskiy - we don't need client version selection in RME
+	// book->AddPage(CreateClientPage(), wxT("Client Version"));
 
 	sizer->Add(book, 1, wxEXPAND | wxALL, 10);
 
@@ -435,8 +436,7 @@ wxNotebookPage* PreferencesWindow::CreateClientPage()
 	wxNotebookPage* client_page = newd wxPanel(book, wxID_ANY);
 
 	// Refresh settings
-	ClientVersion::saveVersions();
-    ClientVersionList versions = ClientVersion::getAllVisible();
+	ClientVersionList versions = ClientVersion::getAllVisible();
 
 	wxSizer* topsizer = newd wxBoxSizer(wxVERTICAL);
 
@@ -485,7 +485,7 @@ wxNotebookPage* PreferencesWindow::CreateClientPage()
         client_list_sizer->Add(dir_picker, 0);
         
         wxString tooltip;
-        tooltip << wxT("The editor will look for ") << wxstr(version->getName()) << wxT(" Tibia.dat & Tibia.spr here.");
+        tooltip << wxT("The editor will look for ") << wxstr(version->getName()) << wxT(" fof.dat & fof.spr here.");
         tmp_text->SetToolTip(tooltip);
         dir_picker->SetToolTip(tooltip);
 
@@ -594,23 +594,13 @@ void PreferencesWindow::Apply()
 		settings.setInteger(Config::CURSOR_RED, clr.Red());
 		settings.setInteger(Config::CURSOR_GREEN, clr.Green());
 		settings.setInteger(Config::CURSOR_BLUE, clr.Blue());
-		//settings.setInteger(Config::CURSOR_ALPHA, clr.Alpha());
 
 	clr = cursor_alt_color_pick->GetColour();
 		settings.setInteger(Config::CURSOR_ALT_RED, clr.Red());
 		settings.setInteger(Config::CURSOR_ALT_GREEN, clr.Green());
 		settings.setInteger(Config::CURSOR_ALT_BLUE, clr.Blue());
-		//settings.setInteger(Config::CURSOR_ALT_ALPHA, clr.Alpha());
 
 	settings.setInteger(Config::HIDE_ITEMS_WHEN_ZOOMED, hide_items_when_zoomed_chkbox->GetValue());
-	/*
-	settings.setInteger(Config::TEXTURE_MANAGEMENT, texture_managment_chkbox->GetValue());
-	settings.setInteger(Config::TEXTURE_CLEAN_PULSE, clean_interval_spin->GetValue());
-	settings.setInteger(Config::TEXTURE_LONGEVITY, texture_longevity_spin->GetValue());
-	settings.setInteger(Config::TEXTURE_CLEAN_THRESHOLD, texture_threshold_spin->GetValue());
-	settings.setInteger(Config::SOFTWARE_CLEAN_THRESHOLD, software_threshold_spin->GetValue());
-	settings.setInteger(Config::SOFTWARE_CLEAN_SIZE, software_clean_amount_spin->GetValue());
-	*/
 
 	// Interface
 	SetPaletteStyleChoice(terrain_palette_style_choice, Config::PALETTE_TERRAIN_STYLE);
@@ -625,7 +615,6 @@ void PreferencesWindow::Apply()
 	settings.setInteger(Config::USE_LARGE_CONTAINER_ICONS, large_container_icons_chkbox->GetValue());
 	settings.setInteger(Config::USE_LARGE_CHOOSE_ITEM_ICONS, large_pick_item_icons_chkbox->GetValue());
 
-	
 	settings.setInteger(Config::SWITCH_MOUSEBUTTONS, switch_mousebtn_chkbox->GetValue());
 	settings.setInteger(Config::DOUBLECLICK_PROPERTIES, doubleclick_properties_chkbox->GetValue());
 
@@ -636,8 +625,9 @@ void PreferencesWindow::Apply()
 	settings.setFloat(Config::SCROLL_SPEED, scroll_mul * scroll_speed_slider->GetValue()/10.f);
 	settings.setFloat(Config::ZOOM_SPEED, zoom_speed_slider->GetValue()/10.f);
 
+	// commented by @dtroitskiy - as 'Client' page is disabled, this code needs to be disabled too
 	// Client
-	ClientVersionList versions = ClientVersion::getAllVisible();
+	/*ClientVersionList versions = ClientVersion::getAllVisible();
 	int version_counter = 0;
     for (ClientVersionList::iterator version_iter = versions.begin();
          version_iter != versions.end();
@@ -655,11 +645,7 @@ void PreferencesWindow::Apply()
 
 		version_counter++;
     }
-	settings.setInteger(Config::CHECK_SIGNATURES, check_sigs_chkbox->GetValue());
-
-	// Make sure to reload client paths
-	ClientVersion::saveVersions();
-	ClientVersion::loadVersions();
+	settings.setInteger(Config::CHECK_SIGNATURES, check_sigs_chkbox->GetValue());*/
 
 	settings.save();
 

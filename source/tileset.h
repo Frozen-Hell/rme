@@ -31,6 +31,7 @@ enum TilesetCategoryType {
 	TILESET_RAW,
 	TILESET_HOUSE,
 	TILESET_WAYPOINT,
+	TILESET_AUDIO,
 };
 
 class TilesetCategory {

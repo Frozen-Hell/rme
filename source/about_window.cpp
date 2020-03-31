@@ -166,6 +166,7 @@ AboutWindow::AboutWindow(wxWindow* parent) :
 	wxString about;
 	
 	about << wxT("This is an OpenTibia Map Editor created by Remere.\n");
+	about << wxT("Customizations for \"Frontiers of Fantasy\" project by Dmitriy Troitskiy.\n");
 	about << wxT("Version ") << __W_RME_VERSION__ << wxT(" for ");
 	about << 
 #ifdef __WINDOWS__

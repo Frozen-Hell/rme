@@ -22,9 +22,12 @@
 #include "selection.h"
 #include "tile.h"
 #include "creature.h"
+#include "audio.h"
 #include "item.h"
 #include "editor.h"
 #include "gui.h"
+#include "events.h"
+#include "mediator.h"
 
 Selection::Selection(Editor& editor) :
 	busy(false),
@@ -122,6 +125,22 @@ void Selection::add(Tile* tile, Creature* creature)
 	creature->deselect();
 
 	subsession->addChange(newd Change(new_tile));
+}
+
+void Selection::add(Tile * tile, Audio * audio)
+{
+	ASSERT(subsession);
+	ASSERT(tile);
+	ASSERT(audio);
+
+	if (audio->isSelected()) return;
+
+	// Make a copy of the tile with the item selected
+	audio->select();
+	Tile * newTile = tile->deepCopy(editor.map);
+	audio->deselect();
+
+	subsession->addChange(newd Change(newTile));
 }
 
 void Selection::add(Tile* tile)
@@ -328,10 +347,12 @@ void Selection::updateSelectionCount()
 		if(size() == 1)
 		{
 			ss << wxT("One tile selected.");
+			Mediator::publishEvent(RME_EVT_TILES_SELECTED, &tiles);
 		}
 		else
 		{
 			ss << size() << wxT(" tiles selected.");
+			Mediator::publishEvent(RME_EVT_TILES_SELECTED, &tiles);
 		}
 		gui.SetStatusText(ss);
 	}

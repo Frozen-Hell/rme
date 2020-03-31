@@ -32,6 +32,9 @@ struct DrawingOptions {
 	bool show_special_tiles;
 	bool show_items;
 
+	bool showAudioPointSources;
+	bool showAudioAreas;
+
 	bool highlight_items;
 	bool show_blocking;
 	bool show_only_colors;
@@ -43,9 +46,9 @@ class MapCanvas;
 
 class MapDrawer
 {
-	MapCanvas* canvas;
-	Editor& editor;
-	wxPaintDC& pdc;
+	MapCanvas * canvas = nullptr;
+	Editor & editor;
+	wxPaintDC * pdc;
 	DrawingOptions options;
 
 	int mouse_map_x, mouse_map_y;
@@ -62,9 +65,12 @@ protected:
 	std::vector<MapTooltip> tooltips;
 
 public:
-	MapDrawer(const DrawingOptions& options, MapCanvas* canvas, wxPaintDC& pdc);
+	MapDrawer(const DrawingOptions & options, MapCanvas * canvas, wxPaintDC * pdc);
+	// special contstuctor for drawing to offscreen buffer (for exporting map as image)
+	MapDrawer(Editor & editor, const DrawingOptions & options, wxGLCanvas * canvas, const wxPoint & renderStartPos, const wxSize & renderSize, int renderFloor);
 	~MapDrawer();
 
+	bool isDrawingOffscreen = false;
 	bool dragging;
 	bool dragging_draw;
 
@@ -74,6 +80,7 @@ public:
 	void Draw();
 	void DrawBackground();
 	void DrawMap();
+	void DrawAudio();
 	void DrawDraggingShadow();
 	void DrawHigherFloors();
 	void DrawSelectionBox();

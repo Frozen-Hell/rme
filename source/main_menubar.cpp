@@ -63,6 +63,7 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(IMPORT_MONSTERS, wxITEM_NORMAL, OnImportMonsterData);
 	MAKE_ACTION(IMPORT_MINIMAP, wxITEM_NORMAL, OnImportMinimap);
 	MAKE_ACTION(EXPORT_MINIMAP, wxITEM_NORMAL, OnExportMinimap);
+	MAKE_ACTION(EXPORT_PNG_IMAGE, wxITEM_NORMAL, OnExportPNGImage);
 
 	MAKE_ACTION(RELOAD_DATA, wxITEM_NORMAL, OnReloadDataFiles);
 	//MAKE_ACTION(RECENT_FILES, wxITEM_NORMAL, OnRecent);
@@ -129,6 +130,9 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(SHOW_ONLY_MODIFIED, wxITEM_CHECK, OnChangeViewSettings);
 	MAKE_ACTION(SHOW_HOUSES, wxITEM_CHECK, OnChangeViewSettings);
 	MAKE_ACTION(SHOW_PATHING, wxITEM_CHECK, OnChangeViewSettings);
+	
+	MAKE_ACTION(SHOW_AUDIO_POINT_SOURCES, wxITEM_CHECK, OnChangeViewSettings);
+	MAKE_ACTION(SHOW_AUDIO_AREAS, wxITEM_CHECK, OnChangeViewSettings);
 
 	MAKE_ACTION(WIN_MINIMAP, wxITEM_NORMAL, OnMinimapWindow);
 	MAKE_ACTION(NEW_PALETTE, wxITEM_NORMAL, OnNewPalette);
@@ -140,6 +144,7 @@ MainMenuBar::MainMenuBar(MainFrame *frame) : frame(frame)
 	MAKE_ACTION(SELECT_CREATURE, wxITEM_NORMAL, OnSelectCreaturePalette);
 	MAKE_ACTION(SELECT_HOUSE, wxITEM_NORMAL, OnSelectHousePalette);
 	MAKE_ACTION(SELECT_WAYPOINT, wxITEM_NORMAL, OnSelectWaypointPalette);
+	MAKE_ACTION(SELECT_AUDIO, wxITEM_NORMAL, OnSelectAudioPalette);
 	MAKE_ACTION(SELECT_RAW, wxITEM_NORMAL, OnSelectRawPalette);
 
 	/*
@@ -293,6 +298,7 @@ void MainMenuBar::Update()
 	EnableItem(IMPORT_MAP, is_local);
 	EnableItem(IMPORT_MINIMAP, false);
 	EnableItem(EXPORT_MINIMAP, is_local);
+	EnableItem(EXPORT_PNG_IMAGE, is_local);
 	
 	EnableItem(FIND_ITEM, is_host);
 	EnableItem(REPLACE_ITEM, is_local);
@@ -335,6 +341,7 @@ void MainMenuBar::Update()
 	EnableItem(SELECT_HOUSE, loaded);
 	EnableItem(SELECT_CREATURE, loaded);
 	EnableItem(SELECT_WAYPOINT, loaded);
+	EnableItem(SELECT_AUDIO, loaded);
 	EnableItem(SELECT_RAW, loaded);
 	
 	EnableItem(LIVE_START, is_local);
@@ -389,6 +396,9 @@ void MainMenuBar::LoadValues()
 	CheckItem(SHOW_ONLY_COLORS, settings.getInteger(Config::SHOW_ONLY_TILEFLAGS));
 	CheckItem(SHOW_ONLY_MODIFIED, settings.getInteger(Config::SHOW_ONLY_MODIFIED_TILES));
 	CheckItem(SHOW_HOUSES, settings.getInteger(Config::SHOW_HOUSES));
+
+	CheckItem(SHOW_AUDIO_POINT_SOURCES, settings.getInteger(Config::SHOW_AUDIO_POINT_SOURCES));
+	CheckItem(SHOW_AUDIO_AREAS, settings.getInteger(Config::SHOW_AUDIO_AREAS));
 }
 
 void MainMenuBar::LoadRecentFiles() 
@@ -697,6 +707,21 @@ void MainMenuBar::OnExportMinimap(wxCommandEvent& WXUNUSED(event))
 	{
 		ExportMiniMapWindow dlg(frame, *gui.GetCurrentEditor());
 		dlg.ShowModal();
+	}
+}
+
+void MainMenuBar::OnExportPNGImage(wxCommandEvent & WXUNUSED(event))
+{
+	const wxString & lastBrowseDir = settings.getString(Config::LAST_EXPORT_PNG_DIR);
+	wxString name = gui.GetCurrentEditor()->map.getName();
+	name = name.SubString(0, name.Find('.') - 1);
+	name.Append(".png");
+	wxFileDialog browseDialog(frame, "Choose file", lastBrowseDir, name, "*.png|*.png|All files|*", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+	if (browseDialog.ShowModal() == wxID_OK)
+	{
+		const wxString & path = browseDialog.GetPath();
+		settings.setString(Config::LAST_EXPORT_PNG_DIR, path.ToStdString());
+		gui.GetCurrentEditor()->exportPNGImage(browseDialog.GetPath());
 	}
 }
 
@@ -1755,6 +1780,9 @@ void MainMenuBar::OnChangeViewSettings(wxCommandEvent& event)
 	settings.setInteger(Config::HIGHLIGHT_ITEMS, IsItemChecked(MenuBar::HIGHLIGHT_ITEMS));
 	settings.setInteger(Config::SHOW_BLOCKING, IsItemChecked(MenuBar::SHOW_PATHING));
 
+	settings.setInteger(Config::SHOW_AUDIO_POINT_SOURCES, IsItemChecked(MenuBar::SHOW_AUDIO_POINT_SOURCES));
+	settings.setInteger(Config::SHOW_AUDIO_AREAS, IsItemChecked(MenuBar::SHOW_AUDIO_AREAS));
+
 	gui.RefreshView();
 }
 
@@ -1809,6 +1837,11 @@ void MainMenuBar::OnSelectCreaturePalette(wxCommandEvent& WXUNUSED(event))
 void MainMenuBar::OnSelectWaypointPalette(wxCommandEvent& WXUNUSED(event)) 
 {
 	gui.SelectPalettePage(TILESET_WAYPOINT);
+}
+
+void MainMenuBar::OnSelectAudioPalette(wxCommandEvent& WXUNUSED(event)) 
+{
+	gui.SelectPalettePage(TILESET_AUDIO);
 }
 
 void MainMenuBar::OnSelectRawPalette(wxCommandEvent& WXUNUSED(event)) 

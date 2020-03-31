@@ -72,5 +72,4 @@ private:
 	SpawnPositionList spawns;
 };
 
-
 #endif
